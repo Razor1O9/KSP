@@ -3,14 +3,18 @@
 //
 
 /* Prototyp Funktionen */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int pushc (int value);
-int add (void);
-int sub (void);
-int mul (void);
-int div (void);
-int mod (void);
-int rdint (void);
-int wrint (void);
-int rdchr (void);
-int wrchr (void);
+int HALT (void);
+int PUSHC (int value);
+int ADD (void);
+int SUB (void);
+int MUL (void);
+int DIV (void);
+int MOD (void);
+int RDINT (void);
+int WRINT (void);
+int RDCHR (void);
+int WRCHR (void);

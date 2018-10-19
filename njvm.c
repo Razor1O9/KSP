@@ -5,8 +5,8 @@
 #include <protofunctions.h>
 
 // Makro-Deklarationen
-#define <PUSHC>(<int>)<1>
 #define <HALT><0>
+#define <PUSHC>(<int>)<1>
 #define <ADD><2>
 #define <SUB><3>
 #define <MUL><4>
@@ -25,7 +25,47 @@ int main(int argcount, char *argvector[]) {
 
     printf("Ninja Virtual Machine started\n");
     for(pc=0; pc < argcount; pc++) {
-        if (programMemory [pc] ==  "BEFEHL"){
+        if (programMemory [pc] ==  PUSHC){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  HALT){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  ADD){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  SUB){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  MUL){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  DIV){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  MOD){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  RDINT){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  WRINT){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  RDCHR){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if (programMemory [pc] ==  WRCHR){
             // ToDo Befehl weitergeben und mit Stack rechnen
             printf("BEFEHL");
         }

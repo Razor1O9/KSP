@@ -24,7 +24,7 @@ int pc; // program counter
 int calculationStack[9999]; // Rechnerstack
 int si; // stack index
 
-// unsigned int zahl; // natürliche Zahl
+unsigned int zahl; // natürliche Zahl
 
 void calculate(int opCode) {
     if (opCode == 2) {
@@ -59,21 +59,15 @@ void data(int opCode) {
         // char ausgeben, stack verringern
     }
 }
-
-unsigned int addNumber(unsigned int value) {
-    value = calculationStack[si];
-    si++;
-}
-
 int main(int argcount, char *argvector[]) {
 
 
     printf("Ninja Virtual Machine started\n");
     for (pc = 0; pc < argcount; pc++) {
         if (programMemory[pc] ==  PUSHC){
-            addNumber[pc + 1];
-            addNumber[pc + 2];
-            printf("PUSHC \n");
+            pc++;
+            zahl = programMemory[pc];
+            calculationStack[pc] = zahl;
         }
         else if (programMemory[pc] ==  HALT){
             exit;

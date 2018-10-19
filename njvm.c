@@ -18,27 +18,30 @@
 #define <WRCHR><10>
 
 
-int programMemory[9999];
-int calculationStack[9999];
+int programMemory[9999]; // Befehlsliste
 int pc; // program counter
-int si; // stack counter
-unsigned int zahl; // natürliche Zahl
+
+int calculationStack[9999]; // Rechnerstack
+int si; // stack index
+
+// unsigned int zahl; // natürliche Zahl
 
 void calculate(int opCode) {
     if (opCode == 2) {
-        // addition mit stack durchführen
+        calculationStack [si-1] = calculationStack[si-1] + calculationStack [si];
     }
     if (opCode == 3) {
-        // subtraktion mit stack durchführen
+        calculationStack [si-1] = calculationStack[si-1] - calculationStack [si];
     }
     if (opCode == 4) {
-        // multiplikation stack durchführen
+        calculationStack [si-1] = calculationStack[si-1] * calculationStack [si];
     }
     if (opCode == 5) {
-        // division mit stack durchführen
+        calculationStack [si-1] = calculationStack[si-1] / calculationStack [si];
     }
     if (opCode == 6) {
-        // ganzzahldivision mit stack durchführen
+        // ToDo Ganzzahldivision
+        calculationStack [si-1] = calculationStack[si-1] / calculationStack [si];
     }
 }
 
@@ -70,19 +73,19 @@ int main(int argcount, char *argvector[]) {
         if (programMemory[pc] ==  PUSHC){
             addNumber[pc + 1];
             addNumber[pc + 2];
-            printf("BEFEHL");
+            printf("PUSHC \n");
         }
         else if (programMemory[pc] ==  HALT){
             exit;
-            printf("HALT");
+            printf("HALT \n");
         }
         else if (programMemory[pc] ==  ADD){
             calculate( ADD);
-            printf("ADD");
+            printf("ADD \n");
         }
         else if (programMemory[pc] ==  SUB){
             calculate( SUB);
-            printf("SUB");
+            printf("SUB \n");
         }
         else if (programMemory[pc] ==  MUL){
             calculate( MUL);
@@ -90,27 +93,27 @@ int main(int argcount, char *argvector[]) {
         }
         else if (programMemory[pc] ==  DIV){
             calculate( DIV);
-            printf("DIV");
+            printf("DIV \n");
         }
         else if (programMemory[pc] ==  MOD){
             calculate( MOD);
-            printf("MOD");
+            printf("MOD \n");
         }
         else if (programMemory[pc] ==  RDINT){
             data( RDINT);
-            printf("RDINT");
+            printf("RDINT \n");
         }
         else if (programMemory[pc] ==  WRINT){
             data( WRINT);
-            printf("WRINT");
+            printf("WRINT \n");
         }
         else if (programMemory[pc] ==  RDCHR){
             data( RDCHR);
-            printf("RDCHR");
+            printf("RDCHR \n");
         }
         else if (programMemory[pc] ==  WRCHR){
             data( WRCHR);
-            printf("WRCHR");
+            printf("WRCHR \n");
         }
         else if (!strcmp(argvector[pc], "--version")) {
             printf("Version 1\n");

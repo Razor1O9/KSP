@@ -17,74 +17,110 @@
 #define <RDCHR><9>
 #define <WRCHR><10>
 
+
+int programMemory[9999];
+int calculationStack[9999];
+int pc; // program counter
+int si; // stack counter
+unsigned int zahl; // natürliche Zahl
+
+void calculate(int opCode) {
+    if (opCode == 2) {
+        // addition mit stack durchführen
+    }
+    if (opCode == 3) {
+        // subtraktion mit stack durchführen
+    }
+    if (opCode == 4) {
+        // multiplikation stack durchführen
+    }
+    if (opCode == 5) {
+        // division mit stack durchführen
+    }
+    if (opCode == 6) {
+        // ganzzahldivision mit stack durchführen
+    }
+}
+
+void data(int opCode) {
+    if (opCode == 7) {
+        // zahl einlesen
+    }
+    if (opCode == 8) {
+        // zahl ausgeben, stack verringern
+    }
+    if (opCode == 9) {
+        // char einlesen
+    }
+    if (opCode == 9) {
+        // char ausgeben, stack verringern
+    }
+}
+
+unsigned int addNumber(unsigned int value) {
+    value = calculationStack[si];
+    si++;
+}
+
 int main(int argcount, char *argvector[]) {
-    int[9999] programMemory;
-    int[9999] calculationStack;
-    int pc; // program counter
-    unsigned int zahl; // natürliche Zahl
+
 
     printf("Ninja Virtual Machine started\n");
-    for(pc=0; pc < argcount; pc++) {
-        if (programMemory [pc] ==  PUSHC){
-            // ToDo Befehl weitergeben und mit Stack rechnen
+    for (pc = 0; pc < argcount; pc++) {
+        if (programMemory[pc] ==  PUSHC){
+            addNumber[pc + 1];
+            addNumber[pc + 2];
             printf("BEFEHL");
         }
-        if (programMemory [pc] ==  HALT){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  HALT){
+            exit;
+            printf("HALT");
         }
-        if (programMemory [pc] ==  ADD){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  ADD){
+            calculate( ADD);
+            printf("ADD");
         }
-        if (programMemory [pc] ==  SUB){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  SUB){
+            calculate( SUB);
+            printf("SUB");
         }
-        if (programMemory [pc] ==  MUL){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  MUL){
+            calculate( MUL);
+            printf("MUL");
         }
-        if (programMemory [pc] ==  DIV){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  DIV){
+            calculate( DIV);
+            printf("DIV");
         }
-        if (programMemory [pc] ==  MOD){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  MOD){
+            calculate( MOD);
+            printf("MOD");
         }
-        if (programMemory [pc] ==  RDINT){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  RDINT){
+            data( RDINT);
+            printf("RDINT");
         }
-        if (programMemory [pc] ==  WRINT){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  WRINT){
+            data( WRINT);
+            printf("WRINT");
         }
-        if (programMemory [pc] ==  RDCHR){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  RDCHR){
+            data( RDCHR);
+            printf("RDCHR");
         }
-        if (programMemory [pc] ==  WRCHR){
-            // ToDo Befehl weitergeben und mit Stack rechnen
-            printf("BEFEHL");
+        else if (programMemory[pc] ==  WRCHR){
+            data( WRCHR);
+            printf("WRCHR");
         }
-        if(!strcmp(argvector[pc], zahl)) {
-            calculationStack[pc] = zahl;
-        }
-        if(!strcmp(argvector[pc], "--version")) {
+        else if (!strcmp(argvector[pc], "--version")) {
             printf("Version 1\n");
-        }
-        else if(!strcmp(argvector[pc], "--help")) {
+        } else if (!strcmp(argvector[pc], "--help")) {
             printf("Valid inputs: \n --version \n --help\n");
-        }
-        else if(!strcmp(argvector[pc], "1")) {
+        } else if (!strcmp(argvector[pc], "1")) {
             printf("... \n");
-        }
-        else if(!strcmp(argvector[pc], "2")) {
+        } else if (!strcmp(argvector[pc], "2")) {
             printf("... \n");
-        }
-        else if(!strcmp(argvector[pc], "3")) {
+        } else if (!strcmp(argvector[pc], "3")) {
             printf("... \n");
         }
     }
@@ -94,8 +130,9 @@ int main(int argcount, char *argvector[]) {
 }
 
 
+
 /* ToDo
  * 1. Die Programme 1-3 werden in der Kommandozeile übergeben
  * 2. Mit #define wird die Funktionalität der VM erweitert
  * 3. Anschließend müssen die index-Stellen im counter mit den bekannten Instruktionen gematched werden
- * /
+ */

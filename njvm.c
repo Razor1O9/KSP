@@ -25,6 +25,7 @@ int calculationStack[9999]; // Rechnerstack
 int si; // stack index
 
 unsigned int zahl; // natürliche Zahl
+char letter; // character
 
 void calculate(int opCode) {
     if (opCode == 2) {
@@ -50,13 +51,15 @@ void data(int opCode) {
         // zahl einlesen
     }
     if (opCode == 8) {
-        // zahl ausgeben, stack verringern
+        printf(zahl);
+        si--;
     }
     if (opCode == 9) {
         // char einlesen
     }
     if (opCode == 9) {
-        // char ausgeben, stack verringern
+        printf(letter);
+        si--;
     }
 }
 int main(int argcount, char *argvector[]) {
@@ -111,13 +114,17 @@ int main(int argcount, char *argvector[]) {
         }
         else if (!strcmp(argvector[pc], "--version")) {
             printf("Version 1\n");
-        } else if (!strcmp(argvector[pc], "--help")) {
+        }
+        else if (!strcmp(argvector[pc], "--help")) {
             printf("Valid inputs: \n --version \n --help\n");
-        } else if (!strcmp(argvector[pc], "1")) {
+        }
+        else if (!strcmp(argvector[pc], "1")) {
             printf("... \n");
-        } else if (!strcmp(argvector[pc], "2")) {
+        }
+        else if (!strcmp(argvector[pc], "2")) {
             printf("... \n");
-        } else if (!strcmp(argvector[pc], "3")) {
+        }
+        else if (!strcmp(argvector[pc], "3")) {
             printf("... \n");
         }
     }
@@ -125,11 +132,3 @@ int main(int argcount, char *argvector[]) {
     printf("Ninja Virtual Machine stopped\n");
     return EXIT_SUCCESS;
 }
-
-
-
-/* ToDo
- * 1. Die Programme 1-3 werden in der Kommandozeile übergeben
- * 2. Mit #define wird die Funktionalität der VM erweitert
- * 3. Anschließend müssen die index-Stellen im counter mit den bekannten Instruktionen gematched werden
- */

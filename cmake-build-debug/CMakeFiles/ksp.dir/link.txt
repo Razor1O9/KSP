@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc libksp.a  CMakeFiles/ksp.dir/library.c.obj CMakeFiles/ksp.dir/njvm.c.obj CMakeFiles/ksp.dir/protofunctions.h.c.obj
+C:\MinGW\bin\ranlib.exe libksp.a

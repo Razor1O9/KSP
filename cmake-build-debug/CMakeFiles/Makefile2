@@ -70,7 +70,7 @@ CMAKE_BINARY_DIR = C:\Users\DVE\CLionProjects\ksp\cmake-build-debug
 CMakeFiles/ksp.dir/all:
 	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/depend
 	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4 "Built target ksp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target ksp"
 .PHONY : CMakeFiles/ksp.dir/all
 
 # Include target in all.
@@ -80,7 +80,7 @@ all: CMakeFiles/ksp.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ksp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles 3
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/ksp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/ksp.dir/rule

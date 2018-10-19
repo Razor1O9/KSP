@@ -6,7 +6,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "C:/Users/DVE/CLionProjects/ksp/library.c" "C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/ksp.dir/library.c.obj"
   "C:/Users/DVE/CLionProjects/ksp/njvm.c" "C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/ksp.dir/njvm.c.obj"
-  "C:/Users/DVE/CLionProjects/ksp/protofunctions.h.c" "C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/ksp.dir/protofunctions.h.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

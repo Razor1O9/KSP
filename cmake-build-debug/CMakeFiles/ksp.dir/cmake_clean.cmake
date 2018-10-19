@@ -1,7 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/ksp.dir/library.c.obj"
   "CMakeFiles/ksp.dir/njvm.c.obj"
-  "CMakeFiles/ksp.dir/protofunctions.h.c.obj"
   "libksp.pdb"
   "libksp.a"
 )

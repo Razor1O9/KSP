@@ -176,33 +176,6 @@ njvm.c.s:
 	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/njvm.c.s
 .PHONY : njvm.c.s
 
-protofunctions.h.obj: protofunctions.h.c.obj
-
-.PHONY : protofunctions.h.obj
-
-# target to build an object file
-protofunctions.h.c.obj:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/protofunctions.h.c.obj
-.PHONY : protofunctions.h.c.obj
-
-protofunctions.h.i: protofunctions.h.c.i
-
-.PHONY : protofunctions.h.i
-
-# target to preprocess a source file
-protofunctions.h.c.i:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/protofunctions.h.c.i
-.PHONY : protofunctions.h.c.i
-
-protofunctions.h.s: protofunctions.h.c.s
-
-.PHONY : protofunctions.h.s
-
-# target to generate assembly for a file
-protofunctions.h.c.s:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/protofunctions.h.c.s
-.PHONY : protofunctions.h.c.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -218,9 +191,6 @@ help:
 	@echo ... njvm.obj
 	@echo ... njvm.i
 	@echo ... njvm.s
-	@echo ... protofunctions.h.obj
-	@echo ... protofunctions.h.i
-	@echo ... protofunctions.h.s
 .PHONY : help
 
 

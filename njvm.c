@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <protofunctions.h>
+
+// Makro-Deklarationen
 #define <PUSHC>(<int>)<1>
 #define <HALT><0>
 #define <ADD><2>
@@ -18,25 +20,31 @@
 int main(int argcount, char *argvector[]) {
     int[9999] programMemory;
     int[9999] calculationStack;
-    int programCounter = 0; // test
-    int i;
-    int sum
+    int pc; // program counter
+    unsigned int zahl; // natürliche Zahl
+
     printf("Ninja Virtual Machine started\n");
-    sum = ADD ( stack1 + stack2 );
-    for(i=0; i < argcount; i++) {
-        if(!strcmp(argvector[i], "--version")) {
+    for(pc=0; pc < argcount; pc++) {
+        if (programMemory [pc] ==  "BEFEHL"){
+            // ToDo Befehl weitergeben und mit Stack rechnen
+            printf("BEFEHL");
+        }
+        if(!strcmp(argvector[pc], zahl)) {
+            calculationStack[pc] = zahl;
+        }
+        if(!strcmp(argvector[pc], "--version")) {
             printf("Version 1\n");
         }
-        else if(!strcmp(argvector[i], "--help")) {
+        else if(!strcmp(argvector[pc], "--help")) {
             printf("Valid inputs: \n --version \n --help\n");
         }
-        else if(!strcmp(argvector[i], "1")) {
+        else if(!strcmp(argvector[pc], "1")) {
             printf("... \n");
         }
-        else if(!strcmp(argvector[i], "2")) {
+        else if(!strcmp(argvector[pc], "2")) {
             printf("... \n");
         }
-        else if(!strcmp(argvector[i], "3")) {
+        else if(!strcmp(argvector[pc], "3")) {
             printf("... \n");
         }
     }

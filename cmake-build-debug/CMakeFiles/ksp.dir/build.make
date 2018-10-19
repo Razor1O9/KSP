@@ -82,34 +82,19 @@ CMakeFiles/ksp.dir/njvm.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ksp.dir/njvm.c.s"
 	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\DVE\CLionProjects\ksp\njvm.c -o CMakeFiles\ksp.dir\njvm.c.s
 
-CMakeFiles/ksp.dir/protofunctions.h.c.obj: CMakeFiles/ksp.dir/flags.make
-CMakeFiles/ksp.dir/protofunctions.h.c.obj: ../protofunctions.h.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/ksp.dir/protofunctions.h.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\ksp.dir\protofunctions.h.c.obj   -c C:\Users\DVE\CLionProjects\ksp\protofunctions.h.c
-
-CMakeFiles/ksp.dir/protofunctions.h.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ksp.dir/protofunctions.h.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\DVE\CLionProjects\ksp\protofunctions.h.c > CMakeFiles\ksp.dir\protofunctions.h.c.i
-
-CMakeFiles/ksp.dir/protofunctions.h.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ksp.dir/protofunctions.h.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\DVE\CLionProjects\ksp\protofunctions.h.c -o CMakeFiles\ksp.dir\protofunctions.h.c.s
-
 # Object files for target ksp
 ksp_OBJECTS = \
 "CMakeFiles/ksp.dir/library.c.obj" \
-"CMakeFiles/ksp.dir/njvm.c.obj" \
-"CMakeFiles/ksp.dir/protofunctions.h.c.obj"
+"CMakeFiles/ksp.dir/njvm.c.obj"
 
 # External object files for target ksp
 ksp_EXTERNAL_OBJECTS =
 
 libksp.a: CMakeFiles/ksp.dir/library.c.obj
 libksp.a: CMakeFiles/ksp.dir/njvm.c.obj
-libksp.a: CMakeFiles/ksp.dir/protofunctions.h.c.obj
 libksp.a: CMakeFiles/ksp.dir/build.make
 libksp.a: CMakeFiles/ksp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C static library libksp.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C static library libksp.a"
 	$(CMAKE_COMMAND) -P CMakeFiles\ksp.dir\cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\ksp.dir\link.txt --verbose=$(VERBOSE)
 

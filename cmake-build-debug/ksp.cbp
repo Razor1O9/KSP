@@ -85,7 +85,7 @@
 		<Unit filename="C:/Users/DVE/CLionProjects/ksp/njvm.c">
 			<Option target="ksp"/>
 		</Unit>
-		<Unit filename="C:/Users/DVE/CLionProjects/ksp/protofunctions.h.c">
+		<Unit filename="C:/Users/DVE/CLionProjects/ksp/protofunctions.h">
 			<Option target="ksp"/>
 		</Unit>
 		<Unit filename="C:/Users/DVE/CLionProjects/ksp/CMakeLists.txt">

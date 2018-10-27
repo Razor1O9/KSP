@@ -57,22 +57,28 @@ int main(int argcount, char *argvector[]) {
             source[8] = PUSHC | IMMEDIATE(10);
             source[9] = WRCHR;
             source[10] = HALT;
+            listInstructions();
+            matchInstruction();
         } else if (!strcmp(programMemory[argcount], "2")) {
-            source[0]=PUSHC|IMMEDIATE(-2);
-            source[1]=RDINT;
-            source[2]=MUL;
-            source[3]=PUSHC|IMMEDIATE(3);
-            source[4]=ADD;
-            source[5]=WRINT;
-            source[6]=PUSHC|'\n';
-            source[7]=WRCHR;
-            source[8]=HALT;
+            source[0] = PUSHC | IMMEDIATE(-2);
+            source[1] = RDINT;
+            source[2] = MUL;
+            source[3] = PUSHC | IMMEDIATE(3);
+            source[4] = ADD;
+            source[5] = WRINT;
+            source[6] = PUSHC | '\n';
+            source[7] = WRCHR;
+            source[8] = HALT;
+            listInstructions();
+            matchInstruction();
         } else if (!strcmp(programMemory[argcount], "3")) {
-            source[0]=RDCHR;
-            source[1]=WRINT;
-            source[2]=PUSHC|'\n';
-            source[3]=WRCHR;
-            source[4]=HALT;
+            source[0] = RDCHR;
+            source[1] = WRINT;
+            source[2] = PUSHC | '\n';
+            source[3] = WRCHR;
+            source[4] = HALT;
+            listInstructions();
+            matchInstruction();
         }
     }
     printf("End of input reached\n");
@@ -81,45 +87,54 @@ int main(int argcount, char *argvector[]) {
 }
 
 /**
- *
+ * This method contains instructions for calculations
+ * Instructions are performored if the given opCode matches with an instruction inside the method.
  * @param opCode
  */
 void calculate(int opCode) {
     if (opCode == ADD) {
-        calculationStack[sp - 1] = calculationStack[sp - 1] + calculationStack[sp];
+        add();
     }
     if (opCode == SUB) {
-        calculationStack[sp - 1] = calculationStack[sp - 1] - calculationStack[sp];
+        sub();
     }
     if (opCode == MUL) {
-        calculationStack[sp - 1] = calculationStack[sp - 1] * calculationStack[sp];
+        mul();
     }
     if (opCode == DIV) {
-        calculationStack[sp - 1] = calculationStack[sp - 1] / calculationStack[sp];
+        divide();
     }
     if (opCode == MOD) {
-        calculationStack[sp - 1] = calculationStack[sp - 1] / calculationStack[sp];
+        mod();
     }
 }
 
 /**
- *
+ * This method contains instructions for read- and write data manipulation.
+ * Instructions are performored if the opCode matches with an instruction inside the method.
  * @param opCode
  */
 void data(int opCode) {
+    if (opCode == PUSHC) {
+        push(SIGN_EXTEND(IMMEDIATE(source[opCode])));
+    }
     if (opCode == RDINT) {
-        // zahl einlesen
+        rdint();
     }
     if (opCode == WRINT) {
-        printf(source);
-        sp--;
+        wrint();
     }
     if (opCode == RDCHR) {
-        // char einlesen
+        rdchr();
     }
     if (opCode == WRCHR) {
-        printf(letter);
-        sp--;
+        wrchr();
+    }
+}
+
+void end(int opCode) {
+    if (opCode == HALT) {
+        halt();
     }
 }
 
@@ -127,42 +142,160 @@ void data(int opCode) {
  *
  * @return
  */
-int matchInstruction() {
+matchInstruction() {
     for (pc = 0; pc < programMemory; pc++) {
         if (programMemory[pc] == PUSHC) {
             pc++;
-            source = programMemory[pc];
+            source == programMemory[pc];
             calculationStack[pc] = source;
         } else if (programMemory[pc] == HALT) {
-            exit;
-            printf("HALT \n");
+            break;
         } else if (programMemory[pc] == ADD) {
             calculate(ADD);
-            printf("ADD \n");
         } else if (programMemory[pc] == SUB) {
             calculate(SUB);
-            printf("SUB \n");
         } else if (programMemory[pc] == MUL) {
             calculate(MUL);
-            printf("MUL");
         } else if (programMemory[pc] == DIV) {
             calculate(DIV);
-            printf("DIV \n");
         } else if (programMemory[pc] == MOD) {
             calculate(MOD);
-            printf("MOD \n");
         } else if (programMemory[pc] == RDINT) {
             data(RDINT);
-            printf("RDINT \n");
         } else if (programMemory[pc] == WRINT) {
             data(WRINT);
-            printf("WRINT \n");
         } else if (programMemory[pc] == RDCHR) {
             data(RDCHR);
-            printf("RDCHR \n");
         } else if (programMemory[pc] == WRCHR) {
             data(WRCHR);
-            printf("WRCHR \n");
         }
     }
+
+}
+
+/**
+ * This method outputs all instructions inside a given program.
+ * The listing order is from top to bottom.
+ */
+listInstructions() {
+    int i;
+    for (i = 0;; i++) {
+        switch (source[i] & 0xFF000000) {
+            case HALT:
+                printf("%d: HALT\n", i);
+                break;
+            case PUSHC:
+                printf("%d: PUSHC\t %d \n", i, SIGN_EXTEND(IMMEDIATE(source[i])));
+                break;
+            case ADD:
+                printf("%d: ADD\n", i);
+                break;
+            case SUB:
+                printf("%d: SUB\n", i);
+                break;
+            case MUL:
+                printf("%d: MUL\n", i);
+                break;
+            case DIV:
+                printf("%d: DIV1\n", i);
+                break;
+            case MOD:
+                printf("%d: MOD\n", i);
+                break;
+            case RDINT:
+                printf("%d: RDINT\n", i);
+                break;
+            case WRINT:
+                printf("%d: WRINT\n", i);
+                break;
+            case RDCHR:
+                printf("%d: RDCHR\n", i);
+                break;
+            case WRCHR:
+                printf("%d: WRCHR\n", i);
+                break;
+            default:
+                printf("Wert ungültig \n");
+        }
+        if ((source[i] & 0xFF000000) == HALT) { break; }
+    }
+}
+
+
+/**
+ * This methods pushes a given variable on top of the stack.
+ * @param var
+ */
+push(int var) {
+    if (sp < 9999) {
+        calculationStack[sp] = var;
+    } else {
+        printf("Kein freier Speicher im Stack vorhanden\n");
+        exit(-1);
+    }
+}
+
+/**
+ * This method removes the top variable from the stack.
+ * It returns the new stack, without the removed variable.
+ * @return
+ */
+pop() {
+    if (sp > 0) {
+        sp--;
+    } else {
+        printf("Keine Elemente im Stack vorhanden\n");
+        exit(-1);
+    }
+    return calculationStack[sp];
+}
+
+add() {
+    int var1 = pop();
+    int var2 = pop();
+    push(var1 + var2);
+}
+
+sub() {
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 - var1);
+}
+
+mul() {
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 * var1);
+}
+
+divide() {
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 / var1);
+}
+
+mod() {
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 % var1);
+}
+
+rdint() {
+    int var;
+    scanf("%i", &var);
+    push(var);
+}
+
+wrint() {
+    printf("%i", pop());
+}
+
+rdchr() {
+    char var;
+    scanf("%c", &var);
+    push(var);
+}
+
+wrchr() {
+    printf("%c", pop());
 }

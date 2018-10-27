@@ -7,14 +7,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-int HALT (void);
-int PUSHC (int value);
-int ADD (void);
-int SUB (void);
-int MUL (void);
-int DIV (void);
-int MOD (void);
-int RDINT (void);
-int WRINT (void);
-int RDCHR (void);
-int WRCHR (void);
+int halt (void);
+int push (int value);
+int pop (void);
+int add (void);
+int sub (void);
+int mul (void);
+int divide (void);
+int mod (void);
+int rdint (void);
+int wrint (void);
+int rdchr (void);
+int wrchr (void);
+int listInstructions(void);
+int matchInstruction(void);

@@ -146,7 +146,7 @@ void end(int opCode) {
  *
  * @return
  */
-matchInstruction() {
+void matchInstruction(void) {
     for (pc = 0; pc < programSize; pc++) {
         if (programMemory[pc] == PUSHC) {
             push(programMemory[pc+1]);
@@ -180,7 +180,7 @@ matchInstruction() {
  * This method outputs all instructions inside a given program.
  * The listing order is from top to bottom.
  */
-listInstructions() {
+void listInstructions(void) {
     int i;
     for (i = 0;; i++) {
         switch (programMemory[i] & 0xFF000000) {

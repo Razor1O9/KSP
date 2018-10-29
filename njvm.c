@@ -26,6 +26,7 @@ int pc; // Program Counter Variable for Instructions
 int calculationStack[9999]; // Stack for Calculation
 int sp; // Stack Pointer Variable for Calculations
 
+int programSize;
 unsigned int source[9999]; // natürliche Zahl
 char letter; // character
 
@@ -42,7 +43,7 @@ int main(int argcount, char *argvector[]) {
     printf("Ninja Virtual Machine started\n");
     for (int i = 0; i < argcount; i++) {
         if (!strcmp(argvector[i], "--version")) {
-            printf("Version = ", version, "\n");
+            printf("Version = %d \n", version);
         } else if (!strcmp(argvector[i], "--help")) {
             printf("Valid inputs: \n --version \n --help\n --program1 \n --program2 \n --program3 \n");
         } else if (!strcmp(argvector[i], "--1")) {
@@ -57,6 +58,7 @@ int main(int argcount, char *argvector[]) {
             programMemory[8] = PUSHC | IMMEDIATE(10);
             programMemory[9] = WRCHR;
             programMemory[10] = HALT;
+            programSize = 10;
             listInstructions();
             matchInstruction();
         } else if (!strcmp(argvector[i], "--2")) {
@@ -69,6 +71,7 @@ int main(int argcount, char *argvector[]) {
             programMemory[6] = PUSHC | '\n';
             programMemory[7] = WRCHR;
             programMemory[8] = HALT;
+            programSize = 8;
             listInstructions();
             matchInstruction();
         } else if (!strcmp(argvector[i], "--3")) {
@@ -77,6 +80,7 @@ int main(int argcount, char *argvector[]) {
             programMemory[2] = PUSHC | '\n';
             programMemory[3] = WRCHR;
             programMemory[4] = HALT;
+            programSize = 4;
             listInstructions();
             matchInstruction();
         }
@@ -143,11 +147,10 @@ void end(int opCode) {
  * @return
  */
 matchInstruction() {
-    for (pc = 0; pc < programMemory; pc++) {
+    for (pc = 0; pc < programSize; pc++) {
         if (programMemory[pc] == PUSHC) {
-            pc++;
-            source == programMemory[pc];
-            calculationStack[pc] = source;
+            push(programMemory[pc+1]);
+            pc+2;
         } else if (programMemory[pc] == HALT) {
             break;
         } else if (programMemory[pc] == ADD) {

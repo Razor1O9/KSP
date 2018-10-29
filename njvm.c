@@ -150,7 +150,7 @@ matchInstruction() {
     for (pc = 0; pc < programSize; pc++) {
         if (programMemory[pc] == PUSHC) {
             push(programMemory[pc+1]);
-            pc+2;
+            pc = pc+2;
         } else if (programMemory[pc] == HALT) {
             break;
         } else if (programMemory[pc] == ADD) {

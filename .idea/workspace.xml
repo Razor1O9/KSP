@@ -26,7 +26,7 @@
     <session id="-1140868775">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="8" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.6" value="5" />
           <entry key="project.open.time.7" value="2" />
@@ -46,14 +46,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="4087" />
+          <entry key="c" value="4098" />
           <entry key="h" value="381" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Doxygen file" value="14" />
-          <entry key="ObjectiveC" value="4454" />
+          <entry key="ObjectiveC" value="4465" />
         </counts>
       </usages-collector>
     </session>
@@ -84,8 +84,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/njvm.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="203" column="22" lean-forward="true" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
+            <state relative-caret-position="255">
+              <caret line="15" column="21" lean-forward="true" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
               <folding>
                 <element signature="e#14#32#0" expanded="true" />
               </folding>
@@ -96,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protofunctions.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+            <state>
+              <caret selection-end-line="22" selection-end-column="28" />
               <folding>
                 <element signature="e#67#85#0" expanded="true" />
               </folding>
@@ -200,12 +200,12 @@
       <workItem from="1540550600388" duration="3423000" />
       <workItem from="1540625942731" duration="5701000" />
       <workItem from="1540726530606" duration="602000" />
-      <workItem from="1540797078846" duration="3379000" />
+      <workItem from="1540797078846" duration="4666000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22081000" />
+    <option name="totallyTimeSpent" value="23368000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1873" height="1096" extended-state="6" />
@@ -262,8 +262,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protofunctions.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+        <state>
+          <caret selection-end-line="22" selection-end-column="28" />
           <folding>
             <element signature="e#67#85#0" expanded="true" />
           </folding>
@@ -272,8 +272,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/njvm.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="203" column="22" lean-forward="true" selection-start-line="203" selection-start-column="22" selection-end-line="203" selection-end-column="22" />
+        <state relative-caret-position="255">
+          <caret line="15" column="21" lean-forward="true" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
           <folding>
             <element signature="e#14#32#0" expanded="true" />
           </folding>

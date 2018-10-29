@@ -27,7 +27,6 @@ int calculationStack[9999]; // Stack for Calculation
 int sp; // Stack Pointer Variable for Calculations
 
 int programSize;
-unsigned int source[9999]; // natürliche Zahl
 char letter; // character
 
 
@@ -120,7 +119,7 @@ void calculate(int opCode) {
  */
 void data(int opCode) {
     if (opCode == PUSHC) {
-        push(SIGN_EXTEND(IMMEDIATE(source[opCode])));
+        push(SIGN_EXTEND(IMMEDIATE(calculationStack[opCode])));
     }
     if (opCode == RDINT) {
         rdint();
@@ -285,12 +284,12 @@ void mod() {
 
 void rdint() {
     int var;
-    scanf("%i", &var);
+    scanf("%d", &var);
     push(var);
 }
 
 void wrint() {
-    printf("%i", pop());
+    printf("%d", pop());
 }
 
 void rdchr() {

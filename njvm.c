@@ -188,7 +188,7 @@ void listInstructions(void) {
                 printf("%d: HALT\n", i);
                 break;
             case PUSHC:
-                printf("%d: PUSHC\t %d \n", i, SIGN_EXTEND(IMMEDIATE(source[i])));
+                printf("%d: PUSHC\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                 break;
             case ADD:
                 printf("%d: ADD\n", i);

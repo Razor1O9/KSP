@@ -136,11 +136,11 @@ void data(int opCode) {
     }
 }
 
-void end(int opCode) {
-    if (opCode == HALT) {
-        halt();
-    }
-}
+// void end(int opCode) {
+//    if (opCode == HALT) {
+//        halt();
+//    }
+//}
 
 /**
  *
@@ -243,7 +243,7 @@ void push(int var) {
  * It returns the new stack, without the removed variable.
  * @return
  */
-pop() {
+int pop() {
     if (sp > 0) {
         sp--;
     } else {

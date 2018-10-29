@@ -41,42 +41,42 @@ int main(int argcount, char *argvector[]) {
 
     printf("Ninja Virtual Machine started\n");
     for (int i = 0; i < argcount; i++) {
-        if (!strcmp(programMemory[i], "--version")) {
+        if (!strcmp(argvector[i], "--version")) {
             printf("Version = ", version, "\n");
-        } else if (!strcmp(programMemory[i], "--help")) {
+        } else if (!strcmp(argvector[i], "--help")) {
             printf("Valid inputs: \n --version \n --help\n --program1 \n --program2 \n --program3 \n");
-        } else if (!strcmp(programMemory[i], "--1")) {
-            source[0] = PUSHC | IMMEDIATE(3);
-            source[1] = PUSHC | IMMEDIATE(4);
-            source[2] = ADD;
-            source[3] = PUSHC | IMMEDIATE(10);
-            source[4] = PUSHC | IMMEDIATE(6);
-            source[5] = SUB;
-            source[6] = MUL;
-            source[7] = WRINT;
-            source[8] = PUSHC | IMMEDIATE(10);
-            source[9] = WRCHR;
-            source[10] = HALT;
+        } else if (!strcmp(argvector[i], "--1")) {
+            programMemory[0] = PUSHC | IMMEDIATE(3);
+            programMemory[1] = PUSHC | IMMEDIATE(4);
+            programMemory[2] = ADD;
+            programMemory[3] = PUSHC | IMMEDIATE(10);
+            programMemory[4] = PUSHC | IMMEDIATE(6);
+            programMemory[5] = SUB;
+            programMemory[6] = MUL;
+            programMemory[7] = WRINT;
+            programMemory[8] = PUSHC | IMMEDIATE(10);
+            programMemory[9] = WRCHR;
+            programMemory[10] = HALT;
             listInstructions();
             matchInstruction();
-        } else if (!strcmp(programMemory[i], "--2")) {
-            source[0] = PUSHC | IMMEDIATE(-2);
-            source[1] = RDINT;
-            source[2] = MUL;
-            source[3] = PUSHC | IMMEDIATE(3);
-            source[4] = ADD;
-            source[5] = WRINT;
-            source[6] = PUSHC | '\n';
-            source[7] = WRCHR;
-            source[8] = HALT;
+        } else if (!strcmp(argvector[i], "--2")) {
+            programMemory[0] = PUSHC | IMMEDIATE(-2);
+            programMemory[1] = RDINT;
+            programMemory[2] = MUL;
+            programMemory[3] = PUSHC | IMMEDIATE(3);
+            programMemory[4] = ADD;
+            programMemory[5] = WRINT;
+            programMemory[6] = PUSHC | '\n';
+            programMemory[7] = WRCHR;
+            programMemory[8] = HALT;
             listInstructions();
             matchInstruction();
-        } else if (!strcmp(programMemory[i], "--3")) {
-            source[0] = RDCHR;
-            source[1] = WRINT;
-            source[2] = PUSHC | '\n';
-            source[3] = WRCHR;
-            source[4] = HALT;
+        } else if (!strcmp(argvector[i], "--3")) {
+            programMemory[0] = RDCHR;
+            programMemory[1] = WRINT;
+            programMemory[2] = PUSHC | '\n';
+            programMemory[3] = WRCHR;
+            programMemory[4] = HALT;
             listInstructions();
             matchInstruction();
         }
@@ -180,7 +180,7 @@ matchInstruction() {
 listInstructions() {
     int i;
     for (i = 0;; i++) {
-        switch (source[i] & 0xFF000000) {
+        switch (programMemory[i] & 0xFF000000) {
             case HALT:
                 printf("%d: HALT\n", i);
                 break;
@@ -217,7 +217,7 @@ listInstructions() {
             default:
                 printf("Wert ungültig \n");
         }
-        if ((source[i] & 0xFF000000) == HALT) { break; }
+        if ((programMemory[i] & 0xFF000000) == HALT) { break; }
     }
 }
 

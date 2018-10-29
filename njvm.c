@@ -40,12 +40,12 @@ char letter; // character
 int main(int argcount, char *argvector[]) {
 
     printf("Ninja Virtual Machine started\n");
-    for (argcount = 0; argcount < argvector; argcount++) {
-        if (!strcmp(programMemory[argcount], "--version")) {
+    for (int i = 0; i < argcount; i++) {
+        if (!strcmp(programMemory[i], "--version")) {
             printf("Version = ", version, "\n");
-        } else if (!strcmp(programMemory[argcount], "--help")) {
+        } else if (!strcmp(programMemory[i], "--help")) {
             printf("Valid inputs: \n --version \n --help\n --program1 \n --program2 \n --program3 \n");
-        } else if (!strcmp(programMemory[argcount], "--1")) {
+        } else if (!strcmp(programMemory[i], "--1")) {
             source[0] = PUSHC | IMMEDIATE(3);
             source[1] = PUSHC | IMMEDIATE(4);
             source[2] = ADD;
@@ -59,7 +59,7 @@ int main(int argcount, char *argvector[]) {
             source[10] = HALT;
             listInstructions();
             matchInstruction();
-        } else if (!strcmp(programMemory[argcount], "--2")) {
+        } else if (!strcmp(programMemory[i], "--2")) {
             source[0] = PUSHC | IMMEDIATE(-2);
             source[1] = RDINT;
             source[2] = MUL;
@@ -71,7 +71,7 @@ int main(int argcount, char *argvector[]) {
             source[8] = HALT;
             listInstructions();
             matchInstruction();
-        } else if (!strcmp(programMemory[argcount], "--3")) {
+        } else if (!strcmp(programMemory[i], "--3")) {
             source[0] = RDCHR;
             source[1] = WRINT;
             source[2] = PUSHC | '\n';

@@ -229,7 +229,7 @@ listInstructions() {
  * This methods pushes a given variable on top of the stack.
  * @param var
  */
-push(int var) {
+void push(int var) {
     if (sp < 9999) {
         calculationStack[sp] = var;
     } else {
@@ -253,52 +253,52 @@ pop() {
     return calculationStack[sp];
 }
 
-add() {
+void add(void) {
     int var1 = pop();
     int var2 = pop();
     push(var1 + var2);
 }
 
-sub() {
+void sub(void) {
     int var1 = pop();
     int var2 = pop();
     push(var2 - var1);
 }
 
-mul() {
+void mul() {
     int var1 = pop();
     int var2 = pop();
     push(var2 * var1);
 }
 
-divide() {
+void divide() {
     int var1 = pop();
     int var2 = pop();
     push(var2 / var1);
 }
 
-mod() {
+void mod() {
     int var1 = pop();
     int var2 = pop();
     push(var2 % var1);
 }
 
-rdint() {
+void rdint() {
     int var;
     scanf("%i", &var);
     push(var);
 }
 
-wrint() {
+void wrint() {
     printf("%i", pop());
 }
 
-rdchr() {
+void rdchr() {
     char var;
     scanf("%c", &var);
     push(var);
 }
 
-wrchr() {
+void wrchr() {
     printf("%c", pop());
 }

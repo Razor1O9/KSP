@@ -58,45 +58,45 @@ RM = "E:\IDE\CLion 2018.2.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\DVE\CLionProjects\ksp
+CMAKE_SOURCE_DIR = E:\Studium\KSP
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\DVE\CLionProjects\ksp\cmake-build-debug
+CMAKE_BINARY_DIR = E:\Studium\KSP\cmake-build-debug
 
 #=============================================================================
-# Target rules for target CMakeFiles/ksp.dir
+# Target rules for target CMakeFiles/KSP.dir
 
 # All Build rule for target.
-CMakeFiles/ksp.dir/all:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/depend
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target ksp"
-.PHONY : CMakeFiles/ksp.dir/all
+CMakeFiles/KSP.dir/all:
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/depend
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=E:\Studium\KSP\cmake-build-debug\CMakeFiles --progress-num=1,2 "Built target KSP"
+.PHONY : CMakeFiles/KSP.dir/all
 
 # Include target in all.
-all: CMakeFiles/ksp.dir/all
+all: CMakeFiles/KSP.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/ksp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles 3
-	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/ksp.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/ksp.dir/rule
+CMakeFiles/KSP.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\Studium\KSP\cmake-build-debug\CMakeFiles 2
+	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/KSP.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\Studium\KSP\cmake-build-debug\CMakeFiles 0
+.PHONY : CMakeFiles/KSP.dir/rule
 
 # Convenience name for target.
-ksp: CMakeFiles/ksp.dir/rule
+KSP: CMakeFiles/KSP.dir/rule
 
-.PHONY : ksp
-
-# clean rule for target.
-CMakeFiles/ksp.dir/clean:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/clean
-.PHONY : CMakeFiles/ksp.dir/clean
+.PHONY : KSP
 
 # clean rule for target.
-clean: CMakeFiles/ksp.dir/clean
+CMakeFiles/KSP.dir/clean:
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/clean
+.PHONY : CMakeFiles/KSP.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/KSP.dir/clean
 
 .PHONY : clean
 

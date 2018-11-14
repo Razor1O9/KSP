@@ -27,6 +27,7 @@ int calculationStack[9999]; // Stack for Calculation
 int sp; // Stack Pointer Variable for Calculations
 
 int programSize;
+int staticVar;
 char letter; // character
 
 
@@ -38,56 +39,50 @@ char letter; // character
  * @return
  */
 int main(int argcount, char *argvector[]) {
-
     printf("Ninja Virtual Machine started\n");
     for (int i = 0; i < argcount; i++) {
         if (!strcmp(argvector[i], "--version")) {
             printf("Version = %d \n", version);
         } else if (!strcmp(argvector[i], "--help")) {
             printf("Valid inputs: \n --version \n --help\n --program1 \n --program2 \n --program3 \n");
-        } else if (!strcmp(argvector[i], "--1")) {
-            programMemory[0] = PUSHC | IMMEDIATE(3);
-            programMemory[1] = PUSHC | IMMEDIATE(4);
-            programMemory[2] = ADD;
-            programMemory[3] = PUSHC | IMMEDIATE(10);
-            programMemory[4] = PUSHC | IMMEDIATE(6);
-            programMemory[5] = SUB;
-            programMemory[6] = MUL;
-            programMemory[7] = WRINT;
-            programMemory[8] = PUSHC | IMMEDIATE(10);
-            programMemory[9] = WRCHR;
-            programMemory[10] = HALT;
-            programSize = 10;
-            listInstructions();
-            matchInstruction();
-        } else if (!strcmp(argvector[i], "--2")) {
-            programMemory[0] = PUSHC | IMMEDIATE(-2);
-            programMemory[1] = RDINT;
-            programMemory[2] = MUL;
-            programMemory[3] = PUSHC | IMMEDIATE(3);
-            programMemory[4] = ADD;
-            programMemory[5] = WRINT;
-            programMemory[6] = PUSHC | '\n';
-            programMemory[7] = WRCHR;
-            programMemory[8] = HALT;
-            programSize = 8;
-            listInstructions();
-            matchInstruction();
-        } else if (!strcmp(argvector[i], "--3")) {
-            programMemory[0] = RDCHR;
-            programMemory[1] = WRINT;
-            programMemory[2] = PUSHC | '\n';
-            programMemory[3] = WRCHR;
-            programMemory[4] = HALT;
-            programSize = 4;
-            listInstructions();
-            matchInstruction();
+            printf("End of input reached\n");
+            printf("Ninja Virtual Machine stopped\n");
+            return EXIT_SUCCESS;
+        } else {
+            FILE *loadedFile;
+            loadedFile = fopen(argvector, "r");
+            if (!loadedFile) {
+                printf("Error: cannot open code file '%s'\n", argvector[1]);
+                exit(99);
+            }
+            // Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist.
+            int programHeader[100];
+            //if (strncmp(programHeader[0], "NJBF", 4)) {
+            if (fread(&programHeader[0], sizeof(unsigned int), 4, loadedFile) != 4) { // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
+                halt();
+            }
+            if (fread(&programHeader[1], sizeof(int), 4, loadedFile) != 4) {
+                halt();  // Versionsnummer nicht drüber!
+
+            }
+            if (fread(&programHeader[2], sizeof(unsigned int), 4, loadedFile) != 4) {
+                halt();
+            }
+            if (fread(&programHeader[3], sizeof(unsigned int), 4, loadedFile) != 4) {
+                halt();
+            }
+
+            fread(&programMemory[4], sizeof(unsigned int), 1000, loadedFile);
+
+            while (!halt) {
+                matchInstruction();
+            }
+
         }
+
     }
-    printf("End of input reached\n");
-    printf("Ninja Virtual Machine stopped\n");
-    return EXIT_SUCCESS;
 }
+
 
 /**
  * This method contains instructions for calculations
@@ -135,11 +130,10 @@ void data(int opCode) {
     }
 }
 
-// void end(int opCode) {
-//    if (opCode == HALT) {
-//        halt();
-//    }
-//}
+void halt(void) {
+    printf("Programm angehalten");
+    exit(-1);
+}
 
 /**
  *
@@ -148,8 +142,8 @@ void data(int opCode) {
 void matchInstruction(void) {
     for (pc = 0; pc < programSize; pc++) {
         if (programMemory[pc] == PUSHC) {
-            push(programMemory[pc+1]);
-            pc = pc+2;
+            push(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            pc++;
         } else if (programMemory[pc] == HALT) {
             break;
         } else if (programMemory[pc] == ADD) {
@@ -233,7 +227,7 @@ void push(int var) {
         calculationStack[sp] = var;
     } else {
         printf("Kein freier Speicher im Stack vorhanden\n");
-        exit(-1);
+        halt();
     }
 }
 
@@ -245,9 +239,10 @@ void push(int var) {
 int pop() {
     if (sp > 0) {
         sp--;
+        pc += 1;
     } else {
         printf("Keine Elemente im Stack vorhanden\n");
-        exit(-1);
+        halt();
     }
     return calculationStack[sp];
 }
@@ -256,48 +251,57 @@ void add(void) {
     int var1 = pop();
     int var2 = pop();
     push(var1 + var2);
+    pc += 1;
 }
 
 void sub(void) {
     int var1 = pop();
     int var2 = pop();
     push(var2 - var1);
+    pc += 1;
 }
 
 void mul() {
     int var1 = pop();
     int var2 = pop();
     push(var2 * var1);
+    pc += 1;
 }
 
 void divide() {
     int var1 = pop();
     int var2 = pop();
     push(var2 / var1);
+    pc += 1;
 }
 
 void mod() {
     int var1 = pop();
     int var2 = pop();
     push(var2 % var1);
+    pc += 1;
 }
 
 void rdint() {
     int var;
     scanf("%d", &var);
     push(var);
+    pc += 1;
 }
 
 void wrint() {
     printf("%d", pop());
+    pc += 1;
 }
 
 void rdchr() {
     char var;
     scanf("%c", &var);
     push(var);
+    pc += 1;
 }
 
 void wrchr() {
     printf("%c", pop());
+    pc += 1;
 }

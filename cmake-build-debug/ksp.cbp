@@ -2,26 +2,26 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6"/>
 	<Project>
-		<Option title="ksp"/>
+		<Option title="KSP"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/DVE/CLionProjects/ksp/cmake-build-debug"/>
+				<Option working_dir="E:/Studium/KSP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="ksp">
-				<Option output="C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/libksp.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/DVE/CLionProjects/ksp/cmake-build-debug"/>
+			<Target title="KSP">
+				<Option output="E:/Studium/KSP/cmake-build-debug/KSP.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/Studium/KSP/cmake-build-debug"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
@@ -30,17 +30,17 @@
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 ksp"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 KSP"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="ksp/fast">
-				<Option output="C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/libksp.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/DVE/CLionProjects/ksp/cmake-build-debug"/>
+			<Target title="KSP/fast">
+				<Option output="E:/Studium/KSP/cmake-build-debug/KSP.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/Studium/KSP/cmake-build-debug"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
@@ -49,46 +49,40 @@
 					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 ksp/fast"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 KSP/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="C:/Users/DVE/CLionProjects/ksp/cmake-build-debug"/>
+				<Option working_dir="E:/Studium/KSP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/DVE/CLionProjects/ksp/cmake-build-debug"/>
+				<Option working_dir="E:/Studium/KSP/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;E:/Studium/KSP/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/DVE/CLionProjects/ksp/library.c">
-			<Option target="ksp"/>
+		<Unit filename="E:/Studium/KSP/njvm.c">
+			<Option target="KSP"/>
 		</Unit>
-		<Unit filename="C:/Users/DVE/CLionProjects/ksp/library.h">
-			<Option target="ksp"/>
+		<Unit filename="E:/Studium/KSP/protofunctions.h">
+			<Option target="KSP"/>
 		</Unit>
-		<Unit filename="C:/Users/DVE/CLionProjects/ksp/njvm.c">
-			<Option target="ksp"/>
-		</Unit>
-		<Unit filename="C:/Users/DVE/CLionProjects/ksp/protofunctions.h">
-			<Option target="ksp"/>
-		</Unit>
-		<Unit filename="C:/Users/DVE/CLionProjects/ksp/CMakeLists.txt">
+		<Unit filename="E:/Studium/KSP/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

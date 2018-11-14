@@ -42,72 +42,58 @@ RM = "E:\IDE\CLion 2018.2.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\DVE\CLionProjects\ksp
+CMAKE_SOURCE_DIR = E:\Studium\KSP
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\DVE\CLionProjects\ksp\cmake-build-debug
+CMAKE_BINARY_DIR = E:\Studium\KSP\cmake-build-debug
 
 # Include any dependencies generated for this target.
-include CMakeFiles/ksp.dir/depend.make
+include CMakeFiles/KSP.dir/depend.make
 
 # Include the progress variables for this target.
-include CMakeFiles/ksp.dir/progress.make
+include CMakeFiles/KSP.dir/progress.make
 
 # Include the compile flags for this target's objects.
-include CMakeFiles/ksp.dir/flags.make
+include CMakeFiles/KSP.dir/flags.make
 
-CMakeFiles/ksp.dir/library.c.obj: CMakeFiles/ksp.dir/flags.make
-CMakeFiles/ksp.dir/library.c.obj: ../library.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/ksp.dir/library.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\ksp.dir\library.c.obj   -c C:\Users\DVE\CLionProjects\ksp\library.c
+CMakeFiles/KSP.dir/njvm.c.obj: CMakeFiles/KSP.dir/flags.make
+CMakeFiles/KSP.dir/njvm.c.obj: ../njvm.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\Studium\KSP\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/KSP.dir/njvm.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\KSP.dir\njvm.c.obj   -c E:\Studium\KSP\njvm.c
 
-CMakeFiles/ksp.dir/library.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ksp.dir/library.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\DVE\CLionProjects\ksp\library.c > CMakeFiles\ksp.dir\library.c.i
+CMakeFiles/KSP.dir/njvm.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/KSP.dir/njvm.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\Studium\KSP\njvm.c > CMakeFiles\KSP.dir\njvm.c.i
 
-CMakeFiles/ksp.dir/library.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ksp.dir/library.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\DVE\CLionProjects\ksp\library.c -o CMakeFiles\ksp.dir\library.c.s
+CMakeFiles/KSP.dir/njvm.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/KSP.dir/njvm.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S E:\Studium\KSP\njvm.c -o CMakeFiles\KSP.dir\njvm.c.s
 
-CMakeFiles/ksp.dir/njvm.c.obj: CMakeFiles/ksp.dir/flags.make
-CMakeFiles/ksp.dir/njvm.c.obj: ../njvm.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/ksp.dir/njvm.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\ksp.dir\njvm.c.obj   -c C:\Users\DVE\CLionProjects\ksp\njvm.c
+# Object files for target KSP
+KSP_OBJECTS = \
+"CMakeFiles/KSP.dir/njvm.c.obj"
 
-CMakeFiles/ksp.dir/njvm.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/ksp.dir/njvm.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\DVE\CLionProjects\ksp\njvm.c > CMakeFiles\ksp.dir\njvm.c.i
+# External object files for target KSP
+KSP_EXTERNAL_OBJECTS =
 
-CMakeFiles/ksp.dir/njvm.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/ksp.dir/njvm.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\DVE\CLionProjects\ksp\njvm.c -o CMakeFiles\ksp.dir\njvm.c.s
-
-# Object files for target ksp
-ksp_OBJECTS = \
-"CMakeFiles/ksp.dir/library.c.obj" \
-"CMakeFiles/ksp.dir/njvm.c.obj"
-
-# External object files for target ksp
-ksp_EXTERNAL_OBJECTS =
-
-libksp.a: CMakeFiles/ksp.dir/library.c.obj
-libksp.a: CMakeFiles/ksp.dir/njvm.c.obj
-libksp.a: CMakeFiles/ksp.dir/build.make
-libksp.a: CMakeFiles/ksp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C static library libksp.a"
-	$(CMAKE_COMMAND) -P CMakeFiles\ksp.dir\cmake_clean_target.cmake
-	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\ksp.dir\link.txt --verbose=$(VERBOSE)
+KSP.exe: CMakeFiles/KSP.dir/njvm.c.obj
+KSP.exe: CMakeFiles/KSP.dir/build.make
+KSP.exe: CMakeFiles/KSP.dir/linklibs.rsp
+KSP.exe: CMakeFiles/KSP.dir/objects1.rsp
+KSP.exe: CMakeFiles/KSP.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=E:\Studium\KSP\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable KSP.exe"
+	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\KSP.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/ksp.dir/build: libksp.a
+CMakeFiles/KSP.dir/build: KSP.exe
 
-.PHONY : CMakeFiles/ksp.dir/build
+.PHONY : CMakeFiles/KSP.dir/build
 
-CMakeFiles/ksp.dir/clean:
-	$(CMAKE_COMMAND) -P CMakeFiles\ksp.dir\cmake_clean.cmake
-.PHONY : CMakeFiles/ksp.dir/clean
+CMakeFiles/KSP.dir/clean:
+	$(CMAKE_COMMAND) -P CMakeFiles\KSP.dir\cmake_clean.cmake
+.PHONY : CMakeFiles/KSP.dir/clean
 
-CMakeFiles/ksp.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\DVE\CLionProjects\ksp C:\Users\DVE\CLionProjects\ksp C:\Users\DVE\CLionProjects\ksp\cmake-build-debug C:\Users\DVE\CLionProjects\ksp\cmake-build-debug C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles\ksp.dir\DependInfo.cmake --color=$(COLOR)
-.PHONY : CMakeFiles/ksp.dir/depend
+CMakeFiles/KSP.dir/depend:
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" E:\Studium\KSP E:\Studium\KSP E:\Studium\KSP\cmake-build-debug E:\Studium\KSP\cmake-build-debug E:\Studium\KSP\cmake-build-debug\CMakeFiles\KSP.dir\DependInfo.cmake --color=$(COLOR)
+.PHONY : CMakeFiles/KSP.dir/depend
 

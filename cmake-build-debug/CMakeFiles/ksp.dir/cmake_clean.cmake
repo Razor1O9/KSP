@@ -1,11 +1,12 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/ksp.dir/library.c.obj"
-  "CMakeFiles/ksp.dir/njvm.c.obj"
-  "libksp.pdb"
-  "libksp.a"
+  "CMakeFiles/KSP.dir/njvm.c.obj"
+  "KSP.pdb"
+  "KSP.exe"
+  "KSP.exe.manifest"
+  "libKSP.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
 foreach(lang C)
-  include(CMakeFiles/ksp.dir/cmake_clean_${lang}.cmake OPTIONAL)
+  include(CMakeFiles/KSP.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()

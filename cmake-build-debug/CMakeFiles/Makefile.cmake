@@ -7,10 +7,6 @@ set(CMAKE_DEPENDS_GENERATOR "MinGW Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "../CMakeLists.txt"
-  "CMakeFiles/3.12.3/CMakeCCompiler.cmake"
-  "CMakeFiles/3.12.3/CMakeRCCompiler.cmake"
-  "CMakeFiles/3.12.3/CMakeSystem.cmake"
   "E:/IDE/CLion 2018.2.5/bin/cmake/win/share/cmake-3.12/Modules/CMakeCInformation.cmake"
   "E:/IDE/CLion 2018.2.5/bin/cmake/win/share/cmake-3.12/Modules/CMakeCommonLanguageInclude.cmake"
   "E:/IDE/CLion 2018.2.5/bin/cmake/win/share/cmake-3.12/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
@@ -31,6 +27,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "E:/IDE/CLion 2018.2.5/bin/cmake/win/share/cmake-3.12/Modules/Platform/Windows.cmake"
   "E:/IDE/CLion 2018.2.5/bin/cmake/win/share/cmake-3.12/Modules/Platform/WindowsPaths.cmake"
   "E:/IDE/CLion 2018.2.5/bin/cmake/win/share/cmake-3.12/Modules/ProcessorCount.cmake"
+  "../CMakeLists.txt"
+  "CMakeFiles/3.12.3/CMakeCCompiler.cmake"
+  "CMakeFiles/3.12.3/CMakeRCCompiler.cmake"
+  "CMakeFiles/3.12.3/CMakeSystem.cmake"
   )
 
 # The corresponding makefile is:
@@ -46,5 +46,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/ksp.dir/DependInfo.cmake"
+  "CMakeFiles/KSP.dir/DependInfo.cmake"
   )

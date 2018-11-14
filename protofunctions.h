@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// extern
+
 void halt (void);
 void push (int value);
 int pop (void);
@@ -21,3 +23,4 @@ void rdchr (void);
 void wrchr (void);
 void listInstructions(void);
 void matchInstruction(void);
+

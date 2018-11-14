@@ -47,10 +47,10 @@ RM = "E:\IDE\CLion 2018.2.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\DVE\CLionProjects\ksp
+CMAKE_SOURCE_DIR = E:\Studium\KSP
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\DVE\CLionProjects\ksp\cmake-build-debug
+CMAKE_BINARY_DIR = E:\Studium\KSP\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\Studium\KSP\cmake-build-debug\CMakeFiles E:\Studium\KSP\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\Studium\KSP\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -110,44 +110,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ksp
+# Target rules for targets named KSP
 
 # Build rule for target.
-ksp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 ksp
-.PHONY : ksp
+KSP: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 KSP
+.PHONY : KSP
 
 # fast build rule for target.
-ksp/fast:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/build
-.PHONY : ksp/fast
-
-library.obj: library.c.obj
-
-.PHONY : library.obj
-
-# target to build an object file
-library.c.obj:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/library.c.obj
-.PHONY : library.c.obj
-
-library.i: library.c.i
-
-.PHONY : library.i
-
-# target to preprocess a source file
-library.c.i:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/library.c.i
-.PHONY : library.c.i
-
-library.s: library.c.s
-
-.PHONY : library.s
-
-# target to generate assembly for a file
-library.c.s:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/library.c.s
-.PHONY : library.c.s
+KSP/fast:
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/build
+.PHONY : KSP/fast
 
 njvm.obj: njvm.c.obj
 
@@ -155,7 +128,7 @@ njvm.obj: njvm.c.obj
 
 # target to build an object file
 njvm.c.obj:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/njvm.c.obj
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/njvm.c.obj
 .PHONY : njvm.c.obj
 
 njvm.i: njvm.c.i
@@ -164,7 +137,7 @@ njvm.i: njvm.c.i
 
 # target to preprocess a source file
 njvm.c.i:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/njvm.c.i
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/njvm.c.i
 .PHONY : njvm.c.i
 
 njvm.s: njvm.c.s
@@ -173,7 +146,7 @@ njvm.s: njvm.c.s
 
 # target to generate assembly for a file
 njvm.c.s:
-	$(MAKE) -f CMakeFiles\ksp.dir\build.make CMakeFiles/ksp.dir/njvm.c.s
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/njvm.c.s
 .PHONY : njvm.c.s
 
 # Help Target
@@ -182,12 +155,9 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... ksp
+	@echo ... KSP
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... library.obj
-	@echo ... library.i
-	@echo ... library.s
 	@echo ... njvm.obj
 	@echo ... njvm.i
 	@echo ... njvm.s

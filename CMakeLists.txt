@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
-project(ksp C)
+project(KSP C)
 
-set(CMAKE_C_STANDARD 90)
+set(CMAKE_C_STANDARD 99)
 
-add_library(ksp library.c library.h njvm.c protofunctions.h)
+add_executable(KSP njvm.c protofunctions.h)

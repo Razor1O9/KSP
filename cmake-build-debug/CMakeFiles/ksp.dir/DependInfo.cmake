@@ -4,8 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/DVE/CLionProjects/ksp/library.c" "C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/ksp.dir/library.c.obj"
-  "C:/Users/DVE/CLionProjects/ksp/njvm.c" "C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/ksp.dir/njvm.c.obj"
+  "E:/Studium/KSP/njvm.c" "E:/Studium/KSP/cmake-build-debug/CMakeFiles/KSP.dir/njvm.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

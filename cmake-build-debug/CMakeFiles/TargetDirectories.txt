@@ -1,3 +1,0 @@
-E:/Studium/KSP/cmake-build-debug/CMakeFiles/KSP.dir
-E:/Studium/KSP/cmake-build-debug/CMakeFiles/edit_cache.dir
-E:/Studium/KSP/cmake-build-debug/CMakeFiles/rebuild_cache.dir

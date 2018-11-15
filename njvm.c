@@ -26,9 +26,13 @@ int pc; // Program Counter Variable for Instructions
 int calculationStack[9999]; // Stack for Calculation
 int sp; // Stack Pointer Variable for Calculations
 
+int staticAreaSize;
+int instructionCount;
 int programSize;
 int staticVar;
 char letter; // character
+bool haltThis = false;
+bool debugMode = false;
 
 
 /**
@@ -58,7 +62,8 @@ int main(int argcount, char *argvector[]) {
             // Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist.
             int programHeader[100];
             //if (strncmp(programHeader[0], "NJBF", 4)) {
-            if (fread(&programHeader[0], sizeof(unsigned int), 4, loadedFile) != 4) { // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
+            if (fread(&programHeader[0], sizeof(unsigned int), 4, loadedFile) !=
+                4) { // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
                 halt();
             }
             if (fread(&programHeader[1], sizeof(int), 4, loadedFile) != 4) {
@@ -67,72 +72,37 @@ int main(int argcount, char *argvector[]) {
             }
             if (fread(&programHeader[2], sizeof(unsigned int), 4, loadedFile) != 4) {
                 halt();
+            } else {
+                instructionCount = programHeader[2];
             }
+
             if (fread(&programHeader[3], sizeof(unsigned int), 4, loadedFile) != 4) {
                 halt();
+            } else {
+                staticAreaSize = programHeader[3];
             }
-
-            fread(&programMemory[4], sizeof(unsigned int), 1000, loadedFile);
-
-            while (!halt) {
+            int count;
+            for (count = 0; count < instructionCount; count++) {
+                fread(&programMemory[count], sizeof(unsigned int), instructionCount, loadedFile);
+            }
+        }
+        if (debugMode == true) {
+            listInstructions()
+        }
+            while (!haltThis) {
                 matchInstruction();
+
             }
+            exit(-1);
 
         }
 
     }
 }
 
-
-/**
- * This method contains instructions for calculations
- * Instructions are performored if the given opCode matches with an instruction inside the method.
- * @param opCode
- */
-void calculate(int opCode) {
-    if (opCode == ADD) {
-        add();
-    }
-    if (opCode == SUB) {
-        sub();
-    }
-    if (opCode == MUL) {
-        mul();
-    }
-    if (opCode == DIV) {
-        divide();
-    }
-    if (opCode == MOD) {
-        mod();
-    }
-}
-
-/**
- * This method contains instructions for read- and write data manipulation.
- * Instructions are performored if the opCode matches with an instruction inside the method.
- * @param opCode
- */
-void data(int opCode) {
-    if (opCode == PUSHC) {
-        push(SIGN_EXTEND(IMMEDIATE(calculationStack[opCode])));
-    }
-    if (opCode == RDINT) {
-        rdint();
-    }
-    if (opCode == WRINT) {
-        wrint();
-    }
-    if (opCode == RDCHR) {
-        rdchr();
-    }
-    if (opCode == WRCHR) {
-        wrchr();
-    }
-}
-
 void halt(void) {
     printf("Programm angehalten");
-    exit(-1);
+    haltThis = true;
 }
 
 /**
@@ -147,33 +117,34 @@ void matchInstruction(void) {
         } else if (programMemory[pc] == HALT) {
             break;
         } else if (programMemory[pc] == ADD) {
-            calculate(ADD);
+            add();
         } else if (programMemory[pc] == SUB) {
-            calculate(SUB);
+            sub();
         } else if (programMemory[pc] == MUL) {
-            calculate(MUL);
+            mul();
         } else if (programMemory[pc] == DIV) {
-            calculate(DIV);
+            div();
         } else if (programMemory[pc] == MOD) {
-            calculate(MOD);
+            mod();
         } else if (programMemory[pc] == RDINT) {
-            data(RDINT);
+            rdint();
         } else if (programMemory[pc] == WRINT) {
-            data(WRINT);
+            wrint();
         } else if (programMemory[pc] == RDCHR) {
-            data(RDCHR);
+            rdchr;
         } else if (programMemory[pc] == WRCHR) {
-            data(WRCHR);
+            wrchr;
         }
     }
 
 }
 
 /**
+ * ONLY DEBUG
  * This method outputs all instructions inside a given program.
  * The listing order is from top to bottom.
  */
-void listInstructions(void) {
+void debugInstructions(void) {
     int i;
     for (i = 0;; i++) {
         switch (programMemory[i] & 0xFF000000) {
@@ -248,10 +219,7 @@ int pop() {
 }
 
 void add(void) {
-    int var1 = pop();
-    int var2 = pop();
-    push(var1 + var2);
-    pc += 1;
+
 }
 
 void sub(void) {

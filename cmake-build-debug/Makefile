@@ -47,10 +47,10 @@ RM = "E:\IDE\CLion 2018.2.5\bin\cmake\win\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = E:\Studium\KSP
+CMAKE_SOURCE_DIR = C:\Users\DVE\CLionProjects\ksp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = E:\Studium\KSP\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\DVE\CLionProjects\ksp\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\Studium\KSP\cmake-build-debug\CMakeFiles E:\Studium\KSP\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\Studium\KSP\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DVE\CLionProjects\ksp\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -149,6 +149,33 @@ njvm.c.s:
 	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/njvm.c.s
 .PHONY : njvm.c.s
 
+protofunctions.obj: protofunctions.c.obj
+
+.PHONY : protofunctions.obj
+
+# target to build an object file
+protofunctions.c.obj:
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/protofunctions.c.obj
+.PHONY : protofunctions.c.obj
+
+protofunctions.i: protofunctions.c.i
+
+.PHONY : protofunctions.i
+
+# target to preprocess a source file
+protofunctions.c.i:
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/protofunctions.c.i
+.PHONY : protofunctions.c.i
+
+protofunctions.s: protofunctions.c.s
+
+.PHONY : protofunctions.s
+
+# target to generate assembly for a file
+protofunctions.c.s:
+	$(MAKE) -f CMakeFiles\KSP.dir\build.make CMakeFiles/KSP.dir/protofunctions.c.s
+.PHONY : protofunctions.c.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -161,6 +188,9 @@ help:
 	@echo ... njvm.obj
 	@echo ... njvm.i
 	@echo ... njvm.s
+	@echo ... protofunctions.obj
+	@echo ... protofunctions.i
+	@echo ... protofunctions.s
 .PHONY : help
 
 

@@ -1,0 +1,96 @@
+//
+// Created by DAVE on 16.11.2018.
+//
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "protofunctions.h"
+
+/**
+ * This methods pushes a given variable on top of the stack.
+ * @param var
+ */
+void push(int var) {
+    if (sp < 9999) {
+        calculationStack[sp] = var;
+    } else {
+        printf("Kein freier Speicher im Stack vorhanden\n");
+        haltProgram();
+    }
+}
+
+/**
+ * This method removes the top variable from the stack.
+ * It returns the new stack, without the removed variable.
+ * @return
+ */
+int pop() {
+    if (sp > 0) {
+        sp--;
+        pc += 1;
+    } else {
+        printf("Keine Elemente im Stack vorhanden\n");
+        haltProgram();
+    }
+    return calculationStack[sp];
+}
+
+void add(void) {
+
+}
+
+void sub(void) {
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 - var1);
+    pc += 1;
+}
+
+void mul() {
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 * var1);
+    pc += 1;
+}
+
+void divide() {
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 / var1);
+    pc += 1;
+}
+
+void mod() {
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 % var1);
+    pc += 1;
+}
+
+void rdint() {
+    int var;
+    scanf("%d", &var);
+    push(var);
+    pc += 1;
+}
+
+void wrint() {
+    printf("%d", pop());
+    pc += 1;
+}
+
+void rdchr() {
+    char var;
+    scanf("%c", &var);
+    push(var);
+    pc += 1;
+}
+
+void wrchr() {
+    printf("%c", pop());
+    pc += 1;
+}
+void haltProgram(void) {
+    printf("Programm angehalten");
+    haltThis == true;
+}

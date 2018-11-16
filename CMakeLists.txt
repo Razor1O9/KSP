@@ -3,4 +3,4 @@ project(KSP C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(KSP njvm.c protofunctions.h)
+add_executable(KSP njvm.c protofunctions.h protofunctions.c)

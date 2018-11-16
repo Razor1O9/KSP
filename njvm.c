@@ -19,21 +19,6 @@
 #define IMMEDIATE(x) ((x) & 0x00FFFFFF)
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
-int version = 1; // The current version
-int programMemory[9999]; // List of all Program Instructions
-int pc; // Program Counter Variable for Instructions
-
-int calculationStack[9999]; // Stack for Calculation
-int sp; // Stack Pointer Variable for Calculations
-
-int staticAreaSize;
-int instructionCount;
-int programSize;
-int staticVar;
-char letter; // character
-bool haltThis = false;
-bool debugMode = false;
-
 
 /**
  * Main Function, which reads all Terminal Arguments
@@ -64,20 +49,20 @@ int main(int argcount, char *argvector[]) {
             //if (strncmp(programHeader[0], "NJBF", 4)) {
             if (fread(&programHeader[0], sizeof(unsigned int), 4, loadedFile) !=
                 4) { // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
-                halt();
+                haltProgram();
             }
             if (fread(&programHeader[1], sizeof(int), 4, loadedFile) != 4) {
-                halt();  // Versionsnummer nicht drüber!
+                haltProgram();  // Versionsnummer nicht drüber!
 
             }
             if (fread(&programHeader[2], sizeof(unsigned int), 4, loadedFile) != 4) {
-                halt();
+                haltProgram();
             } else {
                 instructionCount = programHeader[2];
             }
 
             if (fread(&programHeader[3], sizeof(unsigned int), 4, loadedFile) != 4) {
-                halt();
+                haltProgram();
             } else {
                 staticAreaSize = programHeader[3];
             }
@@ -87,23 +72,18 @@ int main(int argcount, char *argvector[]) {
             }
         }
         if (debugMode == true) {
-            listInstructions()
+            debugInstructions();
         }
-            while (!haltThis) {
-                matchInstruction();
-
-            }
-            exit(-1);
+        while (!haltThis) {
+            matchInstruction();
 
         }
+        exit(-1);
 
     }
+
 }
 
-void halt(void) {
-    printf("Programm angehalten");
-    haltThis = true;
-}
 
 /**
  *
@@ -188,88 +168,3 @@ void debugInstructions(void) {
     }
 }
 
-
-/**
- * This methods pushes a given variable on top of the stack.
- * @param var
- */
-void push(int var) {
-    if (sp < 9999) {
-        calculationStack[sp] = var;
-    } else {
-        printf("Kein freier Speicher im Stack vorhanden\n");
-        halt();
-    }
-}
-
-/**
- * This method removes the top variable from the stack.
- * It returns the new stack, without the removed variable.
- * @return
- */
-int pop() {
-    if (sp > 0) {
-        sp--;
-        pc += 1;
-    } else {
-        printf("Keine Elemente im Stack vorhanden\n");
-        halt();
-    }
-    return calculationStack[sp];
-}
-
-void add(void) {
-
-}
-
-void sub(void) {
-    int var1 = pop();
-    int var2 = pop();
-    push(var2 - var1);
-    pc += 1;
-}
-
-void mul() {
-    int var1 = pop();
-    int var2 = pop();
-    push(var2 * var1);
-    pc += 1;
-}
-
-void divide() {
-    int var1 = pop();
-    int var2 = pop();
-    push(var2 / var1);
-    pc += 1;
-}
-
-void mod() {
-    int var1 = pop();
-    int var2 = pop();
-    push(var2 % var1);
-    pc += 1;
-}
-
-void rdint() {
-    int var;
-    scanf("%d", &var);
-    push(var);
-    pc += 1;
-}
-
-void wrint() {
-    printf("%d", pop());
-    pc += 1;
-}
-
-void rdchr() {
-    char var;
-    scanf("%c", &var);
-    push(var);
-    pc += 1;
-}
-
-void wrchr() {
-    printf("%c", pop());
-    pc += 1;
-}

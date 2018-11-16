@@ -103,7 +103,7 @@ void matchInstruction(void) {
         } else if (programMemory[pc] == MUL) {
             mul();
         } else if (programMemory[pc] == DIV) {
-            div();
+            divide();
         } else if (programMemory[pc] == MOD) {
             mod();
         } else if (programMemory[pc] == RDINT) {

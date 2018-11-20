@@ -6,6 +6,11 @@
 #include <string.h>
 #include "protofunctions.h"
 
+
+version = 1;
+int calculationStack[9999];
+sp = 0;
+
 /**
  * This methods pushes a given variable on top of the stack.
  * @param var

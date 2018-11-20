@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/DVE/CLionProjects/ksp/njvm.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+protofunctions.h
+C:/Users/DVE/CLionProjects/ksp/protofunctions.h
+
+C:/Users/DVE/CLionProjects/ksp/protofunctions.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+protofunctions.h
+C:/Users/DVE/CLionProjects/ksp/protofunctions.h
+
+C:/Users/DVE/CLionProjects/ksp/protofunctions.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+

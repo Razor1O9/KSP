@@ -8,8 +8,7 @@
 #include <string.h>
 typedef enum { false, true } bool;
 
-extern
-int version = 1; // The current version
+extern int version; // The current version
 
 
 extern int calculationStack[9999]; // Stack for Calculation
@@ -20,8 +19,8 @@ extern int instructionCount;
 extern int programSize;
 extern int staticVar;
 extern char letter; // character
-extern bool haltThis = false;
-extern bool debugMode = false;
+extern bool haltThis;
+extern bool debugMode;
 extern int programMemory[9999]; // List of all Program Instructions
 extern int pc; // Program Counter Variable for Instructions
 

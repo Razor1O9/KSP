@@ -20,6 +20,13 @@
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
 
+bool haltThis = false;
+bool debugMode = false;
+int programMemory[9999];
+programSize = 0;
+instructionCount = 0;
+pc = 0;
+
 /**
  * Main Function, which reads all Terminal Arguments
  * Valid Arguments start more specific VM functions

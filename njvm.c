@@ -23,9 +23,10 @@
 bool haltThis = false;
 bool debugMode = false;
 int programMemory[9999];
-programSize = 0;
-instructionCount = 0;
-pc = 0;
+int programSize = 0;
+int instructionCount = 0;
+int pc = 0;
+int staticAreaSize = 0;
 
 /**
  * Main Function, which reads all Terminal Arguments
@@ -46,37 +47,31 @@ int main(int argcount, char *argvector[]) {
             return EXIT_SUCCESS;
         } else {
             FILE *loadedFile;
-            loadedFile = fopen(argvector, "r");
+            loadedFile = fopen((const char *) argvector, "r");
             if (!loadedFile) {
                 printf("Error: cannot open code file '%s'\n", argvector[1]);
-                exit(99);
+                exit(1);
             }
             // Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist.
-            int programHeader[100];
-            //if (strncmp(programHeader[0], "NJBF", 4)) {
-            if (fread(&programHeader[0], sizeof(unsigned int), 4, loadedFile) !=
-                4) { // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
+            char validBinFile[5];
+            int programHeader[2];
+            int programSourceCode[instructionCount];
+            fread(&validBinFile[0], sizeof(char), 4,
+                  loadedFile); // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
+            if (strncmp(&validBinFile[0], "NJBF", 4) != 0){
                 haltProgram();
             }
-            if (fread(&programHeader[1], sizeof(int), 4, loadedFile) != 4) {
-                haltProgram();  // Versionsnummer nicht drüber!
+            fread(&programHeader[0], sizeof(unsigned int), 3,
+                  loadedFile); // läuft von Stelle 0 bis Stelle 2 von ProgramHeader
+            if (version < programHeader[0]) {
+                printf("Version: %d is not supported!", programHeader[0]);
+                exit(1);
+            }
+            instructionCount = programHeader[1];
+            staticAreaSize = programHeader[2];
 
-            }
-            if (fread(&programHeader[2], sizeof(unsigned int), 4, loadedFile) != 4) {
-                haltProgram();
-            } else {
-                instructionCount = programHeader[2];
-            }
+            fread(&programMemory, sizeof(unsigned int), instructionCount, loadedFile);
 
-            if (fread(&programHeader[3], sizeof(unsigned int), 4, loadedFile) != 4) {
-                haltProgram();
-            } else {
-                staticAreaSize = programHeader[3];
-            }
-            int count;
-            for (count = 0; count < instructionCount; count++) {
-                fread(&programMemory[count], sizeof(unsigned int), instructionCount, loadedFile);
-            }
         }
         if (debugMode == true) {
             debugInstructions();
@@ -85,7 +80,7 @@ int main(int argcount, char *argvector[]) {
             matchInstruction();
 
         }
-        exit(-1);
+        exit(1);
 
     }
 

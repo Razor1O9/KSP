@@ -7,9 +7,9 @@
 #include "protofunctions.h"
 
 
-version = 1;
+int version = 1;
 int calculationStack[9999];
-sp = 0;
+int sp = 0;
 
 /**
  * This methods pushes a given variable on top of the stack.
@@ -41,7 +41,10 @@ int pop() {
 }
 
 void add(void) {
-
+    int var1 = pop();
+    int var2 = pop();
+    push(var2 + var1);
+    pc += 1;
 }
 
 void sub(void) {

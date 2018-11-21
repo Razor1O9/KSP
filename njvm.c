@@ -37,11 +37,12 @@ int staticAreaSize = 0;
  */
 int main(int argcount, char *argvector[]) {
     printf("Ninja Virtual Machine started\n");
-    for (int i = 0; i < argcount; i++) {
+    int i = 0;
+    for (i; i < argcount; i++) {
         if (!strcmp(argvector[i], "--version")) {
             printf("Version = %d \n", version);
         } else if (!strcmp(argvector[i], "--help")) {
-            printf("Valid inputs: \n --version \n --help\n --program1 \n --program2 \n --program3 \n");
+            printf("Valid inputs: \n --version");
             printf("End of input reached\n");
             printf("Ninja Virtual Machine stopped\n");
             return EXIT_SUCCESS;
@@ -49,7 +50,7 @@ int main(int argcount, char *argvector[]) {
             FILE *loadedFile;
             loadedFile = fopen((const char *) argvector, "r");
             if (!loadedFile) {
-                printf("Error: cannot open code file '%s'\n", argvector[1]);
+                printf("Error: Code file '%s' cannot be opened \n", argvector[1]);
                 exit(1);
             }
             // Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist.
@@ -80,10 +81,10 @@ int main(int argcount, char *argvector[]) {
             matchInstruction();
 
         }
-        exit(1);
+
 
     }
-
+    exit(1);
 }
 
 

@@ -37,16 +37,22 @@ int staticAreaSize = 0;
  */
 int main(int argcount, char *argvector[]) {
     printf("Ninja Virtual Machine started\n");
-    int i = 0;
-    for (i; i < argcount; i++) {
+    int i;
+    for (i = 0; i < argcount; i++) {
         if (!strcmp(argvector[i], "--version")) {
             printf("Version = %d \n", version);
-        } else if (!strcmp(argvector[i], "--help")) {
+        }
+        if (!strcmp(argvector[i], "--help")) {
             printf("Valid inputs: \n --version");
             printf("End of input reached\n");
             printf("Ninja Virtual Machine stopped\n");
             return EXIT_SUCCESS;
-        } else {
+        }
+        if (strstr(argvector[i], (const char *) (".bin" != NULL))) {
+            if (strstr((const char *) argvector, (const char *) ("--debug" != NULL))) {
+                debugMode = true;
+                debugInstructions();
+            }
             FILE *loadedFile;
             loadedFile = fopen((const char *) argvector, "r");
             if (!loadedFile) {
@@ -55,31 +61,33 @@ int main(int argcount, char *argvector[]) {
             }
             // Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist.
             char validBinFile[5];
-            int programHeader[2];
+            int programHeader[3];
             int programSourceCode[instructionCount];
-            fread(&validBinFile[0], sizeof(char), 4,
-                  loadedFile); // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
-            if (strncmp(&validBinFile[0], "NJBF", 4) != 0){
-                haltProgram();
+            int a;
+            for (a = 0; a < argcount; a++) {
+                fread(&validBinFile[a], sizeof(char), 4,
+                      loadedFile); // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
+                if (strncmp(&validBinFile[0], "NJBF", 4) != 0) {
+                    haltProgram();
+                }
             }
-            fread(&programHeader[0], sizeof(unsigned int), 3,
-                  loadedFile); // läuft von Stelle 0 bis Stelle 2 von ProgramHeader
-            if (version < programHeader[0]) {
-                printf("Version: %d is not supported!", programHeader[0]);
-                exit(1);
+            int b;
+            for (b = 0; b < argcount; b++) {
+                fread(&programHeader[i], sizeof(unsigned int), 3,
+                      loadedFile); // läuft von Stelle 0 bis Stelle 2 von ProgramHeader
+                if (version < programHeader[b]) {
+                    printf("Version: %d is not supported!", programHeader[0]);
+                    exit(1);
+                }
+                instructionCount = programHeader[1];
+                staticAreaSize = programHeader[2];
+
+                fread(&programSourceCode, sizeof(unsigned int), instructionCount, loadedFile);
+                while (!haltThis) {
+                    matchInstruction();
+                }
+
             }
-            instructionCount = programHeader[1];
-            staticAreaSize = programHeader[2];
-
-            fread(&programMemory, sizeof(unsigned int), instructionCount, loadedFile);
-
-        }
-        if (debugMode == true) {
-            debugInstructions();
-        }
-        while (!haltThis) {
-            matchInstruction();
-
         }
 
 

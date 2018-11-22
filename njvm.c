@@ -4,7 +4,7 @@
 #include <string.h>
 #include "protofunctions.h"
 
-// Makro-Deklarationen
+/* Makro-Deklarationen */
 #define HALT 0
 #define PUSHC (1<<24)
 #define ADD (2<<24)
@@ -36,8 +36,13 @@ int staticAreaSize = 0;
  * @return
  */
 int main(int argcount, char *argvector[]) {
-    printf("Ninja Virtual Machine started\n");
+	int a;
+	int b;
     int i;
+    FILE *loadedFile;
+    char validBinFile[5];
+    int programHeader[3];
+    printf("Ninja Virtual Machine started\n");
     for (i = 0; i < argcount; i++) {
         if (!strcmp(argvector[i], "--version")) {
             printf("Version = %d \n", version);
@@ -53,35 +58,29 @@ int main(int argcount, char *argvector[]) {
                 debugMode = true;
                 debugInstructions();
             }
-            FILE *loadedFile;
             loadedFile = fopen((const char *) argvector, "r");
             if (!loadedFile) {
                 printf("Error: Code file '%s' cannot be opened \n", argvector[1]);
                 exit(1);
             }
-            // Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist.
-            char validBinFile[5];
-            int programHeader[3];
-            int programSourceCode[instructionCount];
-            int a;
+            /* Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist. */
             for (a = 0; a < argcount; a++) {
                 fread(&validBinFile[a], sizeof(char), 4,
-                      loadedFile); // &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read
+                      loadedFile); /* &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read */
                 if (strncmp(&validBinFile[0], "NJBF", 4) != 0) {
                     haltProgram();
                 }
             }
-            int b;
+            
             for (b = 0; b < argcount; b++) {
                 fread(&programHeader[i], sizeof(unsigned int), 3,
-                      loadedFile); // läuft von Stelle 0 bis Stelle 2 von ProgramHeader
+                      loadedFile); /* läuft von Stelle 0 bis Stelle 2 von ProgramHeader */
                 if (version < programHeader[b]) {
                     printf("Version: %d is not supported!", programHeader[0]);
                     exit(1);
                 }
                 instructionCount = programHeader[1];
                 staticAreaSize = programHeader[2];
-
                 fread(&programSourceCode, sizeof(unsigned int), instructionCount, loadedFile);
                 while (!haltThis) {
                     matchInstruction();

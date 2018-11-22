@@ -1,28 +1,24 @@
-//
-// Created by DAVE on 19.10.2018.
-//
-
 /* Prototyp Funktionen */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 typedef enum { false, true } bool;
 
-extern int version; // The current version
+extern int version; /* The current version */
 
 
-extern int calculationStack[9999]; // Stack for Calculation
-extern int sp; // Stack Pointer Variable for Calculations
+extern int calculationStack[9999]; /* Stack for Calculation */
+extern int sp; /* Stack Pointer Variable for Calculations */
 
 extern int staticAreaSize;
 extern int instructionCount;
 extern int programSize;
 extern int staticVar;
-extern char letter; // character
+extern char letter; /* character */
 extern bool haltThis;
 extern bool debugMode;
-extern int programMemory[9999]; // List of all Program Instructions
-extern int pc; // Program Counter Variable for Instructions
+extern int programMemory[9999]; /* List of all Program Instructions */
+extern int pc; /* Program Counter Variable for Instructions */
 
 void haltProgram (void);
 void push (int value);

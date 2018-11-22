@@ -36,8 +36,10 @@ int staticAreaSize = 0;
  * @return
  */
 int main(int argcount, char *argvector[]) {
-	int a;
-	int b;
+    int a;
+    int b;
+    unsigned int *ptr;
+    unsigned int *staticPtr;
     int i;
     FILE *loadedFile;
     char validBinFile[5];
@@ -71,7 +73,7 @@ int main(int argcount, char *argvector[]) {
                     haltProgram();
                 }
             }
-            
+
             for (b = 0; b < argcount; b++) {
                 fread(&programHeader[i], sizeof(unsigned int), 3,
                       loadedFile); /* läuft von Stelle 0 bis Stelle 2 von ProgramHeader */
@@ -81,7 +83,10 @@ int main(int argcount, char *argvector[]) {
                 }
                 instructionCount = programHeader[1];
                 staticAreaSize = programHeader[2];
-                fread(&programSourceCode, sizeof(unsigned int), instructionCount, loadedFile);
+                staticPtr = (unsigned int *) malloc(staticAreaSize * sizeof(unsigned int));
+                ptr = (unsigned int *) malloc(instructionCount * sizeof(unsigned int));
+                fread(ptr, sizeof(unsigned int), (size_t) instructionCount, loadedFile);
+                fread(staticPtr, sizeof(unsigned int), (size_t) staticAreaSize, loadedFile);
                 while (!haltThis) {
                     matchInstruction();
                 }

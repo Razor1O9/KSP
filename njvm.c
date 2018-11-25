@@ -16,6 +16,21 @@
 #define WRINT (8<<24)
 #define RDCHR (9<<24)
 #define WRCHR (10<<24)
+#define TEST2 (11<<24
+#define TEST3 (12<<24)
+#define TEST4 (13<<24)
+#define TEST5 (14<<24)
+#define TEST6 (15<<24)
+#define TEST7 (16<<24)
+#define TEST8 (17<<24)
+#define TEST9 (18<<24)
+#define TEST10 (19<<24)
+#define TEST11 (20<<24)
+#define TEST12 (21<<24)
+#define TEST13 (22<<24)
+#define TEST14 (23<<24)
+#define TEST15 (24<<24)
+
 #define IMMEDIATE(x) ((x) & 0x00FFFFFF)
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
@@ -51,14 +66,17 @@ int main(int argcount, char *argvector[]) {
         }
         if (!strcmp(argvector[i], "--help")) {
             printf("Valid inputs: \n --version");
+        }
+        if (!strcmp(argvector[i], NULL)) {
             printf("End of input reached\n");
             printf("Ninja Virtual Machine stopped\n");
-            return EXIT_SUCCESS;
         }
         if (strstr(argvector[i], (const char *) (".bin" != NULL))) {
             if (strstr((const char *) argvector, (const char *) ("--debug" != NULL))) {
                 debugMode = true;
-                debugInstructions();
+                if (debugMode == true) {
+                    debugInstructions();
+                }
             }
             loadedFile = fopen((const char *) argvector, "r");
             if (!loadedFile) {
@@ -90,8 +108,11 @@ int main(int argcount, char *argvector[]) {
                 while (!haltThis) {
                     matchInstruction();
                 }
+                printf("Ninja Virtual Machine stopped\n");
+                return EXIT_SUCCESS;
 
             }
+
         }
 
 
@@ -129,10 +150,34 @@ void matchInstruction(void) {
             rdchr;
         } else if (programMemory[pc] == WRCHR) {
             wrchr;
+        } else if (programMemory[pc] == TEST3) {
+            wrchr;
+        } else if (programMemory[pc] == TEST4) {
+            wrchr;
+        } else if (programMemory[pc] == TEST5) {
+            wrchr;
+        } else if (programMemory[pc] == TEST6) {
+            wrchr;
+        } else if (programMemory[pc] == TEST7) {
+            wrchr;
+        } else if (programMemory[pc] == TEST8) {
+            wrchr;
+        } else if (programMemory[pc] == TEST9) {
+            wrchr;
+        } else if (programMemory[pc] == TEST11) {
+            wrchr;
+        } else if (programMemory[pc] == TEST12) {
+            wrchr;
+        } else if (programMemory[pc] == TEST13) {
+            wrchr;
+        } else if (programMemory[pc] == TEST14) {
+            wrchr;
+        } else if (programMemory[pc] == TEST15) {
+            wrchr;
         }
     }
-
 }
+
 
 /**
  * ONLY DEBUG

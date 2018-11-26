@@ -61,15 +61,20 @@ int main(int argcount, char *argvector[]) {
     int programHeader[3];
     printf("Ninja Virtual Machine started\n");
     for (i = 0; i < argcount; i++) {
-        if (!strcmp(argvector[i], "--version")) {
-            printf("Version = %d \n", version);
-        }
-        if (!strcmp(argvector[i], "--help")) {
-            printf("Valid inputs: \n --version");
-        }
-        if (!strcmp(argvector[i], NULL)) {
-            printf("End of input reached\n");
+        if (!strcmp(argvector[1], NULL)) {
+            printf("No Input \n");
             printf("Ninja Virtual Machine stopped\n");
+            EXIT_FAILURE;
+        }
+        if (!strcmp(argvector[1], "--version")) {
+            printf("Version = %d \n", version);
+            printf("Ninja Virtual Machine stopped\n");
+            EXIT_SUCCESS;
+        }
+        if (!strcmp(argvector[1], "--help")) {
+            printf("Valid inputs: \n --version");
+            printf("Ninja Virtual Machine stopped\n");
+            EXIT_SUCCESS;
         }
         if (strstr(argvector[i], (const char *) (".bin" != NULL))) {
             if (strstr((const char *) argvector, (const char *) ("--debug" != NULL))) {
@@ -108,16 +113,13 @@ int main(int argcount, char *argvector[]) {
                 while (!haltThis) {
                     matchInstruction();
                 }
-                printf("Ninja Virtual Machine stopped\n");
-                return EXIT_SUCCESS;
-
             }
 
+
         }
-
-
     }
-    exit(1);
+    printf("Ninja Virtual Machine stopped\n");
+    return EXIT_SUCCESS;
 }
 
 

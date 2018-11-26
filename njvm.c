@@ -54,13 +54,14 @@ int staticAreaSize = 0;
  */
 int main(int argc, char *argv[]) {
     int reader;
+    int count;
     unsigned int *ptr;
     unsigned int *staticPtr;
     char bin[] = ".bin";
     char debug[] = "--debug";
     FILE *loadedFile;
     char validBinFile[5];
-    int programHeader[3];
+    unsigned int programHeader[3];
     printf("Ninja Virtual Machine started\n");
         if (!strcmp(argv[1], "--version")) {
             printf("Version = %d \n", version);
@@ -107,8 +108,13 @@ int main(int argc, char *argv[]) {
             staticAreaSize = programHeader[2];
             staticPtr = (unsigned int *) malloc(staticAreaSize * sizeof(unsigned int));
             ptr = (unsigned int *) malloc(instructionCount * sizeof(unsigned int));
-            fread(ptr, sizeof(unsigned int), (size_t) instructionCount, loadedFile);
-            fread(staticPtr, sizeof(unsigned int), (size_t) staticAreaSize, loadedFile);
+            count = 0;
+            do {
+                fread(&programHeader, sizeof(unsigned int), 1, loadedFile);
+                ptr[count] = programHeader[count];
+                count++;
+            } while (count < instructionCount);
+
             while (!haltThis) {
                 matchInstruction();
             }

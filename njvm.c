@@ -53,69 +53,64 @@ int staticAreaSize = 0;
  * @return
  */
 int main(int argc, char *argv[]) {
-    int a;
-    int b;
+    int reader;
     unsigned int *ptr;
     unsigned int *staticPtr;
-    int i;
     char bin[] = ".bin";
     char debug[] = "--debug";
     FILE *loadedFile;
     char validBinFile[5];
     int programHeader[3];
     printf("Ninja Virtual Machine started\n");
-    for (i = 1; i < argc; i++) {
-        if (!strcmp(argv[i], "--version")) {
+        if (!strcmp(argv[1], "--version")) {
             printf("Version = %d \n", version);
             printf("Ninja Virtual Machine stopped\n");
             EXIT_SUCCESS;
         }
-        if (!strcmp(argv[i], "--help")) {
+        if (!strcmp(argv[1], "--help")) {
             printf("Valid inputs: \n --version");
             printf("Ninja Virtual Machine stopped\n");
             EXIT_SUCCESS;
         }
-        char *input = argv[1];
-        char *input2 = argv[2];
-        if (strstr(input, bin) != NULL || strstr(input2, bin) != NULL) {
-            if (strstr(input, debug) != NULL) {
+        if (strstr(argv[1], bin) != NULL || strstr(argv[2], bin) != NULL) {
+            if (strstr(argv[1], debug) != NULL || (strstr(argv[2], debug) != NULL )) {
                 debugMode = true;
                 if (debugMode == true) {
                     debugInstructions();
                 }
             }
-            if (input == bin) {
-                loadedFile = fopen(input, "r");
+            if (argv[1] == bin) {
+                loadedFile = fopen(argv[1], "r");
             } else {
-                loadedFile = fopen(input2,"r");
+                loadedFile = fopen(argv[2], "r");
             }
             if (!loadedFile) {
                 printf("Error: Code file '%s' cannot be opened \n", argv[1]);
             }
-            /* Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist. */
-            for (a = 0; a < argc; a++) {
-                fread(&validBinFile[a], sizeof(char), 4,
-                      loadedFile); /* &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read */
+            /* Überprüft ob es sich um eine NJBF handelt */
+            for (reader = 0; reader < argc; reader++) {
+                fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
                 if (strncmp(&validBinFile[0], "NJBF", 4) != 0) {
                     haltProgram();
                 }
             }
 
-            for (b = 0; b < argc; b++) {
-                fread(&programHeader[b], sizeof(unsigned int), 3,
-                      loadedFile); /* läuft von Stelle 0 bis Stelle 2 von ProgramHeader */
-                if (version < programHeader[b]) {
-                    printf("Version: %d is not supported!", programHeader[0]);
-                }
-                instructionCount = programHeader[1];
-                staticAreaSize = programHeader[2];
-                staticPtr = (unsigned int *) malloc(staticAreaSize * sizeof(unsigned int));
-                ptr = (unsigned int *) malloc(instructionCount * sizeof(unsigned int));
-                fread(ptr, sizeof(unsigned int), (size_t) instructionCount, loadedFile);
-                fread(staticPtr, sizeof(unsigned int), (size_t) staticAreaSize, loadedFile);
-                while (!haltThis) {
-                    matchInstruction();
-                }
+
+            fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
+            if (version < programHeader[0]) {
+                printf("Version: %d is not supported!", programHeader[0]);
+                EXIT_FAILURE;
+            }
+            fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
+            instructionCount = programHeader[1];
+            fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
+            staticAreaSize = programHeader[2];
+            staticPtr = (unsigned int *) malloc(staticAreaSize * sizeof(unsigned int));
+            ptr = (unsigned int *) malloc(instructionCount * sizeof(unsigned int));
+            fread(ptr, sizeof(unsigned int), (size_t) instructionCount, loadedFile);
+            fread(staticPtr, sizeof(unsigned int), (size_t) staticAreaSize, loadedFile);
+            while (!haltThis) {
+                matchInstruction();
             }
 
 
@@ -125,7 +120,7 @@ int main(int argc, char *argv[]) {
             EXIT_FAILURE;
         }
 
-    }
+
     printf("Ninja Virtual Machine stopped\n");
     return EXIT_SUCCESS;
 }

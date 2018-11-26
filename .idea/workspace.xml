@@ -12,9 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b05b124a-0c0e-4e00-ac81-0d0c77fa54a5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Aufgabe4_njvm.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/njvm" beforeDir="false" afterPath="$PROJECT_DIR$/njvm" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/njvm.c" beforeDir="false" afterPath="$PROJECT_DIR$/njvm.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/protofunctions.c" beforeDir="false" afterPath="$PROJECT_DIR$/protofunctions.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/protofunctions.h" beforeDir="false" afterPath="$PROJECT_DIR$/protofunctions.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -108,12 +108,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="656" />
+          <entry key="c" value="1025" />
+          <entry key="h" value="303" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="656" />
+          <entry key="ObjectiveC" value="1328" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -138,8 +139,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/njvm.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2700">
-              <caret line="183" column="49" lean-forward="true" selection-start-line="183" selection-start-column="49" selection-end-line="183" selection-end-column="49" />
+            <state relative-caret-position="376">
+              <caret line="272" column="26" selection-start-line="272" selection-start-column="26" selection-end-line="272" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -147,8 +148,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protofunctions.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="151">
+              <caret line="35" selection-start-line="35" selection-end-line="55" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -156,8 +157,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protofunctions.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-760">
-              <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
+            <state relative-caret-position="436">
+              <caret line="114" column="24" selection-start-line="114" selection-start-column="24" selection-end-line="114" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -176,8 +177,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/main.c" />
-        <option value="$PROJECT_DIR$/protofunctions.h" />
         <option value="$PROJECT_DIR$/protofunctions.c" />
+        <option value="$PROJECT_DIR$/protofunctions.h" />
         <option value="$PROJECT_DIR$/njvm.c" />
       </list>
     </option>
@@ -274,15 +275,15 @@
       <workItem from="1542882704599" duration="2104000" />
       <workItem from="1543159084927" duration="6023000" />
       <workItem from="1543242971501" duration="79000" />
-      <workItem from="1543243119265" duration="12857000" />
+      <workItem from="1543243119265" duration="16409000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51601000" />
+    <option name="totallyTimeSpent" value="55153000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="68" y="28" width="1390" height="1051" extended-state="1" />
+    <frame x="68" y="28" width="1390" height="1051" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21279761" />
@@ -322,22 +323,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protofunctions.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-760">
-          <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
+        <state relative-caret-position="436">
+          <caret line="114" column="24" selection-start-line="114" selection-start-column="24" selection-end-line="114" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protofunctions.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        <state relative-caret-position="151">
+          <caret line="35" selection-start-line="35" selection-end-line="55" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/njvm.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2700">
-          <caret line="183" column="49" lean-forward="true" selection-start-line="183" selection-start-column="49" selection-end-line="183" selection-end-column="49" />
+        <state relative-caret-position="376">
+          <caret line="272" column="26" selection-start-line="272" selection-start-column="26" selection-end-line="272" selection-end-column="26" />
         </state>
       </provider>
     </entry>

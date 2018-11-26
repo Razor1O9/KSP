@@ -18,6 +18,7 @@ extern char letter; /* character */
 extern bool haltThis;
 extern bool debugMode;
 extern int programMemory[9999]; /* List of all Program Instructions */
+extern int globalVars[9999]; /* Lists all global Variables */
 extern int pc; /* Program Counter Variable for Instructions */
 
 void haltProgram (void);
@@ -32,6 +33,26 @@ void rdint (void);
 void wrint (void);
 void rdchr (void);
 void wrchr (void);
+void pushg (int);
+void popg (int);
+void asf (void);
+void rsf (void);
+void pushl (void);
+void popl (void);
+void EQ (void);
+void NE (void);
+void LT (void);
+void LE (void);
+void GT (void);
+void GE (void);
+void JMP (void);
+void BRF (void);
+void BRT (void);
+void CALL(void);
+void RET (void);
+void DROP (void);
+void PUSHR (void);
+void POPR (void);
+void DUP (void);
 void debugInstructions(void);
 void matchInstruction(void);
-

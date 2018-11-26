@@ -10,6 +10,7 @@ int sp = 0;
 bool haltThis;
 bool debugMode;
 int programMemory[9999];
+int globalVars[9999];
 int programSize;
 int instructionCount;
 int pc;
@@ -102,6 +103,15 @@ void wrchr() {
     printf("%c", pop());
     pc += 1;
 }
+void popg(int var) {
+    globalVars[var] = popc();
+}
+void pushg(int var) {
+    if (!stack_Full()) {
+        pushg(globalVars[var]);
+    }
+}
+
 void haltProgram(void) {
     printf("Programm angehalten");
     haltThis = true;

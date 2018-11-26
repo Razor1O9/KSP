@@ -16,20 +16,12 @@
 #define WRINT (8<<24)
 #define RDCHR (9<<24)
 #define WRCHR (10<<24)
-#define TEST2 (11<<24
-#define TEST3 (12<<24)
-#define TEST4 (13<<24)
-#define TEST5 (14<<24)
-#define TEST6 (15<<24)
-#define TEST7 (16<<24)
-#define TEST8 (17<<24)
-#define TEST9 (18<<24)
-#define TEST10 (19<<24)
-#define TEST11 (20<<24)
-#define TEST12 (21<<24)
-#define TEST13 (22<<24)
-#define TEST14 (23<<24)
-#define TEST15 (24<<24)
+#define PUSHG (11<<24)
+#define POPG (12<<24)
+#define ASF (13<<24)
+#define RSF (14<<24)
+#define PUSHL (15<<24)
+#define POPL (16<<24)
 
 #define IMMEDIATE(x) ((x) & 0x00FFFFFF)
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
@@ -63,68 +55,68 @@ int main(int argc, char *argv[]) {
     char validBinFile[5];
     unsigned int programHeader[3];
     printf("Ninja Virtual Machine started\n");
-        if (!strcmp(argv[1], "--version")) {
-            printf("Version = %d \n", version);
-            printf("Ninja Virtual Machine stopped\n");
-            EXIT_SUCCESS;
+    if (!strcmp(argv[1], "--version")) {
+        printf("Version = %d \n", version);
+        printf("Ninja Virtual Machine stopped\n");
+        EXIT_SUCCESS;
+    }
+    if (!strcmp(argv[1], "--help")) {
+        printf("Valid inputs: \n --version");
+        printf("Ninja Virtual Machine stopped\n");
+        EXIT_SUCCESS;
+    }
+    if (strstr(argv[1], bin) != NULL || strstr(argv[2], bin) != NULL) {
+        if (strstr(argv[1], debug) != NULL || (strstr(argv[2], debug) != NULL)) {
+            debugMode = true;
+            if (debugMode == true) {
+                debugInstructions();
+            }
         }
-        if (!strcmp(argv[1], "--help")) {
-            printf("Valid inputs: \n --version");
-            printf("Ninja Virtual Machine stopped\n");
-            EXIT_SUCCESS;
-        }
-        if (strstr(argv[1], bin) != NULL || strstr(argv[2], bin) != NULL) {
-            if (strstr(argv[1], debug) != NULL || (strstr(argv[2], debug) != NULL )) {
-                debugMode = true;
-                if (debugMode == true) {
-                    debugInstructions();
-                }
-            }
-            if (argv[1] == bin) {
-                loadedFile = fopen(argv[1], "r");
-            } else {
-                loadedFile = fopen(argv[2], "r");
-            }
-            if (!loadedFile) {
-                printf("Error: Code file '%s' cannot be opened \n", argv[1]);
-            }
-            /* Überprüft ob es sich um eine NJBF handelt */
-            for (reader = 0; reader < argc; reader++) {
-                fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
-                if (strncmp(&validBinFile[0], "NJBF", 4) != 0) {
-                    haltProgram();
-                }
-            }
-
-
-            fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
-            if (version < programHeader[0]) {
-                printf("Version: %d is not supported!", programHeader[0]);
-                EXIT_FAILURE;
-            }
-            fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
-            instructionCount = programHeader[1];
-            fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
-            staticAreaSize = programHeader[2];
-            staticPtr = (unsigned int *) malloc(staticAreaSize * sizeof(unsigned int));
-            ptr = (unsigned int *) malloc(instructionCount * sizeof(unsigned int));
-            count = 0;
-            do {
-                fread(&programHeader, sizeof(unsigned int), 1, loadedFile);
-                ptr[count] = programHeader[count];
-                count++;
-            } while (count < instructionCount);
-
-            while (!haltThis) {
-                matchInstruction();
-            }
-
-
+        if (argv[1] == bin) {
+            loadedFile = fopen(argv[1], "r");
         } else {
-            printf("No Input \n");
-            printf("Ninja Virtual Machine stopped\n");
+            loadedFile = fopen(argv[2], "r");
+        }
+        if (!loadedFile) {
+            printf("Error: Code file '%s' cannot be opened \n", argv[1]);
+        }
+        /* Überprüft ob es sich um eine NJBF handelt */
+        for (reader = 0; reader < argc; reader++) {
+            fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
+            if (strncmp(&validBinFile[0], "NJBF", 4) != 0) {
+                haltProgram();
+            }
+        }
+
+
+        fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
+        if (version < programHeader[0]) {
+            printf("Version: %d is not supported!", programHeader[0]);
             EXIT_FAILURE;
         }
+        fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
+        instructionCount = programHeader[1];
+        fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
+        staticAreaSize = programHeader[2];
+        staticPtr = (unsigned int *) malloc(staticAreaSize * sizeof(unsigned int));
+        ptr = (unsigned int *) malloc(instructionCount * sizeof(unsigned int));
+        count = 0;
+        do {
+            fread(&programHeader, sizeof(unsigned int), 1, loadedFile);
+            ptr[count] = programHeader[count];
+            count++;
+        } while (count < instructionCount);
+
+        while (!haltThis) {
+            matchInstruction();
+        }
+
+
+    } else {
+        printf("No Input \n");
+        printf("Ninja Virtual Machine stopped\n");
+        EXIT_FAILURE;
+    }
 
 
     printf("Ninja Virtual Machine stopped\n");
@@ -141,53 +133,40 @@ void matchInstruction(void) {
         if (programMemory[pc] == PUSHC) {
             push(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
             pc++;
-        } else if (programMemory[pc] == HALT) {
+        } if (programMemory[pc] == HALT) {
             break;
-        } else if (programMemory[pc] == ADD) {
+        } if (programMemory[pc] == ADD) {
             add();
-        } else if (programMemory[pc] == SUB) {
+        } if (programMemory[pc] == SUB) {
             sub();
-        } else if (programMemory[pc] == MUL) {
+        } if (programMemory[pc] == MUL) {
             mul();
-        } else if (programMemory[pc] == DIV) {
+        } if (programMemory[pc] == DIV) {
             divide();
-        } else if (programMemory[pc] == MOD) {
+        } if (programMemory[pc] == MOD) {
             mod();
-        } else if (programMemory[pc] == RDINT) {
+        } if (programMemory[pc] == RDINT) {
             rdint();
-        } else if (programMemory[pc] == WRINT) {
+        } if (programMemory[pc] == WRINT) {
             wrint();
-        } else if (programMemory[pc] == RDCHR) {
-            rdchr;
-        } else if (programMemory[pc] == WRCHR) {
-            wrchr;
-        } else if (programMemory[pc] == TEST3) {
-            wrchr;
-        } else if (programMemory[pc] == TEST4) {
-            wrchr;
-        } else if (programMemory[pc] == TEST5) {
-            wrchr;
-        } else if (programMemory[pc] == TEST6) {
-            wrchr;
-        } else if (programMemory[pc] == TEST7) {
-            wrchr;
-        } else if (programMemory[pc] == TEST8) {
-            wrchr;
-        } else if (programMemory[pc] == TEST9) {
-            wrchr;
-        } else if (programMemory[pc] == TEST11) {
-            wrchr;
-        } else if (programMemory[pc] == TEST12) {
-            wrchr;
-        } else if (programMemory[pc] == TEST13) {
-            wrchr;
-        } else if (programMemory[pc] == TEST14) {
-            wrchr;
-        } else if (programMemory[pc] == TEST15) {
-            wrchr;
+        } if (programMemory[pc] == RDCHR) {
+            rdchr();
+        } if (programMemory[pc] == WRCHR) {
+            wrchr();
+        } if (programMemory[pc] == PUSHG) {
+            pushg();
+        } if (programMemory[pc] == POPG) {
+            popg();
+        } if (programMemory[pc] == ASF) {
+            asf();
+        } if (programMemory[pc] == RSF) {
+            rsf();
+        } if (programMemory[pc] == PUSHL) {
+            pushl();
+        } if (programMemory[pc] == POPL) {
+            popl();
         }
     }
-}
 
 
 /**
@@ -195,47 +174,107 @@ void matchInstruction(void) {
  * This method outputs all instructions inside a given program.
  * The listing order is from top to bottom.
  */
-void debugInstructions(void) {
-    int i;
-    for (i = 0;; i++) {
-        switch (programMemory[i] & 0xFF000000) {
-            case HALT:
-                printf("%d: HALT\n", i);
-                break;
-            case PUSHC:
-                printf("%d: PUSHC\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
-                break;
-            case ADD:
-                printf("%d: ADD\n", i);
-                break;
-            case SUB:
-                printf("%d: SUB\n", i);
-                break;
-            case MUL:
-                printf("%d: MUL\n", i);
-                break;
-            case DIV:
-                printf("%d: DIV1\n", i);
-                break;
-            case MOD:
-                printf("%d: MOD\n", i);
-                break;
-            case RDINT:
-                printf("%d: RDINT\n", i);
-                break;
-            case WRINT:
-                printf("%d: WRINT\n", i);
-                break;
-            case RDCHR:
-                printf("%d: RDCHR\n", i);
-                break;
-            case WRCHR:
-                printf("%d: WRCHR\n", i);
-                break;
-            default:
-                printf("Wert ungültig \n");
+    void debugInstructions(void) {
+        int i;
+        for (i = 0;; i++) {
+            switch (programMemory[i] & 0xFF000000) {
+                case HALT:
+                    printf("%d: HALT\n", i);
+                    break;
+                case PUSHC:
+                    printf("%d: PUSHC\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                    break;
+                case ADD:
+                    printf("%d: ADD\n", i);
+                    break;
+                case SUB:
+                    printf("%d: SUB\n", i);
+                    break;
+                case MUL:
+                    printf("%d: MUL\n", i);
+                    break;
+                case DIV:
+                    printf("%d: DIV1\n", i);
+                    break;
+                case MOD:
+                    printf("%d: MOD\n", i);
+                    break;
+                case RDINT:
+                    printf("%d: RDINT\n", i);
+                    break;
+                case WRINT:
+                    printf("%d: WRINT\n", i);
+                    break;
+                case RDCHR:
+                    printf("%d: RDCHR\n", i);
+                    break;
+                case WRCHR:
+                    printf("%d: WRCHR\n", i);
+                    break;
+                case PUSHG:
+                    printf("%d: PUSHG\n", i);
+                    break;
+                case POPG:
+                    printf("%d: POPG\n", i);
+                    break;
+                case ASF:
+                    printf("%d: ASF\n", i);
+                    break;
+                case RSF:
+                    printf("%d: RSF\n", i);
+                    break;
+                case PUSHL:
+                    printf("%d: PUSHL\n", i);
+                    break;
+                case POPL:
+                    printf("%d: POPL\n", i);
+                    break;
+                case EQ:
+                    printf("%d: EQ\n", i);
+                    break;
+                case NE:
+                    printf("%d: NE\n", i);
+                    break;
+                case LT:
+                    printf("%d: LT\n", i);
+                    break;
+                case LE:
+                    printf("%d: LE\n", i);
+                    break;
+                case GT:
+                    printf("%d: GT\n", i);
+                    break;
+                case JMP:
+                    printf("%d: JMP\n", i);
+                    break;
+                case BRF:
+                    printf("%d: BRF\n", i);
+                    break;
+                case BRT:
+                    printf("%d: BRT\n", i);
+                    break;
+                case CALL:
+                    printf("%d: CALL\n", i);
+                    break;
+                case RET:
+                    printf("%d: RET\n", i);
+                    break;
+                case DROP:
+                    printf("%d: DROP\n", i);
+                    break;
+                case PUSHR:
+                    printf("%d: PUSHR\n", i);
+                    break;
+                case POPR():
+                    printf("%d: POPR\n", i);
+                    break;
+                case DUP:
+                    printf("%d: DUP\n", i);
+                    break;
+                default:
+                    printf("Wert ungültig \n");
+            }
+            if ((programMemory[i] & 0xFF000000) == HALT) { break; }
         }
-        if ((programMemory[i] & 0xFF000000) == HALT) { break; }
     }
-}
 

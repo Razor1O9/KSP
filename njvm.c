@@ -58,6 +58,8 @@ int main(int argc, char *argv[]) {
     unsigned int *ptr;
     unsigned int *staticPtr;
     int i;
+    char bin[] = ".bin";
+    char debug[] = "--debug";
     FILE *loadedFile;
     char validBinFile[5];
     int programHeader[3];
@@ -73,17 +75,22 @@ int main(int argc, char *argv[]) {
             printf("Ninja Virtual Machine stopped\n");
             EXIT_SUCCESS;
         }
-        if (!strstr(argv[i], (const char *) (".bin" != NULL))) {
-            if (!strstr((const char *) argv, (const char *) ("--debug" != NULL))) {
+        char *input = argv[1];
+        char *input2 = argv[2];
+        if (strstr(input, bin) != NULL || strstr(input2, bin) != NULL) {
+            if (strstr(input, debug) != NULL) {
                 debugMode = true;
                 if (debugMode == true) {
                     debugInstructions();
                 }
             }
-            loadedFile = fopen((const char *) argv, "r");
+            if (input == bin) {
+                loadedFile = fopen(input, "r");
+            } else {
+                loadedFile = fopen(input2,"r");
+            }
             if (!loadedFile) {
                 printf("Error: Code file '%s' cannot be opened \n", argv[1]);
-                exit(1);
             }
             /* Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist. */
             for (a = 0; a < argc; a++) {
@@ -95,11 +102,10 @@ int main(int argc, char *argv[]) {
             }
 
             for (b = 0; b < argc; b++) {
-                fread(&programHeader[i], sizeof(unsigned int), 3,
+                fread(&programHeader[b], sizeof(unsigned int), 3,
                       loadedFile); /* läuft von Stelle 0 bis Stelle 2 von ProgramHeader */
                 if (version < programHeader[b]) {
                     printf("Version: %d is not supported!", programHeader[0]);
-                    exit(1);
                 }
                 instructionCount = programHeader[1];
                 staticAreaSize = programHeader[2];

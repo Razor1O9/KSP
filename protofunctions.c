@@ -4,7 +4,7 @@
 #include "protofunctions.h"
 
 
-int version = 1;
+int version = 111;
 int calculationStack[9999];
 int sp = 0;
 bool haltThis;

@@ -52,7 +52,7 @@ int staticAreaSize = 0;
  * @param argvector
  * @return
  */
-int main(int argcount, char *argvector[]) {
+int main(int argc, char *argv[]) {
     int a;
     int b;
     unsigned int *ptr;
@@ -62,31 +62,31 @@ int main(int argcount, char *argvector[]) {
     char validBinFile[5];
     int programHeader[3];
     printf("Ninja Virtual Machine started\n");
-    for (i = 0; i < argcount; i++) {
-        if (!strcmp(argvector[i], "--version")) {
+    for (i = 0; i < argc; i++) {
+        if (!strcmp(argv[i], "--version")) {
             printf("Version = %d \n", version);
             printf("Ninja Virtual Machine stopped\n");
             EXIT_SUCCESS;
         }
-        if (!strcmp(argvector[i], "--help")) {
+        if (!strcmp(argv[i], "--help")) {
             printf("Valid inputs: \n --version");
             printf("Ninja Virtual Machine stopped\n");
             EXIT_SUCCESS;
         }
-        if (strstr(argvector[i], (const char *) (".bin" != NULL))) {
-            if (strstr((const char *) argvector, (const char *) ("--debug" != NULL))) {
+        if (strstr(argv[i], (const char *) (".bin" != NULL))) {
+            if (strstr((const char *) argv, (const char *) ("--debug" != NULL))) {
                 debugMode = true;
                 if (debugMode == true) {
                     debugInstructions();
                 }
             }
-            loadedFile = fopen((const char *) argvector, "r");
+            loadedFile = fopen((const char *) argv, "r");
             if (!loadedFile) {
-                printf("Error: Code file '%s' cannot be opened \n", argvector[1]);
+                printf("Error: Code file '%s' cannot be opened \n", argv[1]);
                 exit(1);
             }
             /* Lese alles als Stream ein, bis Ende des Programms (loadedFile) erreicht ist. */
-            for (a = 0; a < argcount; a++) {
+            for (a = 0; a < argc; a++) {
                 fread(&validBinFile[a], sizeof(char), 4,
                       loadedFile); /* &programHeader = Pointer auf X, sizeOf(unsigned int) = 16 / 32 Bit, Array-Size, Thing to be read */
                 if (strncmp(&validBinFile[0], "NJBF", 4) != 0) {
@@ -94,7 +94,7 @@ int main(int argcount, char *argvector[]) {
                 }
             }
 
-            for (b = 0; b < argcount; b++) {
+            for (b = 0; b < argc; b++) {
                 fread(&programHeader[i], sizeof(unsigned int), 3,
                       loadedFile); /* läuft von Stelle 0 bis Stelle 2 von ProgramHeader */
                 if (version < programHeader[b]) {

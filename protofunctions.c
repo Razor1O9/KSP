@@ -7,6 +7,13 @@
 int version = 1;
 int calculationStack[9999];
 int sp = 0;
+bool haltThis;
+bool debugMode;
+int programMemory[9999];
+int programSize;
+int instructionCount;
+int pc;
+int staticAreaSize;
 
 /**
  * This methods pushes a given variable on top of the stack.

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include "protofunctions.h"
 
 /* Makro-Deklarationen */
@@ -22,6 +23,21 @@
 #define RSF (14<<24)
 #define PUSHL (15<<24)
 #define POPL (16<<24)
+#define EQ (17<<24)
+#define NE (18<<24)
+#define LT (19<<24)
+#define LE (20<<24)
+#define GT (21<<24)
+#define GE (22<<24)
+#define JMP (23<<24)
+#define BRF (24<<24)
+#define BRT (25<<24)
+#define CALL (26<<24)
+#define RET  (27<<24)
+#define DROP (28<<24)
+#define PUSHR (29<<24)
+#define POPR (30<<24)
+#define DUP (31<<24)
 
 #define IMMEDIATE(x) ((x) & 0x00FFFFFF)
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
@@ -36,6 +52,8 @@ int programSize = 0;
 int instructionCount = 0;
 int pc = 0;
 int staticAreaSize = 0;
+
+
 
 /**
  * Main Function, which reads all Terminal Arguments
@@ -133,38 +151,102 @@ void matchInstruction(void) {
         if (programMemory[pc] == PUSHC) {
             push(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
             pc++;
-        } if (programMemory[pc] == HALT) {
+        }
+        if (programMemory[pc] == HALT) {
             break;
-        } if (programMemory[pc] == ADD) {
+        }
+        if (programMemory[pc] == ADD) {
             add();
-        } if (programMemory[pc] == SUB) {
+        }
+        if (programMemory[pc] == SUB) {
             sub();
-        } if (programMemory[pc] == MUL) {
+        }
+        if (programMemory[pc] == MUL) {
             mul();
-        } if (programMemory[pc] == DIV) {
+        }
+        if (programMemory[pc] == DIV) {
             divide();
-        } if (programMemory[pc] == MOD) {
+        }
+        if (programMemory[pc] == MOD) {
             mod();
-        } if (programMemory[pc] == RDINT) {
+        }
+        if (programMemory[pc] == RDINT) {
             rdint();
-        } if (programMemory[pc] == WRINT) {
+        }
+        if (programMemory[pc] == WRINT) {
             wrint();
-        } if (programMemory[pc] == RDCHR) {
+        }
+        if (programMemory[pc] == RDCHR) {
             rdchr();
-        } if (programMemory[pc] == WRCHR) {
+        }
+        if (programMemory[pc] == WRCHR) {
             wrchr();
-        } if (programMemory[pc] == PUSHG) {
+        }
+        if (programMemory[pc] == PUSHG) {
             pushg();
-        } if (programMemory[pc] == POPG) {
+        }
+        if (programMemory[pc] == POPG) {
             popg();
-        } if (programMemory[pc] == ASF) {
+        }
+        if (programMemory[pc] == ASF) {
             asf();
-        } if (programMemory[pc] == RSF) {
+        }
+        if (programMemory[pc] == RSF) {
             rsf();
-        } if (programMemory[pc] == PUSHL) {
+        }
+        if (programMemory[pc] == PUSHL) {
             pushl();
-        } if (programMemory[pc] == POPL) {
+        }
+        if (programMemory[pc] == POPL) {
             popl();
+        }
+        if (programMemory[pc] == EQ) {
+            eq();
+        }
+        if (programMemory[pc] == NE) {
+            ne();
+        }
+        if (programMemory[pc] == LT) {
+            lt();
+        }
+        if (programMemory[pc] == LE) {
+            le();
+        }
+        if (programMemory[pc] == GT) {
+            gt();
+        }
+        if (programMemory[pc] == GE) {
+            ge();
+        }
+        if (programMemory[pc] == JMP) {
+            jmp();
+        }
+        if (programMemory[pc] == BRF) {
+            brf();
+        }
+        if (programMemory[pc] == BRT) {
+            brt();
+        }
+        if (programMemory[pc] == CALL) {
+            call();
+        }
+        if (programMemory[pc] == RET) {
+            ret();
+        }
+        if (programMemory[pc] == DROP) {
+            drop();
+        }
+        if (programMemory[pc] == PUSHR) {
+            pushr();
+        }
+        if (programMemory[pc] == POPR) {
+            popr();
+        }
+        if (programMemory[pc] == DROP) {
+            drop();
+        }
+        if (programMemory[pc] == DUP) {
+            dup();
         }
     }
 
@@ -244,6 +326,9 @@ void matchInstruction(void) {
                 case GT:
                     printf("%d: GT\n", i);
                     break;
+                case GE:
+                    printf("%d: GE\n", i);
+                    break;
                 case JMP:
                     printf("%d: JMP\n", i);
                     break;
@@ -277,4 +362,6 @@ void matchInstruction(void) {
             if ((programMemory[i] & 0xFF000000) == HALT) { break; }
         }
     }
+}
+
 

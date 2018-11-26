@@ -104,13 +104,69 @@ void wrchr() {
     pc += 1;
 }
 void popg(int var) {
-    globalVars[var] = popc();
+    globalVars[var] = pop();
 }
 void pushg(int var) {
     if (!stack_Full()) {
         pushg(globalVars[var]);
     }
 }
+void popr() {
+
+}
+
+void pushr() {
+
+}
+
+void drop() {
+
+}
+
+void ret() {
+
+}
+
+void call() {
+
+}
+
+void brt() {
+
+}
+
+void brf() {
+
+}
+
+void jmp() {
+
+}
+
+void ge() {
+
+}
+
+void gt() {
+
+}
+
+void le() {
+
+}
+
+void lt() {
+
+}
+
+void ne() {
+
+}
+
+void eq() {
+
+}
+
 
 void haltProgram(void) {
     printf("Programm angehalten");

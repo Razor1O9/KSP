@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
     char validBinFile[5];
     int programHeader[3];
     printf("Ninja Virtual Machine started\n");
-    for (i = 0; i < argc; i++) {
+    for (i = 1; i < argc; i++) {
         if (!strcmp(argv[i], "--version")) {
             printf("Version = %d \n", version);
             printf("Ninja Virtual Machine stopped\n");
@@ -73,8 +73,8 @@ int main(int argc, char *argv[]) {
             printf("Ninja Virtual Machine stopped\n");
             EXIT_SUCCESS;
         }
-        if (strstr(argv[i], (const char *) (".bin" != NULL))) {
-            if (strstr((const char *) argv, (const char *) ("--debug" != NULL))) {
+        if (!strstr(argv[i], (const char *) (".bin" != NULL))) {
+            if (!strstr((const char *) argv, (const char *) ("--debug" != NULL))) {
                 debugMode = true;
                 if (debugMode == true) {
                     debugInstructions();

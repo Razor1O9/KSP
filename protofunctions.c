@@ -104,5 +104,5 @@ void wrchr() {
 }
 void haltProgram(void) {
     printf("Programm angehalten");
-    haltThis == true;
+    haltThis = true;
 }

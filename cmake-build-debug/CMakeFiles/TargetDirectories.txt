@@ -1,3 +1,3 @@
-C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/KSP.dir
-C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/kingdav3/KSP/KSP/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/kingdav3/KSP/KSP/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/kingdav3/KSP/KSP/cmake-build-debug/CMakeFiles/KSP.dir

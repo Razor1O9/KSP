@@ -73,11 +73,13 @@ int main(int argc, char *argv[]) {
     char validBinFile[5];
     unsigned int programHeader[3];
     printf("Ninja Virtual Machine started\n");
+    /* Prints the current VM-Version */
     if (!strcmp(argv[1], "--version")) {
         printf("Version = %d \n", version);
         printf("Ninja Virtual Machine stopped\n");
         EXIT_SUCCESS;
     }
+    /* Prints all valid shell commands */
     if (!strcmp(argv[1], "--help")) {
         printf("Valid inputs: \n --version");
         printf("Ninja Virtual Machine stopped\n");
@@ -243,7 +245,7 @@ void matchInstruction(void) {
         }
     }
 
-
+}
 /**
  * ONLY DEBUG
  * This method outputs all instructions inside a given program.
@@ -343,7 +345,7 @@ void matchInstruction(void) {
                 case PUSHR:
                     printf("%d: PUSHR\n", i);
                     break;
-                case POPR():
+                case POPR:
                     printf("%d: POPR\n", i);
                     break;
                 case DUP:
@@ -355,6 +357,6 @@ void matchInstruction(void) {
             if ((programMemory[i] & 0xFF000000) == HALT) { break; }
         }
     }
-}
+
 
 

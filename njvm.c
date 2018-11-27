@@ -146,8 +146,8 @@ int main(int argc, char *argv[]) {
         count = 0;
         do {
             /* reads the File sourcecode */
-            fread(&programMemory, sizeof(unsigned int), 1, loadedFile);
-            ptr[count] = programMemory[count];
+            fread(&programMemory[count], sizeof(unsigned int), 1, loadedFile);
+            int instr = programMemory[count];
             count++;
         } while (count < instructionCount);
 

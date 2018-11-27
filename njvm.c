@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
             matchInstruction();
         }
         if (debugMode == true) {
-            debugInstructions();
+            debugger();
         }
 
     } else {
@@ -166,6 +166,20 @@ int main(int argc, char *argv[]) {
 
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
+}
+/*
+ * ToDo implement a debugger with a proper instructionset
+ */
+void debugger(void) {
+    /*
+     * list instructions
+     * show stack
+     * show static variables
+     * run till end without stop
+     * run next instruction
+     * exit VM
+     */
+    debugInstructions();
 }
 
 

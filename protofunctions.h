@@ -53,3 +53,4 @@ void pushr (void);
 void popr (void);
 void debugInstructions(void);
 void matchInstruction(void);
+void debugger(void);

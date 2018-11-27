@@ -86,7 +86,9 @@ int main(int argc, char *argv[]) {
         printf("\n\nNinja Virtual Machine stopped\n");
         return(EXIT_SUCCESS);
     }
+    /* Searches the arguments for a binary file" */
     if (strstr(argv[1], bin) != NULL || strstr(argv[2], bin) != NULL) {
+        /* Enables the debugger depending if the valid argument is given */
         if (strstr(argv[1], debug) != NULL || (strstr(argv[2], debug) != NULL)) {
             debugMode = true;
         }
@@ -98,7 +100,7 @@ int main(int argc, char *argv[]) {
         if (!loadedFile) {
             printf("Error: Code file '%s' cannot be opened \n", argv[1]);
         }
-        /* Überprüft ob es sich um eine NJBF handelt */
+        /* Checks if the binary file is a valid Ninja-Binary file */
         for (reader = 0; reader < argc; reader++) {
             fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
             if (strncmp(&validBinFile[0], "NJBF", 4) != 0) {
@@ -106,20 +108,25 @@ int main(int argc, char *argv[]) {
             }
         }
 
-
+        /* Reads the File VM-version */
         fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
         if (version < programHeader[0]) {
             printf("Version: %d is not supported!", programHeader[0]);
             return(EXIT_FAILURE);
         }
+        /* Reads the amount of instructions inside the File */
         fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
         instructionCount = programHeader[1];
+
+        /* Reads the amount of global variables inside the File */
         fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
         staticAreaSize = programHeader[2];
+
         staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
         ptr = malloc(instructionCount * sizeof(unsigned int));
         count = 0;
         do {
+            /* reads the File sourcecode */
             fread(&programMemory, sizeof(unsigned int), 1, loadedFile);
             ptr[count] = programMemory[count];
             count++;

@@ -12,7 +12,6 @@ int regADD = 0;
 bool haltThis;
 bool debugMode;
 unsigned int programMemory[9999];
-int programSize;
 int instructionCount;
 int pc;
 int staticAreaSize;
@@ -130,10 +129,8 @@ void rsf () {
 void pushl (int value) {
     pc++;
     if (sp != 9999) {
-        calculationStack[sp] = calculationStack[fp +value];
-        sp = sp +1;
-    } else {
-        EXIT_FAILURE;
+        calculationStack[sp] = calculationStack[fp + value];
+        sp = sp + 1;
     }
 }
 void popl (int value) {
@@ -251,6 +248,5 @@ void eq() {
 }
 
 void haltProgram(void) {
-    printf("Programm angehalten");
     haltThis = true;
 }

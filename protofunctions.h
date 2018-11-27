@@ -13,9 +13,7 @@ extern int fp;
 extern int regADD;
 extern int staticAreaSize;
 extern int instructionCount;
-extern int programSize;
 extern int staticVar;
-extern char letter; /* character */
 extern bool haltThis;
 extern bool debugMode;
 extern unsigned int programMemory[9999]; /* List of all Program Instructions */

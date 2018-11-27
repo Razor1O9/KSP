@@ -48,7 +48,6 @@ int sp;
 bool haltThis = false;
 bool debugMode = false;
 unsigned int programMemory[9999];
-int programSize = 0;
 int instructionCount = 0;
 int pc = 0;
 int staticAreaSize = 0;

@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     unsigned int *ptr;
     char bin[] = ".bin";
     char debug[] = "--debug";
-    FILE *loadedFile;
+    FILE *loadedFile = NULL;
     char validBinFile[5];
     unsigned int programHeader[3];
     printf("Ninja Virtual Machine started\n\n");

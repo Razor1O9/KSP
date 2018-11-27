@@ -15,13 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b05b124a-0c0e-4e00-ac81-0d0c77fa54a5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/KSP.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/KSP.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/KSP.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/KSP.dir/cmake_clean.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/KSP.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/KSP.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KSP.exe" beforeDir="false" afterPath="$PROJECT_DIR$/KSP.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/KSP.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/KSP.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ksp.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/ksp.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/njvm.c" beforeDir="false" afterPath="$PROJECT_DIR$/njvm.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -80,7 +76,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="1864" />
+          <entry key="c" value="1962" />
           <entry key="h" value="108" />
           <entry key="txt" value="27" />
         </counts>
@@ -89,19 +85,19 @@
         <counts>
           <entry key="CMakeLists.txt" value="27" />
           <entry key="Doxygen file" value="1" />
-          <entry key="ObjectiveC" value="1971" />
+          <entry key="ObjectiveC" value="2069" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="KSP (disassembly)" value="4" />
+          <entry key="KSP (disassembly)" value="5" />
           <entry key="c" value="1" />
           <entry key="md" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Disassembly" value="4" />
+          <entry key="Disassembly" value="5" />
           <entry key="Markdown" value="1" />
           <entry key="ObjectiveC" value="1" />
         </counts>
@@ -155,8 +151,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/njvm.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1802">
-              <caret line="142" selection-start-line="142" selection-end-line="142" />
+            <state relative-caret-position="-330">
+              <caret line="166" lean-forward="true" selection-start-line="166" selection-end-line="166" />
               <folding>
                 <element signature="e#14#32#0" expanded="true" />
               </folding>
@@ -176,8 +172,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protofunctions.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+            <state relative-caret-position="574">
+              <caret line="255" selection-start-line="255" selection-end-line="255" />
             </state>
           </provider>
         </entry>
@@ -203,8 +199,8 @@
         <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/protofunctions.c" />
         <option value="$PROJECT_DIR$/protofunctions.h" />
-        <option value="$PROJECT_DIR$/njvm.c" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/njvm.c" />
       </list>
     </option>
   </component>
@@ -215,7 +211,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="106" />
     <option name="y" value="57" />
     <option name="width" value="1390" />
@@ -307,12 +303,12 @@
       <workItem from="1543314234160" duration="2642000" />
       <workItem from="1543316949091" duration="3297000" />
       <workItem from="1543340078094" duration="1179000" />
-      <workItem from="1543344770442" duration="1366000" />
+      <workItem from="1543344770442" duration="3862000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71273000" />
+    <option name="totallyTimeSpent" value="73769000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -324,15 +320,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1867" height="1096" extended-state="7" />
+    <frame x="-8" y="-8" width="1867" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12562259" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12562259" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.18711019" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.22972973" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18711019" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.22972973" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32952183" />
@@ -353,6 +350,32 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/njvm.c</url>
+          <line>115</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/njvm.c</url>
+          <line>118</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/njvm.c</url>
+          <line>121</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/njvm.c</url>
+          <line>124</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/protofunctions.h">
@@ -380,15 +403,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protofunctions.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="15" column="21" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
+        <state relative-caret-position="574">
+          <caret line="255" selection-start-line="255" selection-end-line="255" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/njvm.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1802">
-          <caret line="142" selection-start-line="142" selection-end-line="142" />
+        <state relative-caret-position="-330">
+          <caret line="166" lean-forward="true" selection-start-line="166" selection-end-line="166" />
           <folding>
             <element signature="e#14#32#0" expanded="true" />
           </folding>

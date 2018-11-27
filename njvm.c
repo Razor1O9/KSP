@@ -47,7 +47,7 @@ int calculationStack[9999];
 int sp;
 bool haltThis = false;
 bool debugMode = false;
-int programMemory[9999];
+unsigned int programMemory[9999];
 int programSize = 0;
 int instructionCount = 0;
 int pc = 0;
@@ -72,25 +72,23 @@ int main(int argc, char *argv[]) {
     FILE *loadedFile;
     char validBinFile[5];
     unsigned int programHeader[3];
-    printf("Ninja Virtual Machine started\n");
+    printf("Ninja Virtual Machine started\n\n");
+
     /* Prints the current VM-Version */
     if (!strcmp(argv[1], "--version")) {
         printf("Version = %d \n", version);
-        printf("Ninja Virtual Machine stopped\n");
-        EXIT_SUCCESS;
+        printf("\nNinja Virtual Machine stopped\n");
+        return(EXIT_SUCCESS);
     }
     /* Prints all valid shell commands */
     if (!strcmp(argv[1], "--help")) {
-        printf("Valid inputs: \n --version");
-        printf("Ninja Virtual Machine stopped\n");
-        EXIT_SUCCESS;
+        printf("Valid inputs: \n [1] --version \n [2] --help \n [3] 'programname'.bin \n [4] --debug 'programname'.bin \n [5] 'programname.bin' --debug");
+        printf("\n\nNinja Virtual Machine stopped\n");
+        return(EXIT_SUCCESS);
     }
     if (strstr(argv[1], bin) != NULL || strstr(argv[2], bin) != NULL) {
         if (strstr(argv[1], debug) != NULL || (strstr(argv[2], debug) != NULL)) {
             debugMode = true;
-            if (debugMode == true) {
-                debugInstructions();
-            }
         }
         if (argv[1] == bin) {
             loadedFile = fopen(argv[1], "r");
@@ -112,7 +110,7 @@ int main(int argc, char *argv[]) {
         fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
         if (version < programHeader[0]) {
             printf("Version: %d is not supported!", programHeader[0]);
-            EXIT_FAILURE;
+            return(EXIT_FAILURE);
         }
         fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
         instructionCount = programHeader[1];
@@ -122,25 +120,27 @@ int main(int argc, char *argv[]) {
         ptr = (unsigned int *) malloc(instructionCount * sizeof(unsigned int));
         count = 0;
         do {
-            fread(&programHeader, sizeof(unsigned int), 1, loadedFile);
-            ptr[count] = programHeader[count];
+            fread(&programMemory, sizeof(unsigned int), 1, loadedFile);
+            ptr[count] = programMemory[count];
             count++;
         } while (count < instructionCount);
 
         while (!haltThis) {
             matchInstruction();
         }
-
+        if (debugMode == true) {
+            debugInstructions();
+        }
 
     } else {
         printf("No Input \n");
         printf("Ninja Virtual Machine stopped\n");
-        EXIT_FAILURE;
+        return (EXIT_FAILURE);
     }
 
 
     printf("Ninja Virtual Machine stopped\n");
-    return EXIT_SUCCESS;
+    return (EXIT_SUCCESS);
 }
 
 

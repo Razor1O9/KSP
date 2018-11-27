@@ -18,7 +18,7 @@ extern int staticVar;
 extern char letter; /* character */
 extern bool haltThis;
 extern bool debugMode;
-extern int programMemory[9999]; /* List of all Program Instructions */
+extern unsigned int programMemory[9999]; /* List of all Program Instructions */
 extern int globalVars[9999]; /* Lists all global Variables */
 extern int pc; /* Program Counter Variable for Instructions */
 

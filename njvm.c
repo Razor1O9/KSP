@@ -52,6 +52,7 @@ int programSize = 0;
 int instructionCount = 0;
 int pc = 0;
 int staticAreaSize = 0;
+int *staticPtr;
 
 
 
@@ -66,7 +67,6 @@ int main(int argc, char *argv[]) {
     int reader;
     int count;
     unsigned int *ptr;
-    unsigned int *staticPtr;
     char bin[] = ".bin";
     char debug[] = "--debug";
     FILE *loadedFile;
@@ -116,8 +116,8 @@ int main(int argc, char *argv[]) {
         instructionCount = programHeader[1];
         fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
         staticAreaSize = programHeader[2];
-        staticPtr = (unsigned int *) malloc(staticAreaSize * sizeof(unsigned int));
-        ptr = (unsigned int *) malloc(instructionCount * sizeof(unsigned int));
+        staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
+        ptr = malloc(instructionCount * sizeof(unsigned int));
         count = 0;
         do {
             fread(&programMemory, sizeof(unsigned int), 1, loadedFile);

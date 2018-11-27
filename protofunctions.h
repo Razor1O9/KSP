@@ -6,7 +6,7 @@ typedef enum { false, true } bool;
 
 extern int version; /* The current version */
 
-
+extern int *staticPtr; /* Lists all global Variables */
 extern int calculationStack[9999]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
 extern int fp;
@@ -19,7 +19,6 @@ extern char letter; /* character */
 extern bool haltThis;
 extern bool debugMode;
 extern unsigned int programMemory[9999]; /* List of all Program Instructions */
-extern int globalVars[9999]; /* Lists all global Variables */
 extern int pc; /* Program Counter Variable for Instructions */
 
 void haltProgram (void);

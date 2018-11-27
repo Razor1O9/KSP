@@ -12,11 +12,11 @@ int regADD = 0;
 bool haltThis;
 bool debugMode;
 unsigned int programMemory[9999];
-int globalVars[9999];
 int programSize;
 int instructionCount;
 int pc;
 int staticAreaSize;
+int *staticPtr;
 
 /**
  * This methods pushes a given variable on top of the stack.
@@ -107,12 +107,12 @@ void wrchr() {
 }
 
 void popg(int var) {
-    globalVars[var] = pop();
+    staticPtr[var] = pop();
 }
 
 void pushg(int var) {
     if (sp != 9999) {
-        pushg(globalVars[var]);
+        pushg(staticPtr[var]);
     }
 }
 void asf (int value) {

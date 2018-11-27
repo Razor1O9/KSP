@@ -18,21 +18,6 @@ int instructionCount;
 int pc;
 int staticAreaSize;
 
-int full_Stack() {
-    if (sp != 9999) {
-        return false;
-    } else {
-        return true;
-    }
-}
-int empty_Stack() {
-    if (sp == -1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 /**
  * This methods pushes a given variable on top of the stack.
  * @param var
@@ -126,7 +111,7 @@ void popg(int var) {
 }
 
 void pushg(int var) {
-    if (!full_Stack()) {
+    if (sp != 9999) {
         pushg(globalVars[var]);
     }
 }
@@ -144,7 +129,7 @@ void rsf () {
 
 void pushl (int value) {
     pc++;
-    if (!full_Stack()) {
+    if (sp != 9999) {
         calculationStack[sp] = calculationStack[fp +value];
         sp = sp +1;
     } else {

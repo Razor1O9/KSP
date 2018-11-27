@@ -7,7 +7,7 @@
 int version = 111;
 int calculationStack[9999];
 int sp = 0;
-unsigned int fp = 0;
+int fp = 0;
 int regADD = 0;
 bool haltThis;
 bool debugMode;
@@ -263,12 +263,6 @@ void eq() {
     } else {
         push(true);
     }
-}
-
-void dup() {
-    pc++;
-    calculationStack[sp] = calculationStack[sp - 1];
-    sp++;
 }
 
 void haltProgram(void) {

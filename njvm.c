@@ -188,16 +188,16 @@ void matchInstruction(void) {
             popg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == ASF) {
-            asf();
+            asf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == RSF) {
             rsf();
         }
         if (programMemory[pc] == PUSHL) {
-            pushl();
+            pushl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == POPL) {
-            popl();
+            popl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == EQ) {
             eq();
@@ -232,21 +232,15 @@ void matchInstruction(void) {
         if (programMemory[pc] == RET) {
             ret();
         }
-        if (programMemory[pc] == DROP) {
-            drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-        }
         if (programMemory[pc] == PUSHR) {
-            pushr(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            pushr();
         }
         if (programMemory[pc] == POPR) {
             popr();
         }
         if (programMemory[pc] == DROP) {
-            drop();
+            drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
-       /* if (programMemory[pc] == DUP) {
-            dup();
-        }*/
     }
 
 

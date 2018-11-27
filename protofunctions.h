@@ -9,7 +9,8 @@ extern int version; /* The current version */
 
 extern int calculationStack[9999]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
-
+extern int fp;
+extern int regADD;
 extern int staticAreaSize;
 extern int instructionCount;
 extern int programSize;
@@ -51,8 +52,7 @@ void brt (int value);
 void call (int value);
 void ret (void);
 void drop (int value);
-void pushr (int value);
+void pushr (void);
 void popr (void);
-void dup (void);
 void debugInstructions(void);
 void matchInstruction(void);

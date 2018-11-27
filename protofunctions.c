@@ -7,6 +7,8 @@
 int version = 111;
 int calculationStack[9999];
 int sp = 0;
+unsigned int fp = 0;
+int regADD = 0;
 bool haltThis;
 bool debugMode;
 int programMemory[9999];
@@ -15,6 +17,21 @@ int programSize;
 int instructionCount;
 int pc;
 int staticAreaSize;
+
+int full_Stack() {
+    if (sp != 9999) {
+        return false;
+    } else {
+        return true;
+    }
+}
+int empty_Stack() {
+    if (sp == -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 /**
  * This methods pushes a given variable on top of the stack.
@@ -103,105 +120,155 @@ void wrchr() {
     printf("%c", pop());
     pc += 1;
 }
+
 void popg(int var) {
     globalVars[var] = pop();
 }
+
 void pushg(int var) {
-    if (!stack_Full()) {
+    if (!full_Stack()) {
         pushg(globalVars[var]);
     }
 }
-void popr() {
+void asf (int value) {
+    push(fp);
+    fp = sp;
+    sp = sp + value;
+}
+void rsf () {
+    sp = fp;
+    fp = pop();
+}
 
+
+
+void pushl (int value) {
+    pc++;
+    if (!full_Stack()) {
+        calculationStack[sp] = calculationStack[fp +value];
+        sp = sp +1;
+    } else {
+        EXIT_FAILURE;
+    }
+}
+void popl (int value) {
+    calculationStack[fp + value] = pop();
+}
+
+void popr() {
+    pc++;
+    regADD = calculationStack[sp-1];
 }
 
 void pushr() {
-
+    push(regADD);
 }
 
 void drop(int var) {
- pc++;
- sp = sp - var;
+    pc++;
+    sp = sp - var;
 }
 
 void ret() {
-
+    pc = pop();
 }
 
-void call() {
-
+void call(int value) {
+    push(pc++);
+    pc = value;
 }
 
-void brt() {
-
+void brt(int value) {
+    if (pop() == 1){
+        pc = value;
+    } else {
+        EXIT_FAILURE;
+    }
 }
 
-void brf() {
-
+void brf(int value) {
+    if (pop() == 0){
+        pc = value;
+    } else {
+        EXIT_FAILURE;
+    }
 }
 
-void jmp() {
-
+void jmp(int value) {
+    pc = value;
 }
 
 void ge() {
-
+    int var1 = pop();
+    int var2 = pop();
+    pc = pc -2;
+    if (var2 >= var1){
+        push(true);
+    } else {
+        push(false);
+    }
 }
 
 void gt() {
-
+    int var1 = pop();
+    int var2 = pop();
+    pc = pc -2;
+    if (var2 > var1){
+        push(true);
+    } else {
+        push(false);
+    }
 }
 
 void le() {
+    int var1 = pop();
+    int var2 = pop();
+    pc = pc - 2;
+    if (var2 <= var1) {
+        push(true);
+    } else {
+        push(false);
+    }
 
 }
 
 void lt() {
     int var1 = pop();
     int var2 = pop();
-    pc = pc-2;
+    pc = pc - 2;
     if (var2 < var1) {
-        
+        push(true);
+    } else {
+        push(false);
     }
 }
 
 void ne() {
-    pc = pc-2;
-    if (pop() == (pop())){
-        push(false);
-    } else {
-        push (true);
-    }
-}
-
-void eq() {
-    pc = pc-2;
-    if (pop() != pop()){
+    int var1 = pop();
+    int var2 = pop();
+    pc = pc - 2;
+    if (var1 == var2) {
         push(false);
     } else {
         push(true);
     }
 }
-void dup(){
+
+void eq() {
+    int var1 = pop();
+    int var2 = pop();
+    pc = pc - 2;
+    if (var1 != var2) {
+        push(false);
+    } else {
+        push(true);
+    }
+}
+
+void dup() {
     pc++;
-    calculationStack[sp] = calculationStack[sp-1];
+    calculationStack[sp] = calculationStack[sp - 1];
     sp++;
-}
-
-int full_Stack(){
-    if (sp != 9999) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-int empty_Stack(){
-    if (sp == -1) {
-        return true;
-    } else {
-        return false;
-    }
 }
 
 void haltProgram(void) {

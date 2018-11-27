@@ -218,25 +218,25 @@ void matchInstruction(void) {
             ge();
         }
         if (programMemory[pc] == JMP) {
-            jmp();
+            jmp(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == BRF) {
-            brf();
+            brf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == BRT) {
-            brt();
+            brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == CALL) {
-            call();
+            call(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == RET) {
             ret();
         }
         if (programMemory[pc] == DROP) {
-            drop();
+            drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == PUSHR) {
-            pushr();
+            pushr(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == POPR) {
             popr();
@@ -244,9 +244,9 @@ void matchInstruction(void) {
         if (programMemory[pc] == DROP) {
             drop();
         }
-        if (programMemory[pc] == DUP) {
+       /* if (programMemory[pc] == DUP) {
             dup();
-        }
+        }*/
     }
 
 

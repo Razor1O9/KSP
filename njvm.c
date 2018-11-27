@@ -86,25 +86,33 @@ int main(int argc, char *argv[]) {
         return (EXIT_SUCCESS);
     }
     /* Searches the arguments for a binary file" */
-    if (strstr(argv[1], bin) != NULL || strstr(argv[2], bin) != NULL) {
-        /* Enables the debugger depending if the valid argument is given */
+    if(argc == 2){
+        if (strstr(argv[1], bin) == NULL) {
+            printf("\n\nNot a binary file\n");
+            return(EXIT_FAILURE);
+        }
+        else {
+            loadedFile = fopen(argv[1], "r");
+        }
+        if (!loadedFile) {
+            printf("Error: Code file '%s' cannot be opened \n", argv[1]);
+        }
+    } else if(argc == 3){
         if (strstr(argv[1], debug) != NULL) {
             debugMode = true;
+        } else if(strstr(argv[2], debug) != NULL) {
+            debugMode = true;
         }
-        if (argc > 2) {
-            if (strstr(argv[2], debug) != NULL) {
-                debugMode = true;
-            }
+        if(strstr(argv[1], bin) != NULL){
+            loadedFile = fopen(argv[1], "rb");
+        } else if(strstr(argv[2], bin) != NULL){
+            loadedFile = fopen(argv[2], "rb");
         }
-    if (argv[1] == bin) {
-        loadedFile = fopen(argv[1], "r");
-    } else {
-        loadedFile = fopen(argv[2], "r");
-    }
-    if (!loadedFile) {
-        printf("Error: Code file '%s' cannot be opened \n", argv[1]);
-    }
-    /* Checks if the binary file is a valid Ninja-Binary file */
+        if (!loadedFile) {
+            printf("Error: Code file '%s' cannot be opened \n", argv[1]);
+        }
+
+        /* Checks if the binary file is a valid Ninja-Binary file */
     for (reader = 0; reader < argc; reader++) {
         fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
         if (strncmp(&validBinFile[0], "NJBF", 4) != 0) {

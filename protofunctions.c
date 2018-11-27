@@ -37,7 +37,7 @@ void push(int var) {
 int pop() {
     if (sp > 0) {
         sp--;
-        pc += 1;
+        pc++;
     } else {
         printf("Keine Elemente im Stack vorhanden\n");
         haltProgram();
@@ -119,8 +119,9 @@ void pushr() {
 
 }
 
-void drop() {
-
+void drop(int var) {
+ pc++;
+ sp = sp - var;
 }
 
 void ret() {
@@ -156,17 +157,52 @@ void le() {
 }
 
 void lt() {
-
+    int var1 = pop();
+    int var2 = pop();
+    pc = pc-2;
+    if (var2 < var1) {
+        
+    }
 }
 
 void ne() {
-
+    pc = pc-2;
+    if (pop() == (pop())){
+        push(false);
+    } else {
+        push (true);
+    }
 }
 
 void eq() {
-
+    pc = pc-2;
+    if (pop() != pop()){
+        push(false);
+    } else {
+        push(true);
+    }
+}
+void dup(){
+    pc++;
+    calculationStack[sp] = calculationStack[sp-1];
+    sp++;
 }
 
+int full_Stack(){
+    if (sp != 9999) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+int empty_Stack(){
+    if (sp == -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 void haltProgram(void) {
     printf("Programm angehalten");

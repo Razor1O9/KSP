@@ -150,7 +150,6 @@ void matchInstruction(void) {
     for (pc = 0; pc < programSize; pc++) {
         if (programMemory[pc] == PUSHC) {
             push(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            pc++;
         }
         if (programMemory[pc] == HALT) {
             break;
@@ -183,10 +182,10 @@ void matchInstruction(void) {
             wrchr();
         }
         if (programMemory[pc] == PUSHG) {
-            pushg();
+            pushg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == POPG) {
-            popg();
+            popg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         }
         if (programMemory[pc] == ASF) {
             asf();
@@ -294,22 +293,22 @@ void matchInstruction(void) {
                     printf("%d: WRCHR\n", i);
                     break;
                 case PUSHG:
-                    printf("%d: PUSHG\n", i);
+                    printf("%d: PUSHG\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case POPG:
-                    printf("%d: POPG\n", i);
+                    printf("%d: POPG\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case ASF:
-                    printf("%d: ASF\n", i);
+                    printf("%d: ASF\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case RSF:
                     printf("%d: RSF\n", i);
                     break;
                 case PUSHL:
-                    printf("%d: PUSHL\n", i);
+                    printf("%d: PUSHL\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case POPL:
-                    printf("%d: POPL\n", i);
+                    printf("%d: POPL\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case EQ:
                     printf("%d: EQ\n", i);
@@ -330,22 +329,22 @@ void matchInstruction(void) {
                     printf("%d: GE\n", i);
                     break;
                 case JMP:
-                    printf("%d: JMP\n", i);
+                    printf("%d: JMP\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case BRF:
-                    printf("%d: BRF\n", i);
+                    printf("%d: BRF\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case BRT:
-                    printf("%d: BRT\n", i);
+                    printf("%d: BRT\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case CALL:
-                    printf("%d: CALL\n", i);
+                    printf("%d: CALL\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case RET:
                     printf("%d: RET\n", i);
                     break;
                 case DROP:
-                    printf("%d: DROP\n", i);
+                    printf("%d: DROP\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
                     break;
                 case PUSHR:
                     printf("%d: PUSHR\n", i);

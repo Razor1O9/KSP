@@ -18,8 +18,8 @@
 				</MakeCommands>
 			</Target>
 			<Target title="KSP">
-				<Option output="C:/Users/DVE/CLionProjects/njvm/KSP.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:\Users\DVE\CLionProjects\njvm"/>
+				<Option output="C:/Users/DVE/CLionProjects/ksp/KSP.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:\Users\DVE\CLionProjects\ksp"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -37,8 +37,8 @@
 				</MakeCommands>
 			</Target>
 			<Target title="KSP/fast">
-				<Option output="C:/Users/DVE/CLionProjects/njvm/KSP.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:\Users\DVE\CLionProjects\njvm"/>
+				<Option output="C:/Users/DVE/CLionProjects/ksp/KSP.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:\Users\DVE\CLionProjects\ksp"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>

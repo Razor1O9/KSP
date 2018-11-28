@@ -111,18 +111,18 @@ int main(int argc, char *argv[]) {
         }
 
         /* Checks if the binary file is a valid Ninja-Binary file */
-            fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
-            if (strncmp(&validBinFile[0], "N", 1) != 0) {
-                haltProgram();
-            }
-            if (strncmp(&validBinFile[1], "J", 1) != 0) {
-                haltProgram();
-            }
-            if (strncmp(&validBinFile[2], "B", 1) != 0) {
-                haltProgram();
-            }
-            if (strncmp(&validBinFile[3], "F", 1) != 0) {
-                haltProgram();
+        fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
+        if (strncmp(&validBinFile[0], "N", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[1], "J", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[2], "B", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[3], "F", 1) != 0) {
+            haltProgram();
 
         }
 
@@ -168,19 +168,27 @@ int main(int argc, char *argv[]) {
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
 }
+
 /*
  * ToDo implement a debugger with a proper instructionset
  */
 void debugger(void) {
     /*
-     * list instructions
-     * show stack
-     * show static variables
      * run till end without stop
      * run next instruction
-     * exit VM
      */
+    /* show Stack */
+    /* printf(calculationStack); */
+
+    /* show static Variables */
+    /* printf(staticPtr); */
+
+    /* list instructions */
     debugInstructions();
+
+    /* exit VM */
+    /* exit(EXIT_SUCCESS); */
+
 }
 
 

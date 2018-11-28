@@ -6,7 +6,7 @@
 #include "protofunctions.h"
 
 /* Makro-Deklarationen */
-#define HALT 0
+#define HALT (0<<24)
 #define PUSHC (1<<24)
 #define ADD (2<<24)
 #define SUB (3<<24)
@@ -40,7 +40,10 @@
 #define DUP (31<<24)
 
 #define IMMEDIATE(x) ((x) & 0x00FFFFFF)
-#define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
+#define OPCODE(i) ((i) & 0xFF000000)
+/* 0x00800000 -> 8 checks the sign (+ or -) */
+/* 0xFF000000 -> Fills the OpCode with 1 */
+#define SIGN_EXTEND(i) ((i) & 0x00000000 ? (i) | 0xFF000000 : (i))
 
 int version;
 int calculationStack[9999];

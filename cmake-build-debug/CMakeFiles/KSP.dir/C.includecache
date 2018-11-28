@@ -6,14 +6,12 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/DVE/CLionProjects/ksp/njvm.c
+C:/Users/DVE/CLionProjects/ksp/protofunctions.c
 stdio.h
 -
 stdlib.h
 -
 string.h
--
-unistd.h
 -
 protofunctions.h
 C:/Users/DVE/CLionProjects/ksp/protofunctions.h

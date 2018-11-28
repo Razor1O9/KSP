@@ -11,7 +11,7 @@ int fp = 0;
 int regADD = 0;
 bool haltThis;
 bool debugMode;
-unsigned int programMemory[9999];
+int programMemory[9999];
 int instructionCount;
 int pc;
 int staticAreaSize;
@@ -150,18 +150,14 @@ void call(int value) {
 }
 
 void brt(int value) {
-    if (pop() == 1){
+    if (pop() == 1) {
         pc = value;
-    } else {
-        EXIT_FAILURE;
     }
 }
 
 void brf(int value) {
-    if (pop() == 0){
+    if (pop() == 0) {
         pc = value;
-    } else {
-        EXIT_FAILURE;
     }
 }
 

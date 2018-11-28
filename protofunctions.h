@@ -16,7 +16,7 @@ extern int instructionCount;
 extern int staticVar;
 extern bool haltThis;
 extern bool debugMode;
-extern unsigned int programMemory[9999]; /* List of all Program Instructions */
+extern int programMemory[9999]; /* List of all Program Instructions */
 extern int pc; /* Program Counter Variable for Instructions */
 
 void haltProgram (void);

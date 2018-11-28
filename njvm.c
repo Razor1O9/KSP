@@ -50,7 +50,7 @@ int calculationStack[9999];
 int sp;
 bool haltThis = false;
 bool debugMode = false;
-unsigned int programMemory[9999];
+int programMemory[9999];
 
 int instructionCount = 0;
 int pc = 0;
@@ -203,7 +203,7 @@ void debugger(void) {
  * @return
  */
 void matchInstruction(int pc) {
-        int clearedOP = programMemory[pc] & 0xFF000000;
+        int clearedOP = SIGN_EXTEND(programMemory[pc] & 0xFF000000);
         if (clearedOP == PUSHC) {
             push((IMMEDIATE(programMemory[pc])));
             return;
@@ -249,15 +249,15 @@ void matchInstruction(int pc) {
             return;
         }
         if (clearedOP == PUSHG) {
-            pushg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            pushg(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == POPG) {
-            popg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            popg(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == ASF) {
-            asf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            asf(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == RSF) {
@@ -265,11 +265,11 @@ void matchInstruction(int pc) {
             return;
         }
         if (clearedOP == PUSHL) {
-            pushl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            pushl(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == POPL) {
-            popl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            popl(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == EQ) {
@@ -297,19 +297,19 @@ void matchInstruction(int pc) {
             return;
         }
         if (clearedOP == JMP) {
-            jmp(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            jmp(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == BRF) {
-            brf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            brf(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == BRT) {
-            brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            brt(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == CALL) {
-            call(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            call(IMMEDIATE(programMemory[pc]));
             return;
         }
         if (clearedOP == RET) {
@@ -325,7 +325,7 @@ void matchInstruction(int pc) {
             return;
         }
         if (clearedOP == DROP) {
-            drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            drop(IMMEDIATE(programMemory[pc]));
             return;
         }
     }
@@ -340,12 +340,12 @@ void matchInstruction(int pc) {
 void debugInstructions(void) {
     int i;
     for (i = 0; i < instructionCount; i++) {
-        switch (programMemory[i] & 0xFF000000) {
+        switch SIGN_EXTEND(programMemory[i] & 0xFF000000) {
             case HALT:
                 printf("%d: HALT\n", i);
                 break;
             case PUSHC:
-                printf("%d: PUSHC\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: PUSHC\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case ADD:
                 printf("%d: ADD\n", i);
@@ -375,22 +375,22 @@ void debugInstructions(void) {
                 printf("%d: WRCHR\n", i);
                 break;
             case PUSHG:
-                printf("%d: PUSHG\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: PUSHG\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case POPG:
-                printf("%d: POPG\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: POPG\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case ASF:
-                printf("%d: ASF\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: ASF\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case RSF:
                 printf("%d: RSF\n", i);
                 break;
             case PUSHL:
-                printf("%d: PUSHL\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: PUSHL\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case POPL:
-                printf("%d: POPL\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: POPL\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case EQ:
                 printf("%d: EQ\n", i);
@@ -411,22 +411,22 @@ void debugInstructions(void) {
                 printf("%d: GE\n", i);
                 break;
             case JMP:
-                printf("%d: JMP\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: JMP\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case BRF:
-                printf("%d: BRF\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: BRF\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case BRT:
-                printf("%d: BRT\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: BRT\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case CALL:
-                printf("%d: CALL\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: CALL\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case RET:
                 printf("%d: RET\n", i);
                 break;
             case DROP:
-                printf("%d: DROP\t %d \n", i, SIGN_EXTEND(IMMEDIATE(programMemory[i])));
+                printf("%d: DROP\t %d \n", i,(IMMEDIATE(programMemory[i])));
                 break;
             case PUSHR:
                 printf("%d: PUSHR\n", i);

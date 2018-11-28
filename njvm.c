@@ -64,7 +64,7 @@ int *staticPtr;
 int main(int argc, char *argv[]) {
     int reader;
     int count;
-    unsigned int *ptr;
+    unsigned int *instrPtr;
     char bin[] = ".bin";
     char debug[] = "--debug";
     FILE *loadedFile = NULL;
@@ -141,11 +141,12 @@ int main(int argc, char *argv[]) {
         staticAreaSize = programHeader[2];
 
         staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
-        ptr = malloc(instructionCount * sizeof(unsigned int));
+        instrPtr = malloc(instructionCount * sizeof(unsigned int));
         count = 0;
         do {
             /* reads the File sourcecode */
             fread(&programMemory[count], sizeof(unsigned int), 1, loadedFile);
+            instrPtr[count] = programMemory[count];
             int instr = programMemory[count];
             count++;
         } while (count < instructionCount);

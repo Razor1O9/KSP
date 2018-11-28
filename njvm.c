@@ -50,7 +50,7 @@ int calculationStack[9999];
 int sp;
 bool haltThis = false;
 bool debugMode = false;
-unsigned int programMemory[9999];
+unsigned int *programMemory;
 
 int instructionCount = 0;
 int pc = 0;
@@ -67,8 +67,6 @@ int *staticPtr;
  */
 int main(int argc, char *argv[]) {
     int reader = 0;
-    int count;
-    unsigned int *instrPtr;
     char bin[] = ".bin";
     char debug[] = "--debug";
     FILE *loadedFile = NULL;
@@ -145,19 +143,15 @@ int main(int argc, char *argv[]) {
         staticAreaSize = programHeader[2];
 
         staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
-        instrPtr = malloc(instructionCount * sizeof(unsigned int));
-        count = 0;
-        do {
-            /* reads the File sourcecode */
-            fread(&programMemory[count], sizeof(unsigned int), 1, loadedFile);
-            instrPtr[count] = programMemory[count];
-            count++;
-        } while (count < instructionCount);
+        programMemory = malloc(instructionCount * sizeof(unsigned int));
+
+        fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
+
 
         while (!haltThis) {
-            for (pc = 0; pc < instructionCount; pc++) {
-                matchInstruction(pc);
-            }
+            unsigned int instr = programMemory[pc];
+            pc++;
+            matchInstruction(instr);
         }
         if (debugMode == true) {
             debugger();
@@ -196,139 +190,146 @@ void debugger(void) {
 
 }
 
+/*
+ * while(!halt)
+ * {
+ * unsigned int ir = programMemory[pc]
+ * pc++
+ * exec(ir)
+ * }
+ */
 
 /**
  *
  * @return
  */
-void matchInstruction(int pc) {
-        int clearedOP = SIGN_EXTEND(programMemory[pc] & 0xFF000000);
-        if (clearedOP == PUSHC) {
-            push((IMMEDIATE(programMemory[pc])));
-            return;
-        }
-        if (clearedOP == HALT) {
-            haltProgram();
-            return;
-        }
-        if (clearedOP == ADD) {
-            add();
-            return;
-        }
-        if (clearedOP == SUB) {
-            sub();
-            return;
-        }
-        if (clearedOP == MUL) {
-            mul();
-            return;
-        }
-        if (clearedOP == DIV) {
-            divide();
-            return;
-        }
-        if (clearedOP == MOD) {
-            mod();
-            return;
-        }
-        if (clearedOP == RDINT) {
-            rdint();
-            return;
-        }
-        if (clearedOP == WRINT) {
-            wrint();
-            return;
-        }
-        if (clearedOP == RDCHR) {
-            rdchr();
-            return;
-        }
-        if (clearedOP == WRCHR) {
-            wrchr();
-            return;
-        }
-        if (clearedOP == PUSHG) {
-            pushg(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == POPG) {
-            popg(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == ASF) {
-            asf(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == RSF) {
-            rsf();
-            return;
-        }
-        if (clearedOP == PUSHL) {
-            pushl(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == POPL) {
-            popl(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == EQ) {
-            eq();
-            return;
-        }
-        if (clearedOP == NE) {
-            ne();
-            return;
-        }
-        if (clearedOP == LT) {
-            lt();
-            return;
-        }
-        if (clearedOP == LE) {
-            le();
-            return;
-        }
-        if (clearedOP == GT) {
-            gt();
-            return;
-        }
-        if (clearedOP == GE) {
-            ge();
-            return;
-        }
-        if (clearedOP == JMP) {
-            jmp(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == BRF) {
-            brf(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == BRT) {
-            brt(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == CALL) {
-            call(IMMEDIATE(programMemory[pc]));
-            return;
-        }
-        if (clearedOP == RET) {
-            ret();
-            return;
-        }
-        if (clearedOP == PUSHR) {
-            pushr();
-            return;
-        }
-        if (clearedOP == POPR) {
-            popr();
-            return;
-        }
-        if (clearedOP == DROP) {
-            drop(IMMEDIATE(programMemory[pc]));
-            return;
-        }
+void matchInstruction(unsigned int inst) {
+    int clearedOP = (programMemory[pc] & 0xFF000000);
+    if (clearedOP == PUSHC) {
+        push(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
     }
-
+    if (clearedOP == HALT) {
+        haltProgram();
+        return;
+    }
+    if (clearedOP == ADD) {
+        add();
+        return;
+    }
+    if (clearedOP == SUB) {
+        sub();
+        return;
+    }
+    if (clearedOP == MUL) {
+        mul();
+        return;
+    }
+    if (clearedOP == DIV) {
+        divide();
+        return;
+    }
+    if (clearedOP == MOD) {
+        mod();
+        return;
+    }
+    if (clearedOP == RDINT) {
+        rdint();
+        return;
+    }
+    if (clearedOP == WRINT) {
+        wrint();
+        return;
+    }
+    if (clearedOP == RDCHR) {
+        rdchr();
+        return;
+    }
+    if (clearedOP == WRCHR) {
+        wrchr();
+        return;
+    }
+    if (clearedOP == PUSHG) {
+        pushg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == POPG) {
+        popg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == ASF) {
+        asf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == RSF) {
+        rsf();
+        return;
+    }
+    if (clearedOP == PUSHL) {
+        pushl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == POPL) {
+        popl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == EQ) {
+        eq();
+        return;
+    }
+    if (clearedOP == NE) {
+        ne();
+        return;
+    }
+    if (clearedOP == LT) {
+        lt();
+        return;
+    }
+    if (clearedOP == LE) {
+        le();
+        return;
+    }
+    if (clearedOP == GT) {
+        gt();
+        return;
+    }
+    if (clearedOP == GE) {
+        ge();
+        return;
+    }
+    if (clearedOP == JMP) {
+        jmp(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == BRF) {
+        brf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == BRT) {
+        brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == CALL) {
+        call(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+    if (clearedOP == RET) {
+        ret();
+        return;
+    }
+    if (clearedOP == PUSHR) {
+        pushr();
+        return;
+    }
+    if (clearedOP == POPR) {
+        popr();
+        return;
+    }
+    if (clearedOP == DROP) {
+        drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        return;
+    }
+}
 
 
 /**
@@ -344,7 +345,7 @@ void debugInstructions(void) {
                 printf("%d: HALT\n", i);
                 break;
             case PUSHC:
-                printf("%d: PUSHC\t %d \n", i, (IMMEDIATE(programMemory[i])));
+                printf("%d: PUSHC\t %d \n", i, (SIGN_EXTEND(IMMEDIATE(programMemory[i]))));
                 break;
             case ADD:
                 printf("%d: ADD\n", i);
@@ -374,22 +375,22 @@ void debugInstructions(void) {
                 printf("%d: WRCHR\n", i);
                 break;
             case PUSHG:
-                printf("%d: PUSHG\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: PUSHG\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case POPG:
-                printf("%d: POPG\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: POPG\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case ASF:
-                printf("%d: ASF\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: ASF\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case RSF:
                 printf("%d: RSF\n", i);
                 break;
             case PUSHL:
-                printf("%d: PUSHL\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: PUSHL\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case POPL:
-                printf("%d: POPL\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: POPL\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case EQ:
                 printf("%d: EQ\n", i);
@@ -410,22 +411,22 @@ void debugInstructions(void) {
                 printf("%d: GE\n", i);
                 break;
             case JMP:
-                printf("%d: JMP\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: JMP\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case BRF:
-                printf("%d: BRF\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: BRF\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case BRT:
-                printf("%d: BRT\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: BRT\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case CALL:
-                printf("%d: CALL\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: CALL\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case RET:
                 printf("%d: RET\n", i);
                 break;
             case DROP:
-                printf("%d: DROP\t %d \n", i,(IMMEDIATE(programMemory[i])));
+                printf("%d: DROP\t %d \n", i, (IMMEDIATE(programMemory[i])));
                 break;
             case PUSHR:
                 printf("%d: PUSHR\n", i);

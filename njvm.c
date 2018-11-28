@@ -201,98 +201,128 @@ void debugger(void) {
  */
 void matchInstruction(void) {
     for (pc = 0; pc < instructionCount; pc++) {
-        if (programMemory[pc] == PUSHC) {
-            push(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-        }
-        if (programMemory[pc] == HALT) {
+        int clearedOP = programMemory[pc] & 0xFF000000;
+        if (clearedOP == PUSHC) {
+            push((IMMEDIATE(programMemory[pc])));
             break;
         }
-        if (programMemory[pc] == ADD) {
+        if (clearedOP == HALT) {
+            break;
+        }
+        if (clearedOP == ADD) {
             add();
+            break;
         }
-        if (programMemory[pc] == SUB) {
+        if (clearedOP == SUB) {
             sub();
+            break;
         }
-        if (programMemory[pc] == MUL) {
+        if (clearedOP == MUL) {
             mul();
+            break;
         }
-        if (programMemory[pc] == DIV) {
+        if (clearedOP == DIV) {
             divide();
+            break;
         }
-        if (programMemory[pc] == MOD) {
+        if (clearedOP == MOD) {
             mod();
+            break;
         }
-        if (programMemory[pc] == RDINT) {
+        if (clearedOP == RDINT) {
             rdint();
+            break;
         }
-        if (programMemory[pc] == WRINT) {
+        if (clearedOP == WRINT) {
             wrint();
+            break;
         }
-        if (programMemory[pc] == RDCHR) {
+        if (clearedOP == RDCHR) {
             rdchr();
+            break;
         }
-        if (programMemory[pc] == WRCHR) {
+        if (clearedOP == WRCHR) {
             wrchr();
+            break;
         }
-        if (programMemory[pc] == PUSHG) {
+        if (clearedOP == PUSHG) {
             pushg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
-        if (programMemory[pc] == POPG) {
+        if (clearedOP == POPG) {
             popg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
-        if (programMemory[pc] == ASF) {
+        if (clearedOP == ASF) {
             asf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
-        if (programMemory[pc] == RSF) {
+        if (clearedOP == RSF) {
             rsf();
+            break;
         }
-        if (programMemory[pc] == PUSHL) {
+        if (clearedOP == PUSHL) {
             pushl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
-        if (programMemory[pc] == POPL) {
+        if (clearedOP == POPL) {
             popl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
-        if (programMemory[pc] == EQ) {
+        if (clearedOP == EQ) {
             eq();
+            break;
         }
-        if (programMemory[pc] == NE) {
+        if (clearedOP == NE) {
             ne();
+            break;
         }
-        if (programMemory[pc] == LT) {
+        if (clearedOP == LT) {
             lt();
+            break;
         }
-        if (programMemory[pc] == LE) {
+        if (clearedOP == LE) {
             le();
         }
-        if (programMemory[pc] == GT) {
+        if (clearedOP == GT) {
             gt();
+            break;
         }
-        if (programMemory[pc] == GE) {
+        if (clearedOP == GE) {
             ge();
+            break;
         }
-        if (programMemory[pc] == JMP) {
+        if (clearedOP == JMP) {
             jmp(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
-        if (programMemory[pc] == BRF) {
+        if (clearedOP == BRF) {
             brf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
-        if (programMemory[pc] == BRT) {
-            brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        if (clearedOP == BRT) {
+            brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])))
+            break;
         }
-        if (programMemory[pc] == CALL) {
+        if (clearedOP == CALL) {
             call(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
-        if (programMemory[pc] == RET) {
+        if (clearedOP == RET) {
             ret();
+            break;
         }
-        if (programMemory[pc] == PUSHR) {
+        if (clearedOP == PUSHR) {
             pushr();
+            break;
         }
-        if (programMemory[pc] == POPR) {
+        if (clearedOP == POPR) {
             popr();
+            break;
         }
-        if (programMemory[pc] == DROP) {
+        if (clearedOP == DROP) {
             drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            break;
         }
     }
 

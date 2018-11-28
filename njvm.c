@@ -151,7 +151,6 @@ int main(int argc, char *argv[]) {
             /* reads the File sourcecode */
             fread(&programMemory[count], sizeof(unsigned int), 1, loadedFile);
             instrPtr[count] = programMemory[count];
-            int instr = programMemory[count];
             count++;
         } while (count < instructionCount);
 

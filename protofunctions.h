@@ -52,5 +52,5 @@ void drop (int value);
 void pushr (void);
 void popr (void);
 void debugInstructions(void);
-void matchInstruction(void);
+void matchInstruction(int pc);
 void debugger(void);

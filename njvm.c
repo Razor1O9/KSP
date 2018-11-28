@@ -51,6 +51,7 @@ int sp;
 bool haltThis = false;
 bool debugMode = false;
 unsigned int programMemory[9999];
+
 int instructionCount = 0;
 int pc = 0;
 int staticAreaSize = 0;
@@ -155,7 +156,9 @@ int main(int argc, char *argv[]) {
         } while (count < instructionCount);
 
         while (!haltThis) {
-            matchInstruction();
+            for (pc = 0; pc < instructionCount; pc++) {
+                matchInstruction(pc);
+            }
         }
         if (debugMode == true) {
             debugger();
@@ -199,134 +202,135 @@ void debugger(void) {
  *
  * @return
  */
-void matchInstruction(void) {
-    for (pc = 0; pc < instructionCount; pc++) {
+void matchInstruction(int pc) {
         int clearedOP = programMemory[pc] & 0xFF000000;
         if (clearedOP == PUSHC) {
             push((IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == HALT) {
-            break;
+            haltProgram();
+            return;
         }
         if (clearedOP == ADD) {
             add();
-            break;
+            return;
         }
         if (clearedOP == SUB) {
             sub();
-            break;
+            return;
         }
         if (clearedOP == MUL) {
             mul();
-            break;
+            return;
         }
         if (clearedOP == DIV) {
             divide();
-            break;
+            return;
         }
         if (clearedOP == MOD) {
             mod();
-            break;
+            return;
         }
         if (clearedOP == RDINT) {
             rdint();
-            break;
+            return;
         }
         if (clearedOP == WRINT) {
             wrint();
-            break;
+            return;
         }
         if (clearedOP == RDCHR) {
             rdchr();
-            break;
+            return;
         }
         if (clearedOP == WRCHR) {
             wrchr();
-            break;
+            return;
         }
         if (clearedOP == PUSHG) {
             pushg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == POPG) {
             popg(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == ASF) {
             asf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == RSF) {
             rsf();
-            break;
+            return;
         }
         if (clearedOP == PUSHL) {
             pushl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == POPL) {
             popl(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == EQ) {
             eq();
-            break;
+            return;
         }
         if (clearedOP == NE) {
             ne();
-            break;
+            return;
         }
         if (clearedOP == LT) {
             lt();
-            break;
+            return;
         }
         if (clearedOP == LE) {
             le();
+            return;
         }
         if (clearedOP == GT) {
             gt();
-            break;
+            return;
         }
         if (clearedOP == GE) {
             ge();
-            break;
+            return;
         }
         if (clearedOP == JMP) {
             jmp(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == BRF) {
             brf(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == BRT) {
-            brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])))
-            break;
+            brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            return;
         }
         if (clearedOP == CALL) {
             call(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
         if (clearedOP == RET) {
             ret();
-            break;
+            return;
         }
         if (clearedOP == PUSHR) {
             pushr();
-            break;
+            return;
         }
         if (clearedOP == POPR) {
             popr();
-            break;
+            return;
         }
         if (clearedOP == DROP) {
             drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
-            break;
+            return;
         }
     }
 
-}
+
 
 /**
  * ONLY DEBUG

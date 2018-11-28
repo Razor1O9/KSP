@@ -11,7 +11,7 @@ int fp = 0;
 int regADD = 0;
 bool haltThis;
 bool debugMode;
-int programMemory[9999];
+unsigned int programMemory[9999];
 int instructionCount;
 int pc;
 int staticAreaSize;

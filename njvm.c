@@ -50,7 +50,7 @@ int calculationStack[9999];
 int sp;
 bool haltThis = false;
 bool debugMode = false;
-int programMemory[9999];
+unsigned int programMemory[9999];
 
 int instructionCount = 0;
 int pc = 0;
@@ -66,7 +66,7 @@ int *staticPtr;
  * @return
  */
 int main(int argc, char *argv[]) {
-    int reader;
+    int reader = 0;
     int count;
     unsigned int *instrPtr;
     char bin[] = ".bin";

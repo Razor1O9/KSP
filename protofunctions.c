@@ -22,7 +22,7 @@ int *staticPtr;
  * @param var
  */
 void push(int var) {
-    if (sp < 9999) {
+    if (sp < 1000) {
         calculationStack[sp] = var;
         sp++;
     } else {
@@ -102,7 +102,7 @@ void popg(int var) {
 }
 
 void pushg(int var) {
-    if (sp != 9999) {
+    if (sp != 1000) {
         push(staticPtr[var]);
     }
 }
@@ -119,7 +119,7 @@ void rsf () {
 
 
 void pushl (int value) {
-    if (sp != 9999) {
+    if (sp != 1000) {
         calculationStack[sp] = calculationStack[fp + value];
         sp = sp + 1;
     }

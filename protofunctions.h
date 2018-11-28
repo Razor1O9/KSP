@@ -50,6 +50,6 @@ void ret (void);
 void drop (int);
 void pushr (void);
 void popr (void);
-void debugInstructions(void);
+void debugInstructions(unsigned int);
 void matchInstruction(unsigned int);
-void debugger(void);
+void debugger(int);

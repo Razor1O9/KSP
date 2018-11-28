@@ -15,35 +15,35 @@
 #define MOD 6
 #define RDINT 7
 #define WRINT 8
-#define RDCHR (9
-#define WRCHR (10<<24)
-#define PUSHG (11<<24)
-#define POPG (12<<24)
-#define ASF (13<<24)
-#define RSF (14<<24)
-#define PUSHL (15<<24)
-#define POPL (16<<24)
-#define EQ (17<<24)
-#define NE (18<<24)
-#define LT (19<<24)
-#define LE (20<<24)
-#define GT (21<<24)
-#define GE (22<<24)
-#define JMP (23<<24)
-#define BRF (24<<24)
-#define BRT (25<<24)
-#define CALL (26<<24)
-#define RET  (27<<24)
-#define DROP (28<<24)
-#define PUSHR (29<<24)
-#define POPR (30<<24)
-#define DUP (31<<24)
+#define RDCHR 9
+#define WRCHR 10
+#define PUSHG 11
+#define POPG 12
+#define ASF 13
+#define RSF 14
+#define PUSHL 15
+#define POPL 16
+#define EQ 17
+#define NE 18
+#define LT 19
+#define LE 20
+#define GT 21
+#define GE 22
+#define JMP 23
+#define BRF 24
+#define BRT 25
+#define CALL 26
+#define RET  27
+#define DROP 28
+#define PUSHR 29
+#define POPR 30
+#define DUP 31
 
 #define IMMEDIATE(x) ((x) & 0x00FFFFFF)
 #define OPCODE(i) ((i) & 0xFF000000)
 /* 0x00800000 -> 8 checks the sign (+ or -) */
 /* 0xFF000000 -> Fills the OpCode with 1 */
-#define SIGN_EXTEND(i) ((i) & 0x00000000 ? (i) | 0xFF000000 : (i))
+#define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
 int version;
 int calculationStack[1000];
@@ -53,6 +53,7 @@ bool debugMode = false;
 unsigned int *programMemory;
 
 int instructionCount = 0;
+unsigned int instr;
 int pc = 0;
 int staticAreaSize = 0;
 int *staticPtr;
@@ -146,14 +147,14 @@ int main(int argc, char *argv[]) {
         programMemory = malloc(instructionCount * sizeof(unsigned int));
 
         fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
-
+    fclose(loadedFile);
 
         while (!haltThis) {
-            unsigned int instr = programMemory[pc];
+            instr = programMemory[pc];
             matchInstruction(instr);
         }
         if (debugMode == true) {
-            debugger();
+            debugger(instr);
         }
 
     } else {
@@ -170,7 +171,7 @@ int main(int argc, char *argv[]) {
 /*
  * ToDo implement a debugger with a proper instructionset
  */
-void debugger(void) {
+void debugger(int instr) {
     /*
      * run till end without stop
      * run next instruction
@@ -182,7 +183,7 @@ void debugger(void) {
     /* printf(staticPtr); */
 
     /* list instructions */
-    debugInstructions();
+    debugInstructions(instr);
 
     /* exit VM */
     /* exit(EXIT_SUCCESS); */
@@ -193,160 +194,159 @@ void debugger(void) {
  *
  * @return
  */
-void matchInstruction(unsigned int inst) {
-    int shift = (programMemory[pc] & 0xFF000000);
-    inst =  inst>>24; /* OpCode forwarded */
-    if (inst == PUSHC) {
-        push(SIGN_EXTEND(IMMEDIATE(shift)));
+void matchInstruction(unsigned int instr) {
+    int shift = instr>>24;
+    if (shift == PUSHC) {
+        push(SIGN_EXTEND(IMMEDIATE(instr)));
         pc++;
         return;
     }
-    if (inst == HALT) {
+    if (shift == HALT) {
         haltProgram();
         pc++;
         return;
     }
-    if (inst == ADD) {
+    if (shift == ADD) {
         add();
         pc++;
         return;
     }
-    if (inst == SUB) {
+    if (shift == SUB) {
         sub();
         pc++;
         return;
     }
-    if (inst == MUL) {
+    if (shift == MUL) {
         mul();
         pc++;
         return;
     }
-    if (inst == DIV) {
+    if (shift == DIV) {
         divide();
         pc++;
         return;
     }
-    if (inst == MOD) {
+    if (shift == MOD) {
         mod();
         pc++;
         return;
     }
-    if (inst == RDINT) {
+    if (shift == RDINT) {
         rdint();
         pc++;
         return;
     }
-    if (inst == WRINT) {
+    if (shift == WRINT) {
         wrint();
         pc++;
         return;
     }
-    if (inst == RDCHR) {
+    if (shift == RDCHR) {
         rdchr();
         pc++;
         return;
     }
-    if (inst == WRCHR) {
+    if (shift == WRCHR) {
         wrchr();
         pc++;
         return;
     }
-    if (inst == PUSHG) {
+    if (shift == PUSHG) {
         pushg(SIGN_EXTEND(IMMEDIATE(shift)));
         pc++;
         return;
     }
-    if (inst == POPG) {
+    if (shift == POPG) {
         popg(SIGN_EXTEND(IMMEDIATE(shift)));
         pc++;
         return;
     }
-    if (inst == ASF) {
+    if (shift == ASF) {
         asf(SIGN_EXTEND(IMMEDIATE(shift)));
         pc++;
         return;
     }
-    if (inst == RSF) {
+    if (shift == RSF) {
         rsf();
         pc++;
         return;
     }
-    if (inst == PUSHL) {
+    if (shift == PUSHL) {
         pushl(SIGN_EXTEND(IMMEDIATE(shift)));
         pc++;
         return;
     }
-    if (inst == POPL) {
+    if (shift == POPL) {
         popl(SIGN_EXTEND(IMMEDIATE(shift)));
         pc++;
         return;
     }
-    if (inst == EQ) {
+    if (shift == EQ) {
         eq();
         pc++;
         return;
     }
-    if (inst == NE) {
+    if (shift == NE) {
         ne();
         pc++;
         return;
     }
-    if (inst == LT) {
+    if (shift == LT) {
         lt();
         pc++;
         return;
     }
-    if (inst == LE) {
+    if (shift == LE) {
         le();
         pc++;
         return;
     }
-    if (inst == GT) {
+    if (shift == GT) {
         gt();
         pc++;
         return;
     }
-    if (inst == GE) {
+    if (shift == GE) {
         ge();
         pc++;
         return;
     }
-    if (inst == JMP) {
+    if (shift == JMP) {
         jmp(SIGN_EXTEND(IMMEDIATE(shift)));
         pc++;
         return;
     }
-    if (inst == BRF) {
+    if (shift == BRF) {
         brf(SIGN_EXTEND(IMMEDIATE(shift)));
         pc++;
         return;
     }
-    if (inst == BRT) {
+    if (shift == BRT) {
         brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         pc++;
         return;
     }
-    if (inst == CALL) {
+    if (shift == CALL) {
         call(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         pc++;
         return;
     }
-    if (inst == RET) {
+    if (shift == RET) {
         ret();
         pc++;
         return;
     }
-    if (inst == PUSHR) {
+    if (shift == PUSHR) {
         pushr();
         pc++;
         return;
     }
-    if (inst == POPR) {
+    if (shift == POPR) {
         popr();
         pc++;
         return;
     }
-    if (inst == DROP) {
+    if (shift == DROP) {
         drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
         pc++;
         return;
@@ -359,12 +359,11 @@ void matchInstruction(unsigned int inst) {
  * This method outputs all instructions inside a given program.
  * The listing order is from top to bottom.
  */
-void debugInstructions(void) {
+void debugInstructions(unsigned int inst) {
     int i;
     for (i = 0; i < instructionCount; i++) {
-        switch SIGN_EXTEND(programMemory[i] & 0xFF000000) {
-            case HALT:
-                printf("%d: HALT\n", i);
+        switch SIGN_EXTEND(inst & 0xFF000000) {
+            case HALT:printf("%d: HALT\n", i);
                 break;
             case PUSHC:
                 printf("%d: PUSHC\t %u \n", i, (SIGN_EXTEND(IMMEDIATE(programMemory[i]))));

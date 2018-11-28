@@ -5,7 +5,7 @@
 
 
 int version = 4;
-int calculationStack[9999];
+int calculationStack[1000];
 int sp = 0;
 int fp = 0;
 int regADD = 0;

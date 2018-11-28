@@ -46,7 +46,7 @@
 #define SIGN_EXTEND(i) ((i) & 0x00000000 ? (i) | 0xFF000000 : (i))
 
 int version;
-int calculationStack[9999];
+int calculationStack[1000];
 int sp;
 bool haltThis = false;
 bool debugMode = false;

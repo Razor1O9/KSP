@@ -147,13 +147,14 @@ int main(int argc, char *argv[]) {
         programMemory = malloc(instructionCount * sizeof(unsigned int));
 
         fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
-    fclose(loadedFile);
+        fclose(loadedFile);
 
         while (!haltThis) {
             instr = programMemory[pc];
             matchInstruction(instr);
         }
         if (debugMode == true) {
+            instr = programMemory[0];
             debugger(instr);
         }
 
@@ -163,7 +164,7 @@ int main(int argc, char *argv[]) {
         return (EXIT_FAILURE);
     }
 
-
+    printf("%d ", calculationStack[fp]);
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
 }
@@ -363,7 +364,8 @@ void debugInstructions(unsigned int inst) {
     int i;
     for (i = 0; i < instructionCount; i++) {
         switch SIGN_EXTEND(inst & 0xFF000000) {
-            case HALT:printf("%d: HALT\n", i);
+            case HALT:
+                printf("%d: HALT\n", i);
                 break;
             case PUSHC:
                 printf("%d: PUSHC\t %u \n", i, (SIGN_EXTEND(IMMEDIATE(programMemory[i]))));

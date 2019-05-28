@@ -98,6 +98,11 @@ int main(int argc, char *argv[]) {
         if (!loadedFile) {
             printf("Error: Code file '%s' cannot be opened \n", argv[1]);
         }
+        while (!haltThis) {
+            instr = programMemory[pc];
+            matchInstruction(instr);
+            printf("%d ", calculationStack[fp]);
+        }
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
             debugMode = true;
@@ -164,7 +169,6 @@ int main(int argc, char *argv[]) {
         return (EXIT_FAILURE);
     }
 
-    printf("%d ", calculationStack[fp]);
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
 }

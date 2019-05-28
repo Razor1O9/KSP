@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/DVE/CLionProjects/ksp/njvm.c
+F:/KSP/njvm.c
 stdio.h
 -
 stdlib.h
@@ -16,9 +16,9 @@ string.h
 unistd.h
 -
 protofunctions.h
-C:/Users/DVE/CLionProjects/ksp/protofunctions.h
+F:/KSP/protofunctions.h
 
-C:/Users/DVE/CLionProjects/ksp/protofunctions.h
+F:/KSP/protofunctions.h
 stdio.h
 -
 stdlib.h

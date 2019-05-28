@@ -1,0 +1,17 @@
+﻿Leider besitzt die derzeitige Version keinen ausführbaren Debugger.
+
+In Zukunft sind folgende Funktionalitäten geplant:
+
+
+
+-showStack // Zeigt den derzeitigen Stack an
+
+-showStatic // Zeigt die statischen Daten
+
+-run // Weiterlaufen ohne anhalten
+
+-list // Listet die Instruktionen des Programms auf
+
+-next // Ausführen des nächsten Befehls
+
+-exit // Verlassen der VM

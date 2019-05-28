@@ -7,19 +7,20 @@ typedef enum { false, true } bool;
 extern int version; /* The current version */
 
 extern int *staticPtr; /* Lists all global Variables */
-extern int calculationStack[1000]; /* Stack for Calculation */
+extern int calculationStack[9999]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
 extern int fp;
 extern int regADD;
 extern int staticAreaSize;
 extern int instructionCount;
+extern int staticVar;
 extern bool haltThis;
 extern bool debugMode;
-extern unsigned int *programMemory; /* List of all Program Instructions */
+extern unsigned int programMemory[9999]; /* List of all Program Instructions */
 extern int pc; /* Program Counter Variable for Instructions */
 
 void haltProgram (void);
-void push (int);
+void push (int value);
 int pop (void);
 void add (void);
 void sub (void);
@@ -30,26 +31,26 @@ void rdint (void);
 void wrint (void);
 void rdchr (void);
 void wrchr (void);
-void pushg (int);
-void popg (int);
-void asf (int);
+void pushg (int value);
+void popg (int value);
+void asf (int value);
 void rsf ();
-void pushl (int);
-void popl (int);
+void pushl (int value);
+void popl (int value);
 void eq (void);
 void ne (void);
 void lt (void);
 void le (void);
 void gt (void);
 void ge (void);
-void jmp (int);
-void brf (int);
-void brt (int);
-void call (int);
+void jmp (int value);
+void brf (int value);
+void brt (int value);
+void call (int value);
 void ret (void);
-void drop (int);
+void drop (int value);
 void pushr (void);
 void popr (void);
-void debugInstructions(unsigned int);
-void matchInstruction(unsigned int);
-void debugger(int);
+void debugInstructions(void);
+void matchInstruction(void);
+void debugger(void);

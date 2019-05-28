@@ -1,9 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/KSP.dir/library.c.obj"
   "CMakeFiles/KSP.dir/njvm.c.obj"
   "CMakeFiles/KSP.dir/protofunctions.c.obj"
-  "../KSP.pdb"
-  "../KSP.exe"
-  "../KSP.exe.manifest"
+  "KSP.pdb"
+  "KSP.exe"
+  "KSP.exe.manifest"
   "libKSP.dll.a"
 )
 

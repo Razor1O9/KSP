@@ -6,23 +6,11 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/DVE/CLionProjects/ksp/njvm.c
+F:/KSP2019/KSP/library.c
+library.h
+F:/KSP2019/KSP/library.h
 stdio.h
 -
-stdlib.h
--
-string.h
--
-unistd.h
--
-protofunctions.h
-C:/Users/DVE/CLionProjects/ksp/protofunctions.h
 
-C:/Users/DVE/CLionProjects/ksp/protofunctions.h
-stdio.h
--
-stdlib.h
--
-string.h
--
+F:/KSP2019/KSP/library.h
 

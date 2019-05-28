@@ -4,13 +4,18 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Users/DVE/CLionProjects/ksp/njvm.c" "C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/KSP.dir/njvm.c.obj"
-  "C:/Users/DVE/CLionProjects/ksp/protofunctions.c" "C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/KSP.dir/protofunctions.c.obj"
+  "F:/KSP2019/KSP/library.c" "F:/KSP2019/KSP/cmake-build-debug/CMakeFiles/KSP.dir/library.c.obj"
+  "F:/KSP2019/KSP/njvm.c" "F:/KSP2019/KSP/cmake-build-debug/CMakeFiles/KSP.dir/njvm.c.obj"
+  "F:/KSP2019/KSP/protofunctions.c" "F:/KSP2019/KSP/cmake-build-debug/CMakeFiles/KSP.dir/protofunctions.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_C_TARGET_INCLUDE_PATH
+  "../."
+  "../.idea"
+  "../.vs"
+  "."
   )
 
 # Targets to which this target links.

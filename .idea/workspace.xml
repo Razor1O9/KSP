@@ -14,7 +14,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b05b124a-0c0e-4e00-ac81-0d0c77fa54a5" name="Default Changelist" comment="" />
+    <list default="true" id="b05b124a-0c0e-4e00-ac81-0d0c77fa54a5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/njvm.c" beforeDir="false" afterPath="$PROJECT_DIR$/njvm.c" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/njvm.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="208" selection-start-line="208" selection-end-line="208" />
+            <state relative-caret-position="-886">
+              <caret line="123" column="5" selection-start-line="123" selection-start-column="5" selection-end-line="123" selection-end-column="5" />
               <folding>
                 <element signature="e#14#32#0" expanded="true" />
               </folding>
@@ -52,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protofunctions.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="31" selection-start-line="31" selection-end-line="31" />
+            <state relative-caret-position="126">
+              <caret line="53" selection-start-line="53" selection-end-line="53" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -130,7 +132,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="KSP" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="prog1.bin --debug" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/KSP.exe" EXPLICIT_BUILD_TARGET_NAME="all">
+    <configuration name="KSP" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--debug prog1.bin" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/KSP.exe" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -178,7 +180,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="101248000" />
+    <option name="totallyTimeSpent" value="102470000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -191,14 +193,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1381" height="895" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08541194" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32952183" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25620916" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.039215688" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.13986929" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.44052288" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32952183" />
@@ -222,13 +225,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/njvm.c</url>
-          <line>156</line>
+          <line>161</line>
           <option name="timeStamp" value="38" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/njvm.c</url>
-          <line>201</line>
-          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -254,8 +252,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protofunctions.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
+        <state relative-caret-position="126">
+          <caret line="53" selection-start-line="53" selection-end-line="53" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -264,8 +262,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/njvm.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="208" selection-start-line="208" selection-end-line="208" />
+        <state relative-caret-position="-886">
+          <caret line="123" column="5" selection-start-line="123" selection-start-column="5" selection-end-line="123" selection-end-column="5" />
           <folding>
             <element signature="e#14#32#0" expanded="true" />
           </folding>

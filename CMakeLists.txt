@@ -1,22 +1,10 @@
-cmake_minimum_required(VERSION 3.14)
-project(KSP_hue)
+cmake_minimum_required(VERSION 3.12)
+project(KSP C)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_C_STANDARD 90)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "C:\\Users\\DVE\\CLionProjects\\ksp")
+add_executable(KSP njvm.c protofunctions.c)
 
-include_directories(.)
-include_directories(.idea)
 
-add_executable(KSP_hue
-        .idea/workspace.xml
-        debug.txt
-        KSP-HU1.TEAM
-        mknjvm
-        njvm
-        njvm.c
-        prog1.asm
-        prog1.bin
-        prog2.asm
-        prog2.bin
-        protofunctions.c
-        protofunctions.h
-        README.md)
+
+

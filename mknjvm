@@ -1,2 +1,0 @@
-#!/bin/sh
-gcc -g -Wall -std=c90 -pedantic -o njvm njvm.c protofunctions.c

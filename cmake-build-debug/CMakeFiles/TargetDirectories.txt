@@ -1,3 +1,3 @@
-F:/KSP_hue/cmake-build-debug/CMakeFiles/KSP_hue.dir
-F:/KSP_hue/cmake-build-debug/CMakeFiles/edit_cache.dir
-F:/KSP_hue/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/KSP.dir
+C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/DVE/CLionProjects/ksp/cmake-build-debug/CMakeFiles/rebuild_cache.dir

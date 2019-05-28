@@ -5,13 +5,13 @@
 
 
 int version = 4;
-int calculationStack[9999];
+int calculationStack[1000];
 int sp = 0;
 int fp = 0;
 int regADD = 0;
 bool haltThis;
 bool debugMode;
-unsigned int programMemory[9999];
+unsigned int *programMemory;
 int instructionCount;
 int pc;
 int staticAreaSize;
@@ -22,8 +22,9 @@ int *staticPtr;
  * @param var
  */
 void push(int var) {
-    if (sp < 9999) {
+    if (sp < 1000) {
         calculationStack[sp] = var;
+        sp++;
     } else {
         printf("Kein freier Speicher im Stack vorhanden\n");
         haltProgram();
@@ -38,71 +39,62 @@ void push(int var) {
 int pop() {
     if (sp > 0) {
         sp--;
-        pc++;
+        return calculationStack[sp];
     } else {
         printf("Keine Elemente im Stack vorhanden\n");
         haltProgram();
     }
-    return calculationStack[sp];
+    return 0;
 }
 
 void add(void) {
     int var1 = pop();
     int var2 = pop();
     push(var2 + var1);
-    pc += 1;
 }
 
 void sub(void) {
     int var1 = pop();
     int var2 = pop();
     push(var2 - var1);
-    pc += 1;
 }
 
 void mul() {
     int var1 = pop();
     int var2 = pop();
     push(var2 * var1);
-    pc += 1;
 }
 
 void divide() {
     int var1 = pop();
     int var2 = pop();
     push(var2 / var1);
-    pc += 1;
 }
 
 void mod() {
     int var1 = pop();
     int var2 = pop();
     push(var2 % var1);
-    pc += 1;
 }
 
 void rdint() {
     int var;
     scanf("%d", &var);
     push(var);
-    pc += 1;
 }
 
 void wrint() {
     printf("%d", pop());
-    pc += 1;
 }
 
 void rdchr() {
     char var;
     scanf("%c", &var);
     push(var);
-    pc += 1;
 }
 
 void wrchr() {
     printf("%c", pop());
-    pc += 1;
 }
 
 void popg(int var) {
@@ -110,8 +102,8 @@ void popg(int var) {
 }
 
 void pushg(int var) {
-    if (sp != 9999) {
-        pushg(staticPtr[var]);
+    if (sp != 1000) {
+        push(staticPtr[var]);
     }
 }
 void asf (int value) {
@@ -127,8 +119,7 @@ void rsf () {
 
 
 void pushl (int value) {
-    pc++;
-    if (sp != 9999) {
+    if (sp != 1000) {
         calculationStack[sp] = calculationStack[fp + value];
         sp = sp + 1;
     }
@@ -138,7 +129,6 @@ void popl (int value) {
 }
 
 void popr() {
-    pc++;
     regADD = calculationStack[sp-1];
 }
 
@@ -147,7 +137,6 @@ void pushr() {
 }
 
 void drop(int var) {
-    pc++;
     sp = sp - var;
 }
 
@@ -161,18 +150,14 @@ void call(int value) {
 }
 
 void brt(int value) {
-    if (pop() == 1){
+    if (pop() == 1) {
         pc = value;
-    } else {
-        EXIT_FAILURE;
     }
 }
 
 void brf(int value) {
-    if (pop() == 0){
+    if (pop() == 0) {
         pc = value;
-    } else {
-        EXIT_FAILURE;
     }
 }
 

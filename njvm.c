@@ -81,31 +81,33 @@ int main(int argc, char *argv[]) {
     FILE *loadedFile = NULL;
     char validBinFile[5];
     unsigned int programHeader[3];
-    printf("Ninja Virtual Machine started\n");
 
-    /* Prints the current VM-Version */
+
+        /* Prints the current VM-Version */
     if (!strcmp(argv[1], "--version")) {
         printf("Version = %d", version);
-        printf("Ninja Virtual Machine stopped\n");
         return (EXIT_SUCCESS);
-    }
+
         /* Prints all valid shell commands */
-    else if (!strcmp(argv[1], "--help")) {
-        printf("Valid inputs: \n [1] --version \n [2] --help \n [3] 'programname'.bin \n [4] --debug 'programname'.bin \n [5] 'programname.bin' --debug");
-        printf("\nNinja Virtual Machine stopped\n");
+    } else if (!strcmp(argv[1], "--help")) {
+        printf("Usage: ./njvm [options] <code file> \nOptions:\n"
+               "  --debug          start virtual machine in debug mode\n"
+               "  --version        show version and exit\n"
+               "  --help           show this help and exit\n");
         return (EXIT_SUCCESS);
-    }
-    else if (argc == 0){
-        printf("No Input");
-        printf("Ninja Virtual Machine stopped\n");
+
+        /* Stops the NinjaVM if there is no input */
+    } else if (argc == 1) {
+        printf("Error: no code file specified");
         return (EXIT_FAILURE);
-    }
+
         /* Searches the arguments for a binary file" */
-    else if (argc == 1) {
+    } else if (argc == 2) {
         if (strstr(argv[1], bin) == NULL) {
             printf("\nNot a binary file\n");
             return (EXIT_FAILURE);
         } else {
+            printf("Ninja Virtual Machine started");
             loadedFile = fopen(argv[1], "r");
         }
     } else if (argc == 3) {
@@ -115,8 +117,10 @@ int main(int argc, char *argv[]) {
             debugMode = true;
         }
         if (strstr(argv[1], bin) != NULL) {
+            printf("Ninja Virtual Machine started");
             loadedFile = fopen(argv[1], "rb");
         } else if (strstr(argv[2], bin) != NULL) {
+            printf("Ninja Virtual Machine started");
             loadedFile = fopen(argv[2], "rb");
         }
     }

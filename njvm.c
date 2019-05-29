@@ -47,9 +47,10 @@
 
 /* ToDo
  * (1) Richtige Ausgabe bei einem Argument = "prog1.bin" (wrchr anpassen)
- * (2) Richtige Ausgabe beim Debugger anstatt überall "HALT", instr1 = matchInstruction, instr2 = debugInstruction. Eigener ProgramCounter
- * (3) Restlichen Debugger-Funktionen implementieren
- * (4) Die Ergebnis-Ausgabe ist falsch
+ * (2) Die Ergebnis-Ausgabe ist falsch
+ * (3) Richtige Ausgabe beim Debugger anstatt überall "HALT", instr1 = matchInstruction, instr2 = debugInstruction. Eigener ProgramCounter
+ * (4) Restlichen Debugger-Funktionen implementieren
+
  */
 
 int version;
@@ -94,21 +95,18 @@ int main(int argc, char *argv[]) {
         printf("\nNinja Virtual Machine stopped\n");
         return (EXIT_SUCCESS);
     }
-    else if (argc == 1){
+    else if (argc == 0){
         printf("No Input");
         printf("Ninja Virtual Machine stopped\n");
         return (EXIT_FAILURE);
     }
         /* Searches the arguments for a binary file" */
-    else if (argc == 2) {
+    else if (argc == 1) {
         if (strstr(argv[1], bin) == NULL) {
             printf("\nNot a binary file\n");
             return (EXIT_FAILURE);
         } else {
             loadedFile = fopen(argv[1], "r");
-        }
-        if (!loadedFile) {
-            printf("Error: Code file '%s' cannot be opened \n", argv[1]);
         }
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {

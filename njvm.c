@@ -45,6 +45,13 @@
 /* 0xFF000000 -> Fills the OpCode with 1 */
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
+/* ToDo
+ * (1) Richtige Ausgabe bei einem Argument = "prog1.bin" (wrchr anpassen)
+ * (2) Richtige Ausgabe beim Debugger anstatt überall "HALT", instr1 = matchInstruction, instr2 = debugInstruction. Eigener ProgramCounter
+ * (3) Restlichen Debugger-Funktionen implementieren
+ * (4) Die Ergebnis-Ausgabe ist falsch
+ */
+
 int version;
 int calculationStack[1000];
 int sp;
@@ -77,8 +84,8 @@ int main(int argc, char *argv[]) {
 
     /* Prints the current VM-Version */
     if (!strcmp(argv[1], "--version")) {
-        printf("Version = %d \n", version);
-        printf("\nNinja Virtual Machine stopped\n");
+        printf("Version = %d", version);
+        printf("Ninja Virtual Machine stopped\n");
         return (EXIT_SUCCESS);
     }
         /* Prints all valid shell commands */
@@ -86,6 +93,11 @@ int main(int argc, char *argv[]) {
         printf("Valid inputs: \n [1] --version \n [2] --help \n [3] 'programname'.bin \n [4] --debug 'programname'.bin \n [5] 'programname.bin' --debug");
         printf("\nNinja Virtual Machine stopped\n");
         return (EXIT_SUCCESS);
+    }
+    else if (argc == 1){
+        printf("No Input");
+        printf("Ninja Virtual Machine stopped\n");
+        return (EXIT_FAILURE);
     }
         /* Searches the arguments for a binary file" */
     else if (argc == 2) {
@@ -98,11 +110,6 @@ int main(int argc, char *argv[]) {
         if (!loadedFile) {
             printf("Error: Code file '%s' cannot be opened \n", argv[1]);
         }
-        while (!haltThis) {
-            instr = programMemory[pc];
-            matchInstruction(instr);
-            printf("%d ", calculationStack[fp]);
-        }
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
             debugMode = true;
@@ -114,10 +121,6 @@ int main(int argc, char *argv[]) {
         } else if (strstr(argv[2], bin) != NULL) {
             loadedFile = fopen(argv[2], "rb");
         }
-    } else {
-        printf("No Input \n");
-        printf("Ninja Virtual Machine stopped\n");
-        return (EXIT_FAILURE);
     }
     if (!loadedFile) {
         printf("Error: Code file '%s' cannot be opened \n", argv[1]);
@@ -164,7 +167,6 @@ int main(int argc, char *argv[]) {
         matchInstruction(instr);
     }
     if (debugMode == true) {
-        instr = programMemory[0];
         debugger(instr);
     }
 
@@ -357,7 +359,6 @@ void matchInstruction(unsigned int instr) {
         return;
     }
 }
-
 
 /**
  * ONLY DEBUG

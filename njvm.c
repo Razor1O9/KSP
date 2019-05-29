@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 
         /* Prints the current VM-Version */
     if (!strcmp(argv[1], "--version")) {
-        printf("Version = %d", version);
+        printf("Ninja Virtual Machine version %d (compiled Oct  2 2018, 11:20:07)\n", version);
         return (EXIT_SUCCESS);
 
         /* Prints all valid shell commands */

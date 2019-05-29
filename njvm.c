@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
             printf("Error: no code file specified\n");
             return (EXIT_FAILURE);
         } else {
-            printf("Ninja Virtual Machine started");
+            printf("Ninja Virtual Machine started\n");
             loadedFile = fopen(argv[1], "r");
         }
     } else if (argc == 3) {
@@ -116,10 +116,10 @@ int main(int argc, char *argv[]) {
             debugMode = true;
         }
         if (strstr(argv[1], bin) != NULL) {
-            printf("Ninja Virtual Machine started");
+            printf("Ninja Virtual Machine started\n");
             loadedFile = fopen(argv[1], "rb");
         } else if (strstr(argv[2], bin) != NULL) {
-            printf("Ninja Virtual Machine started");
+            printf("Ninja Virtual Machine started\n");
             loadedFile = fopen(argv[2], "rb");
         }
     }

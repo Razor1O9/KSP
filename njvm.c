@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
         /* Stops the NinjaVM if there is no input */
     if (argc == 1) {
         printf("Error: no code file specified\n");
-        return (EXIT_SUCCESS);
+        return (EXIT_FAILURE);
     }
         /* Prints the current VM-Version */
     if (!strcmp(argv[1], "--version")) {
@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
         /* Searches the arguments for a binary file" */
     } else if (argc == 2) {
         if (strstr(argv[1], bin) == NULL) {
-            printf("\nNot a binary file\n");
+            printf("Error: no code file specified\n");
             return (EXIT_FAILURE);
         } else {
             printf("Ninja Virtual Machine started");

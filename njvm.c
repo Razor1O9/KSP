@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
             printf("Ninja Virtual Machine started\n");
             loadedFile = fopen(argv[2], "rb");
         }
-    } else if (!loadedFile) {
+    } else {
         printf("Error: Code file '%s' cannot be opened \n", argv[1]);
     }
 

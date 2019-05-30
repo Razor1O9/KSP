@@ -240,9 +240,11 @@ void debugger(int instr) {
  * @return
  */
 void matchInstruction(unsigned int instr) {
+    int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
     int shift = instr>>24;
+    int shifter = (SIGN_EXTEND(IMMEDIATE(shift)));
     if (shift == PUSHC) {
-        push(SIGN_EXTEND(IMMEDIATE(instr)));
+        push(value);
         pc++;
         return;
     }
@@ -297,17 +299,17 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == PUSHG) {
-        pushg(SIGN_EXTEND(IMMEDIATE(shift)));
+        pushg(value);
         pc++;
         return;
     }
     if (shift == POPG) {
-        popg(SIGN_EXTEND(IMMEDIATE(shift)));
+        popg(value);
         pc++;
         return;
     }
     if (shift == ASF) {
-        asf(SIGN_EXTEND(IMMEDIATE(shift)));
+        asf(value);
         pc++;
         return;
     }
@@ -317,12 +319,12 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == PUSHL) {
-        pushl(SIGN_EXTEND(IMMEDIATE(shift)));
+        pushl(value);
         pc++;
         return;
     }
     if (shift == POPL) {
-        popl(SIGN_EXTEND(IMMEDIATE(shift)));
+        popl(value);
         pc++;
         return;
     }
@@ -357,22 +359,22 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == JMP) {
-        jmp(SIGN_EXTEND(IMMEDIATE(shift)));
+        jmp(shifter);
         pc++;
         return;
     }
     if (shift == BRF) {
-        brf(SIGN_EXTEND(IMMEDIATE(shift)));
+        brf(shifter);
         pc++;
         return;
     }
     if (shift == BRT) {
-        brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        brt(shifter);
         pc++;
         return;
     }
     if (shift == CALL) {
-        call(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        call(value);
         pc++;
         return;
     }
@@ -392,7 +394,7 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == DROP) {
-        drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        drop(value);
         pc++;
         return;
     }
@@ -406,12 +408,13 @@ void matchInstruction(unsigned int instr) {
  */
 
 void debugInstructions(unsigned int inst) {
+    int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
     switch (inst >> 24) {
         case HALT:
             printf("%d: HALT\n", pc);
             break;
         case PUSHC:
-            printf("%d: PUSHC\t %u \n", pc, (SIGN_EXTEND(IMMEDIATE(inst & 0x00FFFFFF))));
+            printf("%d: PUSHC\t %u \n", pc, (value & 0x00FFFFFF));
             break;
         case ADD:
             printf("%d: ADD\n", pc);
@@ -441,22 +444,22 @@ void debugInstructions(unsigned int inst) {
             printf("%d: WRCHR\n", pc);
             break;
         case PUSHG:
-            printf("%d: PUSHG\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: PUSHG\t %u \n", pc, (value));
             break;
         case POPG:
-            printf("%d: POPG\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: POPG\t %u \n", pc, (value));
             break;
         case ASF:
-            printf("%d: ASF\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: ASF\t %u \n", pc, (value));
             break;
         case RSF:
             printf("%d: RSF\n", pc);
             break;
         case PUSHL:
-            printf("%d: PUSHL\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: PUSHL\t %u \n", pc, (value));
             break;
         case POPL:
-            printf("%d: POPL\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: POPL\t %u \n", pc, (value));
             break;
         case EQ:
             printf("%d: EQ\n", pc);
@@ -477,22 +480,22 @@ void debugInstructions(unsigned int inst) {
             printf("%d: GE\n", pc);
             break;
         case JMP:
-            printf("%d: JMP\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: JMP\t %u \n", pc, (value));
             break;
         case BRF:
-            printf("%d: BRF\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: BRF\t %u \n", pc, (value));
             break;
         case BRT:
-            printf("%d: BRT\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: BRT\t %u \n", pc, (value));
             break;
         case CALL:
-            printf("%d: CALL\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: CALL\t %u \n", pc, (value));
             break;
         case RET:
             printf("%d: RET\n", pc);
             break;
         case DROP:
-            printf("%d: DROP\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            printf("%d: DROP\t %u \n", pc, (value));
             break;
         case PUSHR:
             printf("%d: PUSHR\n", pc);

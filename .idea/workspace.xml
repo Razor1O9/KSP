@@ -15,6 +15,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b05b124a-0c0e-4e00-ac81-0d0c77fa54a5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/a.out" beforeDir="false" afterPath="$PROJECT_DIR$/a.out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/njvm.c" beforeDir="false" afterPath="$PROJECT_DIR$/njvm.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -33,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/njvm.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+            <state relative-caret-position="187">
+              <caret line="485" column="48" selection-start-line="485" selection-start-column="48" selection-end-line="485" selection-end-column="48" />
               <folding>
                 <element signature="e#14#32#0" expanded="true" />
               </folding>
@@ -54,8 +55,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protofunctions.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" column="33" lean-forward="true" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+            <state relative-caret-position="-3123">
+              <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -140,27 +141,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.KSP2">
-    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="prog1.bin" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/prog1.bin" EXPLICIT_BUILD_TARGET_NAME="all">
+  <component name="RunManager">
+    <configuration name="KSP" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--debug prog1.bin" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="KSP" RUN_TARGET_NAME="KSP" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="KSP" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--help" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/KSP.exe" EXPLICIT_BUILD_TARGET_NAME="all">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--debug prog1.bin" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="KSP" RUN_TARGET_NAME="KSP" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="KSP2" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="--debug prog1.bin" PASS_PARENT_ENVS_2="true" PROJECT_NAME="KSP" TARGET_NAME="KSP" CONFIG_NAME="Debug" RUN_PATH="$PROJECT_DIR$/KSP.exe">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <list>
-      <item itemvalue="CMake Application.KSP2" />
-      <item itemvalue="CMake Application.Build All" />
-      <item itemvalue="CMake Application.KSP" />
-    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -196,12 +187,12 @@
       <workItem from="1543344770442" duration="9840000" />
       <workItem from="1543387975549" duration="1439000" />
       <workItem from="1559054865497" duration="576000" />
-      <workItem from="1559145647654" duration="15728000" />
+      <workItem from="1559145647654" duration="16493000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127211000" />
+    <option name="totallyTimeSpent" value="127976000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -281,8 +272,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protofunctions.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="33" lean-forward="true" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+        <state relative-caret-position="-3123">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -291,8 +282,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/njvm.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+        <state relative-caret-position="187">
+          <caret line="485" column="48" selection-start-line="485" selection-start-column="48" selection-end-line="485" selection-end-column="48" />
           <folding>
             <element signature="e#14#32#0" expanded="true" />
           </folding>

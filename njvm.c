@@ -98,10 +98,45 @@ int main(int argc, char *argv[]) {
         if (!loadedFile) {
             printf("Error: Code file '%s' cannot be opened \n", argv[1]);
         }
+        /* Checks if the binary file is a valid Ninja-Binary file */
+        fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
+        if (strncmp(&validBinFile[0], "N", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[1], "J", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[2], "B", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[3], "F", 1) != 0) {
+            haltProgram();
+
+        }
+
+        /* Reads the File VM-version */
+        fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
+        if (version < programHeader[0]) {
+            printf("Version: %d is not supported!", programHeader[0]);
+            return (EXIT_FAILURE);
+        }
+        /* Reads the amount of instructions inside the File */
+        fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
+        instructionCount = programHeader[1];
+
+        /* Reads the amount of global variables inside the File */
+        fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
+        staticAreaSize = programHeader[2];
+
+        staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
+        programMemory = malloc(instructionCount * sizeof(unsigned int));
+
+        fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
+        fclose(loadedFile);
+
         while (!haltThis) {
             instr = programMemory[pc];
             matchInstruction(instr);
-            printf("%d ", calculationStack[fp]);
         }
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
@@ -375,7 +410,7 @@ void debugInstructions(unsigned int inst) {
             printf("%d: HALT\n", pc);
             break;
         case PUSHC:
-            printf("%d: PUSHC\t %u \n", pc, (SIGN_EXTEND(IMMEDIATE(programMemory[pc]))));
+            printf("%d: PUSHC\t %u \n", pc, (SIGN_EXTEND(IMMEDIATE(programMemory[pc] & 0x00FFFFFF))));
             break;
         case ADD:
             printf("%d: ADD\n", pc);

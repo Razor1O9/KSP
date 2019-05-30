@@ -370,110 +370,106 @@ void matchInstruction(unsigned int instr) {
  */
 
 void debugInstructions(unsigned int inst) {
-    int i;
-    for (i = 0; i < instructionCount; i++) {
-        switch(inst >> 24) {
-            case HALT:
-                printf("%d: HALT\n", i);
-                break;
-            case PUSHC:
-                printf("%d: PUSHC\t %u \n", i, (SIGN_EXTEND(IMMEDIATE(programMemory[i]))));
-                break;
-            case ADD:
-                printf("%d: ADD\n", i);
-                break;
-            case SUB:
-                printf("%d: SUB\n", i);
-                break;
-            case MUL:
-                printf("%d: MUL\n", i);
-                break;
-            case DIV:
-                printf("%d: DIV1\n", i);
-                break;
-            case MOD:
-                printf("%d: MOD\n", i);
-                break;
-            case RDINT:
-                printf("%d: RDINT\n", i);
-                break;
-            case WRINT:
-                printf("%d: WRINT\n", i);
-                break;
-            case RDCHR:
-                printf("%d: RDCHR\n", i);
-                break;
-            case WRCHR:
-                printf("%d: WRCHR\n", i);
-                break;
-            case PUSHG:
-                printf("%d: PUSHG\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case POPG:
-                printf("%d: POPG\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case ASF:
-                printf("%d: ASF\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case RSF:
-                printf("%d: RSF\n", i);
-                break;
-            case PUSHL:
-                printf("%d: PUSHL\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case POPL:
-                printf("%d: POPL\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case EQ:
-                printf("%d: EQ\n", i);
-                break;
-            case NE:
-                printf("%d: NE\n", i);
-                break;
-            case LT:
-                printf("%d: LT\n", i);
-                break;
-            case LE:
-                printf("%d: LE\n", i);
-                break;
-            case GT:
-                printf("%d: GT\n", i);
-                break;
-            case GE:
-                printf("%d: GE\n", i);
-                break;
-            case JMP:
-                printf("%d: JMP\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case BRF:
-                printf("%d: BRF\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case BRT:
-                printf("%d: BRT\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case CALL:
-                printf("%d: CALL\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case RET:
-                printf("%d: RET\n", i);
-                break;
-            case DROP:
-                printf("%d: DROP\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case PUSHR:
-                printf("%d: PUSHR\n", i);
-                break;
-            case POPR:
-                printf("%d: POPR\n", i);
-                break;
-            case DUP:
-                printf("%d: DUP\n", i);
-                break;
-            default:
-                printf("Wert ungültig \n");
-        }
-        if ((programMemory[i] & 0xFF000000) == HALT) { break; }
+    switch (inst >> 24) {
+        case HALT:
+            printf("%d: HALT\n", pc);
+            break;
+        case PUSHC:
+            printf("%d: PUSHC\t %u \n", pc, (SIGN_EXTEND(IMMEDIATE(programMemory[pc]))));
+            break;
+        case ADD:
+            printf("%d: ADD\n", pc);
+            break;
+        case SUB:
+            printf("%d: SUB\n", pc);
+            break;
+        case MUL:
+            printf("%d: MUL\n", pc);
+            break;
+        case DIV:
+            printf("%d: DIV1\n", pc);
+            break;
+        case MOD:
+            printf("%d: MOD\n", pc);
+            break;
+        case RDINT:
+            printf("%d: RDINT\n", pc);
+            break;
+        case WRINT:
+            printf("%d: WRINT\n", pc);
+            break;
+        case RDCHR:
+            printf("%d: RDCHR\n", pc);
+            break;
+        case WRCHR:
+            printf("%d: WRCHR\n", pc);
+            break;
+        case PUSHG:
+            printf("%d: PUSHG\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case POPG:
+            printf("%d: POPG\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case ASF:
+            printf("%d: ASF\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case RSF:
+            printf("%d: RSF\n", pc);
+            break;
+        case PUSHL:
+            printf("%d: PUSHL\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case POPL:
+            printf("%d: POPL\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case EQ:
+            printf("%d: EQ\n", pc);
+            break;
+        case NE:
+            printf("%d: NE\n", pc);
+            break;
+        case LT:
+            printf("%d: LT\n", pc);
+            break;
+        case LE:
+            printf("%d: LE\n", pc);
+            break;
+        case GT:
+            printf("%d: GT\n", pc);
+            break;
+        case GE:
+            printf("%d: GE\n", pc);
+            break;
+        case JMP:
+            printf("%d: JMP\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case BRF:
+            printf("%d: BRF\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case BRT:
+            printf("%d: BRT\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case CALL:
+            printf("%d: CALL\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case RET:
+            printf("%d: RET\n", pc);
+            break;
+        case DROP:
+            printf("%d: DROP\t %u \n", pc, (IMMEDIATE(programMemory[pc])));
+            break;
+        case PUSHR:
+            printf("%d: PUSHR\n", pc);
+            break;
+        case POPR:
+            printf("%d: POPR\n", pc);
+            break;
+        case DUP:
+            printf("%d: DUP\n", pc);
+            break;
+        default:
+            printf("Wert ungültig \n");
+
+            if ((programMemory[pc] & 0xFF000000) == HALT) { break; }
     }
 }
-
-

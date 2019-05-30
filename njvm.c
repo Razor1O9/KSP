@@ -45,14 +45,6 @@
 /* 0xFF000000 -> Fills the OpCode with 1 */
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
-/* ToDo
- * (1) Richtige Ausgabe bei einem Argument = "prog1.bin" (wrchr anpassen)
- * (2) Die Ergebnis-Ausgabe ist falsch
- * (3) Richtige Ausgabe beim Debugger anstatt überall "HALT", instr1 = matchInstruction, instr2 = debugInstruction. Eigener ProgramCounter
- * (4) Restlichen Debugger-Funktionen implementieren
-
- */
-
 int version;
 int calculationStack[1000];
 int sp;
@@ -78,36 +70,38 @@ int main(int argc, char *argv[]) {
     int reader = 0;
     char bin[] = ".bin";
     char debug[] = "--debug";
-    FILE *loadedFile;
+    FILE *loadedFile = NULL;
     char validBinFile[5];
     unsigned int programHeader[3];
+    printf("Ninja Virtual Machine started\n");
 
-        /* Stops the NinjaVM if there is no input */
-    if (argc == 1) {
-        printf("Error: no code file specified\n");
-        return (EXIT_FAILURE);
-
-        /* Prints the current VM-Version */
-    } else if (!strcmp(argv[1], "--version")) {
-        printf("Ninja Virtual Machine version %d (compiled Oct  2 2018, 11:20:07)\n", version);
+    /* Prints the current VM-Version */
+    if (!strcmp(argv[1], "--version")) {
+        printf("Version = %d \n", version);
+        printf("\nNinja Virtual Machine stopped\n");
         return (EXIT_SUCCESS);
-
-        /* Prints all valid shell commands */
-    } else if (!strcmp(argv[1], "--help")) {
-        printf("Usage: ./njvm [options] <code file> \nOptions:\n"
-               "  --debug          start virtual machine in debug mode\n"
-               "  --version        show version and exit\n"
-               "  --help           show this help and exit\n");
+    }
+    /* Prints all valid shell commands */
+    if (!strcmp(argv[1], "--help")) {
+        printf("Valid inputs: \n [1] --version \n [2] --help \n [3] 'programname'.bin \n [4] --debug 'programname'.bin \n [5] 'programname.bin' --debug");
+        printf("\nNinja Virtual Machine stopped\n");
         return (EXIT_SUCCESS);
-
-        /* Searches the arguments for a binary file" */
-    } else if (argc == 2) {
+    }
+    /* Searches the arguments for a binary file" */
+    if (argc == 2) {
         if (strstr(argv[1], bin) == NULL) {
-            printf("Error: no code file specified\n");
+            printf("\nNot a binary file\n");
             return (EXIT_FAILURE);
         } else {
-            printf("Ninja Virtual Machine started\n");
-            loadedFile = fopen(argv[1], "rb");
+            loadedFile = fopen(argv[1], "r");
+        }
+        if (!loadedFile) {
+            printf("Error: Code file '%s' cannot be opened \n", argv[1]);
+        }
+        while (!haltThis) {
+            instr = programMemory[pc];
+            matchInstruction(instr);
+            printf("%d ", calculationStack[fp]);
         }
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
@@ -116,58 +110,63 @@ int main(int argc, char *argv[]) {
             debugMode = true;
         }
         if (strstr(argv[1], bin) != NULL) {
-            printf("Ninja Virtual Machine started\n");
             loadedFile = fopen(argv[1], "rb");
         } else if (strstr(argv[2], bin) != NULL) {
-            printf("Ninja Virtual Machine started\n");
             loadedFile = fopen(argv[2], "rb");
         }
+        if (!loadedFile) {
+            printf("Error: Code file '%s' cannot be opened \n", argv[1]);
+        }
+
+        /* Checks if the binary file is a valid Ninja-Binary file */
+        fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
+        if (strncmp(&validBinFile[0], "N", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[1], "J", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[2], "B", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[3], "F", 1) != 0) {
+            haltProgram();
+
+        }
+
+        /* Reads the File VM-version */
+        fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
+        if (version < programHeader[0]) {
+            printf("Version: %d is not supported!", programHeader[0]);
+            return (EXIT_FAILURE);
+        }
+        /* Reads the amount of instructions inside the File */
+        fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
+        instructionCount = programHeader[1];
+
+        /* Reads the amount of global variables inside the File */
+        fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
+        staticAreaSize = programHeader[2];
+
+        staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
+        programMemory = malloc(instructionCount * sizeof(unsigned int));
+
+        fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
+        fclose(loadedFile);
+
+        while (!haltThis) {
+            instr = programMemory[pc];
+            matchInstruction(instr);
+        }
+        if (debugMode == true) {
+            instr = programMemory[0];
+            debugger(instr);
+        }
+
     } else {
-        printf("Error: Code file '%s' cannot be opened \n", argv[1]);
-    }
-
-    /* Checks if the binary file is a valid Ninja-Binary file */
-    fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
-    if (strncmp(&validBinFile[0], "N", 1) != 0) {
-        haltProgram();
-    }
-    if (strncmp(&validBinFile[1], "J", 1) != 0) {
-        haltProgram();
-    }
-    if (strncmp(&validBinFile[2], "B", 1) != 0) {
-        haltProgram();
-    }
-    if (strncmp(&validBinFile[3], "F", 1) != 0) {
-        haltProgram();
-
-    }
-
-    /* Reads the File VM-version */
-    fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
-    if (version < programHeader[0]) {
-        printf("Version: %d is not supported!", programHeader[0]);
+        printf("No Input \n");
+        printf("Ninja Virtual Machine stopped\n");
         return (EXIT_FAILURE);
-    }
-    /* Reads the amount of instructions inside the File */
-    fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
-    instructionCount = programHeader[1];
-
-    /* Reads the amount of global variables inside the File */
-    fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
-    staticAreaSize = programHeader[2];
-
-    staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
-    programMemory = malloc(instructionCount * sizeof(unsigned int));
-
-    fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
-    fclose(loadedFile);
-
-    while (!haltThis) {
-        instr = programMemory[pc];
-        matchInstruction(instr);
-    }
-    if (debugMode == true) {
-        debugger(instr);
     }
 
     printf("Ninja Virtual Machine stopped\n");
@@ -196,13 +195,12 @@ void debugger(int instr) {
 
 }
 
-
 /**
  *
  * @return
  */
 void matchInstruction(unsigned int instr) {
-    int shift = instr >> 24;
+    int shift = instr>>24;
     if (shift == PUSHC) {
         push(SIGN_EXTEND(IMMEDIATE(instr)));
         pc++;
@@ -360,6 +358,7 @@ void matchInstruction(unsigned int instr) {
     }
 }
 
+
 /**
  * ONLY DEBUG
  * This method outputs all instructions inside a given program.
@@ -471,6 +470,5 @@ void debugInstructions(unsigned int inst) {
         if ((programMemory[i] & 0xFF000000) == HALT) { break; }
     }
 }
-
 
 

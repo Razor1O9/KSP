@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
     int reader = 0;
     char bin[] = ".bin";
     char debug[] = "--debug";
-    FILE *loadedFile = NULL;
+    FILE *loadedFile;
     char validBinFile[5];
     unsigned int programHeader[3];
 
@@ -86,9 +86,9 @@ int main(int argc, char *argv[]) {
     if (argc == 1) {
         printf("Error: no code file specified\n");
         return (EXIT_FAILURE);
-    }
+
         /* Prints the current VM-Version */
-    if (!strcmp(argv[1], "--version")) {
+    } else if (!strcmp(argv[1], "--version")) {
         printf("Ninja Virtual Machine version %d (compiled Oct  2 2018, 11:20:07)\n", version);
         return (EXIT_SUCCESS);
 
@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
             return (EXIT_FAILURE);
         } else {
             printf("Ninja Virtual Machine started\n");
-            loadedFile = fopen(argv[1], "r");
+            loadedFile = fopen(argv[1], "rb");
         }
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
@@ -122,24 +122,23 @@ int main(int argc, char *argv[]) {
             printf("Ninja Virtual Machine started\n");
             loadedFile = fopen(argv[2], "rb");
         }
-    }
-    if (!loadedFile) {
+    } else if (!loadedFile) {
         printf("Error: Code file '%s' cannot be opened \n", argv[1]);
     }
 
     /* Checks if the binary file is a valid Ninja-Binary file */
     fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
     if (strncmp(&validBinFile[0], "N", 1) != 0) {
-        haltProgram();
+        return (EXIT_FAILURE);
     }
     if (strncmp(&validBinFile[1], "J", 1) != 0) {
-        haltProgram();
+        return (EXIT_FAILURE);
     }
     if (strncmp(&validBinFile[2], "B", 1) != 0) {
-        haltProgram();
+        return (EXIT_FAILURE);
     }
     if (strncmp(&validBinFile[3], "F", 1) != 0) {
-        haltProgram();
+        return (EXIT_FAILURE);
 
     }
 

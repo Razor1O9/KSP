@@ -53,7 +53,7 @@ bool debugMode = false;
 unsigned int *programMemory;
 
 int instructionCount = 0;
-unsigned int instr;
+signed int instr;
 int pc = 0;
 int staticAreaSize = 0;
 int *staticPtr;

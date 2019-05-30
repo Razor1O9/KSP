@@ -73,24 +73,29 @@ int main(int argc, char *argv[]) {
     FILE *loadedFile = NULL;
     char validBinFile[5];
     unsigned int programHeader[3];
-    printf("Ninja Virtual Machine started\n");
 
-    /* Prints the current VM-Version */
-    if (!strcmp(argv[1], "--version")) {
-        printf("Version = %d \n", version);
-        printf("\nNinja Virtual Machine stopped\n");
+    /* Stops the NinjaVM if there is no input */
+    if (argc == 1) {
+        printf("Error: no code file specified\n");
+        return (EXIT_FAILURE);
+
+        /* Prints the current VM-Version */
+    } else if (!strcmp(argv[1], "--version")) {
+        printf("Ninja Virtual Machine version %d (compiled Oct  2 2018, 11:20:07)\n", version);
         return (EXIT_SUCCESS);
-    }
-    /* Prints all valid shell commands */
-    if (!strcmp(argv[1], "--help")) {
-        printf("Valid inputs: \n [1] --version \n [2] --help \n [3] 'programname'.bin \n [4] --debug 'programname'.bin \n [5] 'programname.bin' --debug");
-        printf("\nNinja Virtual Machine stopped\n");
+
+        /* Prints all valid shell commands */
+    } else if (!strcmp(argv[1], "--help")) {
+        printf("Usage: ./njvm [options] <code file> \nOptions:\n"
+               "  --debug          start virtual machine in debug mode\n"
+               "  --version        show version and exit\n"
+               "  --help           show this help and exit\n");
         return (EXIT_SUCCESS);
-    }
-    /* Searches the arguments for a binary file" */
-    if (argc == 2) {
+
+        /* Searches the arguments for a binary file" */
+    } else if (argc == 2) {
         if (strstr(argv[1], bin) == NULL) {
-            printf("\nNot a binary file\n");
+            printf("Error: no code file specified\n");
             return (EXIT_FAILURE);
         } else {
             loadedFile = fopen(argv[1], "r");
@@ -133,6 +138,7 @@ int main(int argc, char *argv[]) {
 
         fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
         fclose(loadedFile);
+        printf("Ninja Virtual Machine started\n");
 
         while (!haltThis) {
             instr = programMemory[pc];
@@ -188,6 +194,7 @@ int main(int argc, char *argv[]) {
 
         fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
         fclose(loadedFile);
+        printf("Ninja Virtual Machine started\n");
 
         while (!haltThis) {
             instr = programMemory[pc];
@@ -195,19 +202,13 @@ int main(int argc, char *argv[]) {
         }
         if (debugMode == true) {
             pc = 0;
-            while(pc < instructionCount) {
+            while (pc < instructionCount) {
                 instr = programMemory[pc];
                 debugger(instr);
                 pc++;
             }
         }
-
-    } else {
-        printf("No Input \n");
-        printf("Ninja Virtual Machine stopped\n");
-        return (EXIT_FAILURE);
     }
-
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
 }
@@ -410,7 +411,7 @@ void debugInstructions(unsigned int inst) {
             printf("%d: HALT\n", pc);
             break;
         case PUSHC:
-            printf("%d: PUSHC\t %u \n", pc, (SIGN_EXTEND(IMMEDIATE(programMemory[pc] & 0x00FFFFFF))));
+            printf("%d: PUSHC\t %u \n", pc, (SIGN_EXTEND(IMMEDIATE(inst & 0x00FFFFFF))));
             break;
         case ADD:
             printf("%d: ADD\n", pc);

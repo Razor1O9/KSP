@@ -159,6 +159,7 @@ int main(int argc, char *argv[]) {
             matchInstruction(instr);
         }
         if (debugMode == true) {
+            pc = 0;
             while(pc < instructionCount) {
                 instr = programMemory[pc];
                 debugger(instr);

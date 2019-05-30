@@ -159,8 +159,11 @@ int main(int argc, char *argv[]) {
             matchInstruction(instr);
         }
         if (debugMode == true) {
-            instr = programMemory[0];
-            debugger(instr);
+            while(pc < instructionCount) {
+                instr = programMemory[pc];
+                debugger(instr);
+                pc++;
+            }
         }
 
     } else {
@@ -364,10 +367,11 @@ void matchInstruction(unsigned int instr) {
  * This method outputs all instructions inside a given program.
  * The listing order is from top to bottom.
  */
+
 void debugInstructions(unsigned int inst) {
     int i;
     for (i = 0; i < instructionCount; i++) {
-        switch SIGN_EXTEND(inst & 0xFF000000) {
+        switch(inst >> 24) {
             case HALT:
                 printf("%d: HALT\n", i);
                 break;

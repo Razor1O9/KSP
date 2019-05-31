@@ -1,4 +1,4 @@
-#ifndef PROTOFUNCTONS_H_
+#ifndef PROTOFUNCTIONS_H_
 #define PROTOFUNCTIONS_H_
 
 

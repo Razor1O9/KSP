@@ -5,7 +5,7 @@
 
 int version = 4;
 int calculationStack[1000];
-int fp = 0;
+int  fp = 0;
 int regADD = 0;
 bool haltThis = false;
 bool debugMode = false;
@@ -22,7 +22,8 @@ int sp;
  */
 void push(int var) {
     if (sp < 1000) {
-        calculationStack[sp++] = var;
+        calculationStack[sp] = var;
+        sp++;
     } else {
         haltProgram();
     }
@@ -34,9 +35,10 @@ void push(int var) {
  * @return
  */
 int pop() {
-    int value;
+    int value = 0;
     if (sp > 0) {
-        value = calculationStack[sp--];
+        sp--;
+        value = calculationStack[sp];
     } else {
         haltProgram();
     }

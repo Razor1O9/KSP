@@ -26,7 +26,6 @@ void push(int var) {
         calculationStack[sp] = var;
         sp++;
     } else {
-        printf("Kein freier Speicher im Stack vorhanden\n");
         haltProgram();
     }
 }
@@ -41,7 +40,6 @@ int pop() {
         sp--;
         return calculationStack[sp];
     } else {
-        printf("Keine Elemente im Stack vorhanden\n");
         haltProgram();
     }
     return 0;

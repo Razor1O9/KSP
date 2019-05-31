@@ -1,3 +1,0 @@
-F:/KSP2019/KSP/cmake-build-debug/CMakeFiles/KSP.dir
-F:/KSP2019/KSP/cmake-build-debug/CMakeFiles/edit_cache.dir
-F:/KSP2019/KSP/cmake-build-debug/CMakeFiles/rebuild_cache.dir

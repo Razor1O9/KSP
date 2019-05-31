@@ -30,7 +30,6 @@ void push(int var) {
         calculationStack[sp] = var;
         sp++;
     } else {
-        printf("Kein freier Speicher im Stack vorhanden\n");
         haltProgram();
     }
 }

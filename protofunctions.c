@@ -15,6 +15,7 @@ bool haltThis = false;
 bool debugMode = false;
 unsigned int *programMemory;
 int instructionCount=0;
+int popvalue = 0;
 int pc=0;
 int staticAreaSize=0;
 int *staticPtr;
@@ -42,12 +43,11 @@ void push(int var) {
 int pop() {
     if (sp > 0) {
         sp--;
-        return calculationStack[sp];
+        popvalue = calculationStack[sp];
     } else {
-        printf("Keine Elemente im Stack vorhanden\n");
         haltProgram();
     }
-    return 0;
+    return popvalue;
 }
 
 void add(void) {

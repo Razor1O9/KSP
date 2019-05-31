@@ -25,12 +25,6 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="F:/KSP2019/KSP/."/>
-					<Add directory="F:/KSP2019/KSP/.idea"/>
-					<Add directory="F:/KSP2019/KSP/.vs"/>
-					<Add directory="F:/KSP2019/KSP/cmake-build-debug"/>
-					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++"/>
-					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++/mingw32"/>
-					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++/backward"/>
 					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include"/>
 					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/../../../../include"/>
 					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include-fixed"/>
@@ -50,12 +44,6 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="F:/KSP2019/KSP/."/>
-					<Add directory="F:/KSP2019/KSP/.idea"/>
-					<Add directory="F:/KSP2019/KSP/.vs"/>
-					<Add directory="F:/KSP2019/KSP/cmake-build-debug"/>
-					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++"/>
-					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++/mingw32"/>
-					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include/c++/backward"/>
 					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include"/>
 					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/../../../../include"/>
 					<Add directory="f:\mingw\bin\../lib/gcc/mingw32/8.2.0/include-fixed"/>
@@ -88,82 +76,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="F:/KSP2019/KSP/.idea/.name">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/.idea/KSP.iml">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/.idea/misc.xml">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/.idea/modules.xml">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/.idea/vcs.xml">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/.idea/workspace.xml">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/.vs/VSWorkspaceState.json">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/.vs/ksp/v15/.suo">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/.vs/slnx.sqlite">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/KSP.exe">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/README.md">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/cmake-build-debug/CMakeCache.txt">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/cmake-build-debug/KSP">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/cmake-build-debug/KSP.cbp">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/cmake-build-debug/KSP.exe">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/cmake-build-debug/Makefile">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/cmake-build-debug/cmake_install.cmake">
-			<Option target="KSP"/>
-		</Unit>
 		<Unit filename="F:/KSP2019/KSP/library.c">
 			<Option target="KSP"/>
 		</Unit>
 		<Unit filename="F:/KSP2019/KSP/library.h">
 			<Option target="KSP"/>
 		</Unit>
-		<Unit filename="F:/KSP2019/KSP/nja">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/njvm">
-			<Option target="KSP"/>
-		</Unit>
 		<Unit filename="F:/KSP2019/KSP/njvm.c">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/prog1.asm">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/prog1.bin">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/prog2.asm">
-			<Option target="KSP"/>
-		</Unit>
-		<Unit filename="F:/KSP2019/KSP/prog2.bin">
 			<Option target="KSP"/>
 		</Unit>
 		<Unit filename="F:/KSP2019/KSP/protofunctions.c">

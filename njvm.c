@@ -53,7 +53,7 @@ bool debugMode = false;
 unsigned int *programMemory;
 
 int instructionCount = 0;
-signed int instr;
+unsigned int instr;
 int pc = 0;
 int staticAreaSize = 0;
 int *staticPtr;
@@ -242,7 +242,6 @@ void debugger(int instr) {
 void matchInstruction(unsigned int instr) {
     int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
     int shift = instr>>24;
-    int shifter = (SIGN_EXTEND(IMMEDIATE(shift)));
     if (shift == PUSHC) {
         push(value);
         pc++;
@@ -359,17 +358,17 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == JMP) {
-        jmp(shifter);
+        jmp(value);
         pc++;
         return;
     }
     if (shift == BRF) {
-        brf(shifter);
+        brf(value);
         pc++;
         return;
     }
     if (shift == BRT) {
-        brt(shifter);
+        brt(value);
         pc++;
         return;
     }
@@ -414,7 +413,7 @@ void debugInstructions(unsigned int inst) {
             printf("%d: HALT\n", pc);
             break;
         case PUSHC:
-            printf("%d: PUSHC\t %u \n", pc, (value & 0x00FFFFFF));
+            printf("%d: PUSHC\t %u \n", pc, (value));
             break;
         case ADD:
             printf("%d: ADD\n", pc);

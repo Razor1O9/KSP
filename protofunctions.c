@@ -3,19 +3,22 @@
 #include <string.h>
 #include "protofunctions.h"
 
-
+/*in der h datei wird deklariert und in der c datei initialisiert damit man es nicht mehr in njvm.c initialisieren muss
+*/
 int version = 4;
 int calculationStack[1000];
-int sp = 0;
-int fp = 0;
+int isp = 0;
+int  fp = 0;
 int regADD = 0;
-bool haltThis;
-bool debugMode;
+
+bool haltThis = false;
+bool debugMode = false;
 unsigned int *programMemory;
-int instructionCount;
-int pc;
-int staticAreaSize;
+int instructionCount=0;
+int pc=0;
+int staticAreaSize=0;
 int *staticPtr;
+int sp;
 
 /**
  * This methods pushes a given variable on top of the stack.

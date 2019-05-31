@@ -45,26 +45,22 @@
 /* 0xFF000000 -> Fills the OpCode with 1 */
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
-/* ToDo
- * (1) Richtige Ausgabe bei einem Argument = "prog1.bin" (wrchr anpassen)
- * (2) Die Ergebnis-Ausgabe ist falsch
- * (3) Richtige Ausgabe beim Debugger anstatt überall "HALT", instr1 = matchInstruction, instr2 = debugInstruction. Eigener ProgramCounter
- * (4) Restlichen Debugger-Funktionen implementieren
-
- */
+/*
+Das wurde bereits im header deklariert und in der protofunction.c initialisiert 
+man brauch es nicht nochmal sonst ist es doppelt!?
 
 int version;
 int calculationStack[1000];
-int sp;
 bool haltThis = false;
 bool debugMode = false;
 unsigned int *programMemory;
-
 int instructionCount = 0;
-unsigned int instr;
+int sp;
 int pc = 0;
 int staticAreaSize = 0;
 int *staticPtr;
+*/
+signed int instr;
 
 
 /**
@@ -81,32 +77,76 @@ int main(int argc, char *argv[]) {
     FILE *loadedFile = NULL;
     char validBinFile[5];
     unsigned int programHeader[3];
-    printf("Ninja Virtual Machine started\n");
 
-    /* Prints the current VM-Version */
-    if (!strcmp(argv[1], "--version")) {
-        printf("Version = %d", version);
-        printf("Ninja Virtual Machine stopped\n");
-        return (EXIT_SUCCESS);
-    }
-        /* Prints all valid shell commands */
-    else if (!strcmp(argv[1], "--help")) {
-        printf("Valid inputs: \n [1] --version \n [2] --help \n [3] 'programname'.bin \n [4] --debug 'programname'.bin \n [5] 'programname.bin' --debug");
-        printf("\nNinja Virtual Machine stopped\n");
-        return (EXIT_SUCCESS);
-    }
-    else if (argc == 0){
-        printf("No Input");
-        printf("Ninja Virtual Machine stopped\n");
+    /* Stops the NinjaVM if there is no input */
+    if (argc == 1) {
+        printf("Error: no code file specified\n");
         return (EXIT_FAILURE);
-    }
+
+        /* Prints the current VM-Version */
+    } else if (!strcmp(argv[1], "--version")) {
+        printf("Ninja Virtual Machine version %d (compiled Oct  2 2018, 11:20:07)\n", version);
+        return (EXIT_SUCCESS);
+
+        /* Prints all valid shell commands */
+    } else if (!strcmp(argv[1], "--help")) {
+        printf("Usage: ./njvm [options] <code file> \nOptions:\n"
+               "  --debug          start virtual machine in debug mode\n"
+               "  --version        show version and exit\n"
+               "  --help           show this help and exit\n");
+        return (EXIT_SUCCESS);
+
         /* Searches the arguments for a binary file" */
-    else if (argc == 1) {
+    } else if (argc == 2) {
         if (strstr(argv[1], bin) == NULL) {
-            printf("\nNot a binary file\n");
+            printf("Error: no code file specified\n");
             return (EXIT_FAILURE);
         } else {
             loadedFile = fopen(argv[1], "r");
+        }
+        if (!loadedFile) {
+            printf("Error: Code file '%s' cannot be opened \n", argv[1]);
+        }
+        /* Checks if the binary file is a valid Ninja-Binary file */
+        fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
+        if (strncmp(&validBinFile[0], "N", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[1], "J", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[2], "B", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[3], "F", 1) != 0) {
+            haltProgram();
+
+        }
+
+        /* Reads the File VM-version */
+        fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
+        if (version < programHeader[0]) {
+            printf("Version: %d is not supported!", programHeader[0]);
+            return (EXIT_FAILURE);
+        }
+        /* Reads the amount of instructions inside the File */
+        fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
+        instructionCount = programHeader[1];
+
+        /* Reads the amount of global variables inside the File */
+        fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
+        staticAreaSize = programHeader[2];
+
+        staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
+        programMemory = malloc(instructionCount * sizeof(unsigned int));
+
+        fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
+        fclose(loadedFile);
+        printf("Ninja Virtual Machine started\n");
+
+        while (!haltThis) {
+            instr = programMemory[pc];
+            matchInstruction(instr);
         }
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
@@ -119,55 +159,60 @@ int main(int argc, char *argv[]) {
         } else if (strstr(argv[2], bin) != NULL) {
             loadedFile = fopen(argv[2], "rb");
         }
-    }
-    if (!loadedFile) {
-        printf("Error: Code file '%s' cannot be opened \n", argv[1]);
-    }
+        if (!loadedFile) {
+            printf("Error: Code file '%s' cannot be opened \n", argv[1]);
+        }
 
-    /* Checks if the binary file is a valid Ninja-Binary file */
-    fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
-    if (strncmp(&validBinFile[0], "N", 1) != 0) {
-        haltProgram();
-    }
-    if (strncmp(&validBinFile[1], "J", 1) != 0) {
-        haltProgram();
-    }
-    if (strncmp(&validBinFile[2], "B", 1) != 0) {
-        haltProgram();
-    }
-    if (strncmp(&validBinFile[3], "F", 1) != 0) {
-        haltProgram();
+        /* Checks if the binary file is a valid Ninja-Binary file */
+        fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
+        if (strncmp(&validBinFile[0], "N", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[1], "J", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[2], "B", 1) != 0) {
+            haltProgram();
+        }
+        if (strncmp(&validBinFile[3], "F", 1) != 0) {
+            haltProgram();
 
+        }
+
+        /* Reads the File VM-version */
+        fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
+        if (version < programHeader[0]) {
+            printf("Version: %d is not supported!", programHeader[0]);
+            return (EXIT_FAILURE);
+        }
+        /* Reads the amount of instructions inside the File */
+        fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
+        instructionCount = programHeader[1];
+
+        /* Reads the amount of global variables inside the File */
+        fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
+        staticAreaSize = programHeader[2];
+
+        staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
+        programMemory = malloc(instructionCount * sizeof(unsigned int));
+
+        fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
+        fclose(loadedFile);
+        printf("Ninja Virtual Machine started\n");
+
+        while (!haltThis) {
+            instr = programMemory[pc];
+            matchInstruction(instr);
+        }
+        if (debugMode == true) {
+            pc = 0;
+            while (pc < instructionCount) {
+                instr = programMemory[pc];
+                debugger(instr);
+                pc++;
+            }
+        }
     }
-
-    /* Reads the File VM-version */
-    fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
-    if (version < programHeader[0]) {
-        printf("Version: %d is not supported!", programHeader[0]);
-        return (EXIT_FAILURE);
-    }
-    /* Reads the amount of instructions inside the File */
-    fread(&programHeader[1], sizeof(unsigned int), 1, loadedFile);
-    instructionCount = programHeader[1];
-
-    /* Reads the amount of global variables inside the File */
-    fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
-    staticAreaSize = programHeader[2];
-
-    staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
-    programMemory = malloc(instructionCount * sizeof(unsigned int));
-
-    fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
-    fclose(loadedFile);
-
-    while (!haltThis) {
-        instr = programMemory[pc];
-        matchInstruction(instr);
-    }
-    if (debugMode == true) {
-        debugger(instr);
-    }
-
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
 }
@@ -194,15 +239,16 @@ void debugger(int instr) {
 
 }
 
-
 /**
  *
  * @return
  */
 void matchInstruction(unsigned int instr) {
-    int shift = instr >> 24;
+    int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
+    int shift = instr>>24;
+    int shifter = (SIGN_EXTEND(IMMEDIATE(shift)));
     if (shift == PUSHC) {
-        push(SIGN_EXTEND(IMMEDIATE(instr)));
+        push(value);
         pc++;
         return;
     }
@@ -257,17 +303,17 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == PUSHG) {
-        pushg(SIGN_EXTEND(IMMEDIATE(shift)));
+        pushg(value);
         pc++;
         return;
     }
     if (shift == POPG) {
-        popg(SIGN_EXTEND(IMMEDIATE(shift)));
+        popg(value);
         pc++;
         return;
     }
     if (shift == ASF) {
-        asf(SIGN_EXTEND(IMMEDIATE(shift)));
+        asf(value);
         pc++;
         return;
     }
@@ -277,12 +323,12 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == PUSHL) {
-        pushl(SIGN_EXTEND(IMMEDIATE(shift)));
+        pushl(value);
         pc++;
         return;
     }
     if (shift == POPL) {
-        popl(SIGN_EXTEND(IMMEDIATE(shift)));
+        popl(value);
         pc++;
         return;
     }
@@ -317,22 +363,22 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == JMP) {
-        jmp(SIGN_EXTEND(IMMEDIATE(shift)));
+        jmp(shifter);
         pc++;
         return;
     }
     if (shift == BRF) {
-        brf(SIGN_EXTEND(IMMEDIATE(shift)));
+        brf(shifter);
         pc++;
         return;
     }
     if (shift == BRT) {
-        brt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        brt(shifter);
         pc++;
         return;
     }
     if (shift == CALL) {
-        call(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        call(value);
         pc++;
         return;
     }
@@ -352,123 +398,121 @@ void matchInstruction(unsigned int instr) {
         return;
     }
     if (shift == DROP) {
-        drop(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+        drop(value);
         pc++;
         return;
     }
 }
+
 
 /**
  * ONLY DEBUG
  * This method outputs all instructions inside a given program.
  * The listing order is from top to bottom.
  */
+
 void debugInstructions(unsigned int inst) {
-    int i;
-    for (i = 0; i < instructionCount; i++) {
-        switch SIGN_EXTEND(inst & 0xFF000000) {
-            case HALT:
-                printf("%d: HALT\n", i);
-                break;
-            case PUSHC:
-                printf("%d: PUSHC\t %u \n", i, (SIGN_EXTEND(IMMEDIATE(programMemory[i]))));
-                break;
-            case ADD:
-                printf("%d: ADD\n", i);
-                break;
-            case SUB:
-                printf("%d: SUB\n", i);
-                break;
-            case MUL:
-                printf("%d: MUL\n", i);
-                break;
-            case DIV:
-                printf("%d: DIV1\n", i);
-                break;
-            case MOD:
-                printf("%d: MOD\n", i);
-                break;
-            case RDINT:
-                printf("%d: RDINT\n", i);
-                break;
-            case WRINT:
-                printf("%d: WRINT\n", i);
-                break;
-            case RDCHR:
-                printf("%d: RDCHR\n", i);
-                break;
-            case WRCHR:
-                printf("%d: WRCHR\n", i);
-                break;
-            case PUSHG:
-                printf("%d: PUSHG\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case POPG:
-                printf("%d: POPG\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case ASF:
-                printf("%d: ASF\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case RSF:
-                printf("%d: RSF\n", i);
-                break;
-            case PUSHL:
-                printf("%d: PUSHL\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case POPL:
-                printf("%d: POPL\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case EQ:
-                printf("%d: EQ\n", i);
-                break;
-            case NE:
-                printf("%d: NE\n", i);
-                break;
-            case LT:
-                printf("%d: LT\n", i);
-                break;
-            case LE:
-                printf("%d: LE\n", i);
-                break;
-            case GT:
-                printf("%d: GT\n", i);
-                break;
-            case GE:
-                printf("%d: GE\n", i);
-                break;
-            case JMP:
-                printf("%d: JMP\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case BRF:
-                printf("%d: BRF\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case BRT:
-                printf("%d: BRT\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case CALL:
-                printf("%d: CALL\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case RET:
-                printf("%d: RET\n", i);
-                break;
-            case DROP:
-                printf("%d: DROP\t %u \n", i, (IMMEDIATE(programMemory[i])));
-                break;
-            case PUSHR:
-                printf("%d: PUSHR\n", i);
-                break;
-            case POPR:
-                printf("%d: POPR\n", i);
-                break;
-            case DUP:
-                printf("%d: DUP\n", i);
-                break;
-            default:
-                printf("Wert ungültig \n");
-        }
-        if ((programMemory[i] & 0xFF000000) == HALT) { break; }
+    int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
+    switch (inst >> 24) {
+        case HALT:
+            printf("%d: HALT\n", pc);
+            break;
+        case PUSHC:
+            printf("%d: PUSHC\t %u \n", pc, (value & 0x00FFFFFF));
+            break;
+        case ADD:
+            printf("%d: ADD\n", pc);
+            break;
+        case SUB:
+            printf("%d: SUB\n", pc);
+            break;
+        case MUL:
+            printf("%d: MUL\n", pc);
+            break;
+        case DIV:
+            printf("%d: DIV1\n", pc);
+            break;
+        case MOD:
+            printf("%d: MOD\n", pc);
+            break;
+        case RDINT:
+            printf("%d: RDINT\n", pc);
+            break;
+        case WRINT:
+            printf("%d: WRINT\n", pc);
+            break;
+        case RDCHR:
+            printf("%d: RDCHR\n", pc);
+            break;
+        case WRCHR:
+            printf("%d: WRCHR\n", pc);
+            break;
+        case PUSHG:
+            printf("%d: PUSHG\t %u \n", pc, (value));
+            break;
+        case POPG:
+            printf("%d: POPG\t %u \n", pc, (value));
+            break;
+        case ASF:
+            printf("%d: ASF\t %u \n", pc, (value));
+            break;
+        case RSF:
+            printf("%d: RSF\n", pc);
+            break;
+        case PUSHL:
+            printf("%d: PUSHL\t %u \n", pc, (value));
+            break;
+        case POPL:
+            printf("%d: POPL\t %u \n", pc, (value));
+            break;
+        case EQ:
+            printf("%d: EQ\n", pc);
+            break;
+        case NE:
+            printf("%d: NE\n", pc);
+            break;
+        case LT:
+            printf("%d: LT\n", pc);
+            break;
+        case LE:
+            printf("%d: LE\n", pc);
+            break;
+        case GT:
+            printf("%d: GT\n", pc);
+            break;
+        case GE:
+            printf("%d: GE\n", pc);
+            break;
+        case JMP:
+            printf("%d: JMP\t %u \n", pc, (value));
+            break;
+        case BRF:
+            printf("%d: BRF\t %u \n", pc, (value));
+            break;
+        case BRT:
+            printf("%d: BRT\t %u \n", pc, (value));
+            break;
+        case CALL:
+            printf("%d: CALL\t %u \n", pc, (value));
+            break;
+        case RET:
+            printf("%d: RET\n", pc);
+            break;
+        case DROP:
+            printf("%d: DROP\t %u \n", pc, (value));
+            break;
+        case PUSHR:
+            printf("%d: PUSHR\n", pc);
+            break;
+        case POPR:
+            printf("%d: POPR\n", pc);
+            break;
+        case DUP:
+            printf("%d: DUP\n", pc);
+            break;
+        default:
+            printf("Wert ungültig \n");
+
+            if ((programMemory[pc] & 0xFF000000) == HALT) { break; }
     }
 }
-
-
-

@@ -187,6 +187,9 @@ int main(int argc, char *argv[]) {
             matchInstruction(instr);
         }
         if (debugMode == true) {
+            printf("DEBUG: file %s loaded ", "Filename ToDo");
+            printf("(code size = %d, ", instructionCount);
+            printf("data size = %d)\n", staticAreaSize);
             pc = 0;
             while (pc < instructionCount) {
                 instr = programMemory[pc];
@@ -203,6 +206,11 @@ int main(int argc, char *argv[]) {
  * ToDo implement a debugger with a proper instructionset
  */
 void debugger(int instr) {
+    char *commands[6] = {"list", "quit"};
+    char *input = (char*) malloc(12);
+    printf("DEBUG: list, step, quit?\n");
+    scanf("%s", input);
+
     /*
      * run till end without stop
      * run next instruction
@@ -214,7 +222,16 @@ void debugger(int instr) {
     /* printf(staticPtr); */
 
     /* list instructions */
-    debugInstructions(instr);
+    if (strcmp(input, commands[0]) == 0) {
+        debugInstructions(instr);
+    }
+    if (strcmp(input, commands[1]) == 1) {
+        while (pc < instructionCount) {
+            debugInstructions(instr);
+        } haltProgram();
+    } else {
+        haltProgram();
+    }
 
     /* exit VM */
     /* exit(EXIT_SUCCESS); */

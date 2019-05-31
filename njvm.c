@@ -208,7 +208,7 @@ int main(int argc, char *argv[]) {
 void debugger(int instr) {
     char *commands[6] = {"list", "quit"};
     char *input = (char*) malloc(12);
-    printf("DEBUG: list, step, quit?\n");
+    printf("DEBUG: step, list, quit?\n");
     scanf("%s", input);
 
     /*

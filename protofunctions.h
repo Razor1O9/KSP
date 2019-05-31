@@ -4,6 +4,8 @@
 
 
 /* Prototyp Funktionen */
+
+
 /**braucht man nur in der C datei nicht im header
 #include <stdio.h>
 #include <stdlib.h>

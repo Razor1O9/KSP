@@ -40,28 +40,9 @@
 #define DUP 31
 
 #define IMMEDIATE(x) ((x) & 0x00FFFFFF)
-#define OPCODE(i) ((i) & 0xFF000000)
 /* 0x00800000 -> 8 checks the sign (+ or -) */
 /* 0xFF000000 -> Fills the OpCode with 1 */
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
-
-/*
-Das wurde bereits im header deklariert und in der protofunction.c initialisiert 
-man brauch es nicht nochmal sonst ist es doppelt!?
-
-int version;
-int calculationStack[1000];
-bool haltThis = false;
-bool debugMode = false;
-unsigned int *programMemory;
-int instructionCount = 0;
-int sp;
-int pc = 0;
-int staticAreaSize = 0;
-int *staticPtr;
-*/
-signed int instr;
-
 
 /**
  * Main Function, which reads all Terminal Arguments
@@ -71,6 +52,7 @@ signed int instr;
  * @return
  */
 int main(int argc, char *argv[]) {
+    unsigned int instr;
     int reader = 0;
     char bin[] = ".bin";
     char debug[] = "--debug";

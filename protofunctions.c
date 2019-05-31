@@ -3,14 +3,10 @@
 #include <string.h>
 #include "protofunctions.h"
 
-/*in der h datei wird deklariert und in der c datei initialisiert damit man es nicht mehr in njvm.c initialisieren muss
-*/
 int version = 4;
 int calculationStack[1000];
-int isp = 0;
-int  fp = 0;
+int fp = 0;
 int regADD = 0;
-
 bool haltThis = false;
 bool debugMode = false;
 unsigned int *programMemory;
@@ -26,10 +22,8 @@ int sp;
  */
 void push(int var) {
     if (sp < 1000) {
-        calculationStack[++sp] = var;
-
+        calculationStack[sp++] = var;
     } else {
-        printf("Kein freier Speicher im Stack vorhanden\n");
         haltProgram();
     }
 }
@@ -40,13 +34,13 @@ void push(int var) {
  * @return
  */
 int pop() {
+    int value;
     if (sp > 0) {
-        return calculationStack[sp--];
+        value = calculationStack[sp--];
     } else {
-        printf("Keine Elemente im Stack vorhanden\n");
         haltProgram();
     }
-    return 0;
+    return value;
 }
 
 void add(void) {

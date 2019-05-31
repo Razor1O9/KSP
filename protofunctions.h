@@ -1,16 +1,7 @@
 #ifndef PROTOFUNCTIONS_H_
 #define PROTOFUNCTIONS_H_
 
-
-
 /* Prototyp Funktionen */
-
-
-/**braucht man nur in der C datei nicht im header
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-**/
 typedef enum { false, true } bool;
 
 extern int version ; /* The current version */

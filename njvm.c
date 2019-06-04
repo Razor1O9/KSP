@@ -219,14 +219,14 @@ void debugger(int instr) {
         printf("DEBUG [inspect]: stack, data?\n");
         scanf("%s", input);
         if (strcmp(input, options[0]) == 0) {
-            printf((const char *) calculationStack);
+            printf("%s", (const char *) calculationStack);
         }
         else if (strcmp(input, options[1]) == 0) {
-            printf((const char *) staticPtr);
+            printf("%s", (const char *) staticPtr);
         }
     }
     /* LIST */
-    if (strcmp(input, commands[1]) == 0) {
+    else if (strcmp(input, commands[1]) == 0) {
         int i = 0;
         while (i < instructionCount) {
             debugInstructions(instr);
@@ -234,21 +234,19 @@ void debugger(int instr) {
         }
     }
     /* STEP */
-    if (strcmp(input, commands[2]) == 0) {
+    else if (strcmp(input, commands[2]) == 0) {
         debugInstructions(instr);
     }
     /* RUN */
-    if (strcmp(input, commands[3]) == 0) {
+    else if (strcmp(input, commands[3]) == 0) {
         debugMode = false;
     }
 
     /* QUIT*/
-    if (strcmp(input, commands[4]) == 0) {
+    else if (strcmp(input, commands[4]) == 0) {
         printf("Ninja Virtual Machine stopped\n");
         exit(EXIT_SUCCESS);
     }
-
-
 }
 
 /**

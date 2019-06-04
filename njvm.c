@@ -244,7 +244,7 @@ void debugger(int instr) {
 
     /* QUIT*/
     if (strcmp(input, commands[4]) == 0) {
-        //haltProgram();
+        printf("Ninja Virtual Machine stopped\n");
         exit(EXIT_SUCCESS);
     }
 

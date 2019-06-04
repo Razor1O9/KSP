@@ -215,7 +215,7 @@ void debugger(int instr) {
     scanf("%s", input);
 
     /* INSPECT */
-    if (strcmp(input, commands[1]) == 0) {
+    if (strcmp(input, commands[0]) == 0) {
         printf("DEBUG [inspect]: stack, data?\n");
         scanf("%s", input);
         if (strcmp(input, options[0]) == 0) {
@@ -226,7 +226,7 @@ void debugger(int instr) {
         }
     }
     /* LIST */
-    if (strcmp(input, commands[2]) == 0) {
+    if (strcmp(input, commands[1]) == 0) {
         int i = 0;
         while (i < instructionCount) {
             debugInstructions(instr);
@@ -234,16 +234,16 @@ void debugger(int instr) {
         }
     }
     /* STEP */
-    if (strcmp(input, commands[3]) == 0) {
+    if (strcmp(input, commands[2]) == 0) {
         debugInstructions(instr);
     }
     /* RUN */
-    if (strcmp(input, commands[4]) == 0) {
+    if (strcmp(input, commands[3]) == 0) {
         debugMode = false;
     }
 
     /* QUIT*/
-    if (strcmp(input, commands[5]) == 0) {
+    if (strcmp(input, commands[4]) == 0) {
         //haltProgram();
         exit(EXIT_SUCCESS);
     }

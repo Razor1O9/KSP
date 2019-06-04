@@ -209,25 +209,23 @@ int main(int argc, char *argv[]) {
  */
 void debugger(int instr) {
     char *commands[5] = {"inspect", "list", "step", "run", "quit"};
+    char *options[2] = {"stack", "data"};
     char *input = (char*) malloc(12);
-    printf("DEBUG: list, step, quit?\n");
+    printf("DEBUG: inspect, list, step, run, quit?\n");
     scanf("%s", input);
 
-    /* RUN
-     * run till end without stop
-     * run next instruction
-     */
-
-    /* Inspect Stack
-     * show Stack
-     * printf(calculationStack);
-     */
-
-    /* show static Variables */
-    /* printf(staticPtr); */
-
+    /* INSPECT */
+    if (strcmp(input, commands[1]) == 0) {
+        printf("DEBUG [inspect]: stack, data?\n");
+        scanf("%s", input);
+        if (strcmp(input, options[0]) == 0) {
+            printf((const char *) calculationStack);
+        }
+        else if (strcmp(input, options[1]) == 0) {
+            printf((const char *) staticPtr);
+        }
+    }
     /* LIST */
-    /* list instructions */
     if (strcmp(input, commands[2]) == 0) {
         int i = 0;
         while (i < instructionCount) {
@@ -244,10 +242,10 @@ void debugger(int instr) {
         debugMode = false;
     }
 
-    /* QUIT exit VM */
+    /* QUIT*/
     if (strcmp(input, commands[5]) == 0) {
-        haltProgram();
-        /* exit(EXIT_SUCCESS); */
+        //haltProgram();
+        exit(EXIT_SUCCESS);
     }
 
 

@@ -40,24 +40,9 @@
 #define DUP 31
 
 #define IMMEDIATE(x) ((x) & 0x00FFFFFF)
-#define OPCODE(i) ((i) & 0xFF000000)
 /* 0x00800000 -> 8 checks the sign (+ or -) */
 /* 0xFF000000 -> Fills the OpCode with 1 */
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
-
-int version;
-int calculationStack[1000];
-int sp;
-bool haltThis = false;
-bool debugMode = false;
-unsigned int *programMemory;
-
-int instructionCount = 0;
-unsigned int instr;
-int pc = 0;
-int staticAreaSize = 0;
-int *staticPtr;
-
 
 /**
  * Main Function, which reads all Terminal Arguments
@@ -67,6 +52,7 @@ int *staticPtr;
  * @return
  */
 int main(int argc, char *argv[]) {
+    unsigned int instr;
     int reader = 0;
     char bin[] = ".bin";
     char debug[] = "--debug";
@@ -142,6 +128,7 @@ int main(int argc, char *argv[]) {
 
         while (!haltThis) {
             instr = programMemory[pc];
+            pc++;
             matchInstruction(instr);
         }
     } else if (argc == 3) {
@@ -197,17 +184,21 @@ int main(int argc, char *argv[]) {
         printf("Ninja Virtual Machine started\n");
 
         while (!haltThis) {
+            if (debugMode == true) {
+                printf("DEBUG: file %s loaded ", "Filename ToDo");
+                printf("(code size = %d, ", instructionCount);
+                printf("data size = %d)\n", staticAreaSize);
+                for (int i = 0; i < instructionCount; i++) {
+                    instr = programMemory[i];
+                    debugger(instr);
+
+                }
+            }
             instr = programMemory[pc];
+            pc++;
             matchInstruction(instr);
         }
-        if (debugMode == true) {
-            pc = 0;
-            while (pc < instructionCount) {
-                instr = programMemory[pc];
-                debugger(instr);
-                pc++;
-            }
-        }
+
     }
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
@@ -217,21 +208,48 @@ int main(int argc, char *argv[]) {
  * ToDo implement a debugger with a proper instructionset
  */
 void debugger(int instr) {
-    /*
+    char *commands[5] = {"inspect", "list", "step", "run", "quit"};
+    char *input = (char*) malloc(12);
+    printf("DEBUG: list, step, quit?\n");
+    scanf("%s", input);
+
+    /* RUN
      * run till end without stop
      * run next instruction
      */
-    /* show Stack */
-    /* printf(calculationStack); */
+
+    /* Inspect Stack
+     * show Stack
+     * printf(calculationStack);
+     */
 
     /* show static Variables */
     /* printf(staticPtr); */
 
+    /* LIST */
     /* list instructions */
-    debugInstructions(instr);
+    if (strcmp(input, commands[2]) == 0) {
+        int i = 0;
+        while (i < instructionCount) {
+            debugInstructions(instr);
+            i++;
+        }
+    }
+    /* STEP */
+    if (strcmp(input, commands[3]) == 0) {
+        debugInstructions(instr);
+    }
+    /* RUN */
+    if (strcmp(input, commands[4]) == 0) {
+        debugMode = false;
+    }
 
-    /* exit VM */
-    /* exit(EXIT_SUCCESS); */
+    /* QUIT exit VM */
+    if (strcmp(input, commands[5]) == 0) {
+        haltProgram();
+        /* exit(EXIT_SUCCESS); */
+    }
+
 
 }
 
@@ -242,29 +260,25 @@ void debugger(int instr) {
 void matchInstruction(unsigned int instr) {
     int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
     int shift = instr>>24;
+    int shifter = (SIGN_EXTEND(IMMEDIATE(shift)));
     if (shift == PUSHC) {
         push(value);
-        pc++;
         return;
     }
     if (shift == HALT) {
         haltProgram();
-        pc++;
         return;
     }
     if (shift == ADD) {
         add();
-        pc++;
         return;
     }
     if (shift == SUB) {
         sub();
-        pc++;
         return;
     }
     if (shift == MUL) {
         mul();
-        pc++;
         return;
     }
     if (shift == DIV) {
@@ -274,127 +288,102 @@ void matchInstruction(unsigned int instr) {
     }
     if (shift == MOD) {
         mod();
-        pc++;
         return;
     }
     if (shift == RDINT) {
         rdint();
-        pc++;
         return;
     }
     if (shift == WRINT) {
         wrint();
-        pc++;
         return;
     }
     if (shift == RDCHR) {
         rdchr();
-        pc++;
         return;
     }
     if (shift == WRCHR) {
         wrchr();
-        pc++;
         return;
     }
     if (shift == PUSHG) {
         pushg(value);
-        pc++;
         return;
     }
     if (shift == POPG) {
         popg(value);
-        pc++;
         return;
     }
     if (shift == ASF) {
         asf(value);
-        pc++;
         return;
     }
     if (shift == RSF) {
         rsf();
-        pc++;
         return;
     }
     if (shift == PUSHL) {
         pushl(value);
-        pc++;
         return;
     }
     if (shift == POPL) {
         popl(value);
-        pc++;
         return;
     }
     if (shift == EQ) {
         eq();
-        pc++;
         return;
     }
     if (shift == NE) {
         ne();
-        pc++;
         return;
     }
     if (shift == LT) {
         lt();
-        pc++;
         return;
     }
     if (shift == LE) {
         le();
-        pc++;
         return;
     }
     if (shift == GT) {
         gt();
-        pc++;
         return;
     }
     if (shift == GE) {
         ge();
-        pc++;
         return;
     }
     if (shift == JMP) {
         jmp(value);
-        pc++;
         return;
     }
     if (shift == BRF) {
         brf(value);
-        pc++;
         return;
     }
     if (shift == BRT) {
         brt(value);
-        pc++;
         return;
     }
     if (shift == CALL) {
         call(value);
-        pc++;
         return;
     }
     if (shift == RET) {
         ret();
-        pc++;
         return;
     }
     if (shift == PUSHR) {
         pushr();
-        pc++;
         return;
     }
     if (shift == POPR) {
         popr();
-        pc++;
         return;
     }
     if (shift == DROP) {
         drop(value);
-        pc++;
         return;
     }
 }
@@ -413,7 +402,7 @@ void debugInstructions(unsigned int inst) {
             printf("%d: HALT\n", pc);
             break;
         case PUSHC:
-            printf("%d: PUSHC\t %u \n", pc, (value));
+            printf("%d: PUSHC\t %u \n", pc, (value & 0x00FFFFFF));
             break;
         case ADD:
             printf("%d: ADD\n", pc);

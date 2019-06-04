@@ -3,19 +3,18 @@
 #include <string.h>
 #include "protofunctions.h"
 
-
 int version = 4;
 int calculationStack[1000];
-int sp = 0;
-int fp = 0;
+int  fp = 0;
 int regADD = 0;
-bool haltThis;
-bool debugMode;
+bool haltThis = false;
+bool debugMode = false;
 unsigned int *programMemory;
-int instructionCount;
-int pc;
-int staticAreaSize;
+int instructionCount=0;
+int pc=0;
+int staticAreaSize=0;
 int *staticPtr;
+int sp;
 
 /**
  * This methods pushes a given variable on top of the stack.
@@ -36,13 +35,14 @@ void push(int var) {
  * @return
  */
 int pop() {
+    int value = 0;
     if (sp > 0) {
         sp--;
-        return calculationStack[sp];
+        value = calculationStack[sp];
     } else {
         haltProgram();
     }
-    return 0;
+    return value;
 }
 
 void add(void) {
@@ -143,7 +143,7 @@ void ret() {
 }
 
 void call(int value) {
-    push(pc++);
+    push(pc);
     pc = value;
 }
 

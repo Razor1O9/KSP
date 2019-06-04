@@ -1,13 +1,12 @@
+#ifndef PROTOFUNCTIONS_H_
+#define PROTOFUNCTIONS_H_
+
 /* Prototyp Funktionen */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 typedef enum { false, true } bool;
 
-extern int version; /* The current version */
-
+extern int version ; /* The current version */
 extern int *staticPtr; /* Lists all global Variables */
-extern int calculationStack[1000]; /* Stack for Calculation */
+extern int calculationStack[]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
 extern int fp;
 extern int regADD;
@@ -53,3 +52,6 @@ void popr (void);
 void debugInstructions(unsigned int);
 void matchInstruction(unsigned int);
 void debugger(int);
+
+
+#endif

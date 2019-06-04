@@ -143,7 +143,7 @@ void ret() {
 }
 
 void call(int value) {
-    push(pc++);
+    push(pc);
     pc = value;
 }
 

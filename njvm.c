@@ -128,6 +128,7 @@ int main(int argc, char *argv[]) {
 
         while (!haltThis) {
             instr = programMemory[pc];
+            pc++;
             matchInstruction(instr);
         }
     } else if (argc == 3) {
@@ -183,20 +184,21 @@ int main(int argc, char *argv[]) {
         printf("Ninja Virtual Machine started\n");
 
         while (!haltThis) {
+            if (debugMode == true) {
+                printf("DEBUG: file %s loaded ", "Filename ToDo");
+                printf("(code size = %d, ", instructionCount);
+                printf("data size = %d)\n", staticAreaSize);
+                for (int i = 0; i < instructionCount; i++) {
+                    instr = programMemory[i];
+                    debugger(instr);
+
+                }
+            }
             instr = programMemory[pc];
+            pc++;
             matchInstruction(instr);
         }
-        if (debugMode == true) {
-            printf("DEBUG: file %s loaded ", "Filename ToDo");
-            printf("(code size = %d, ", instructionCount);
-            printf("data size = %d)\n", staticAreaSize);
-            pc = 0;
-            while (pc < instructionCount) {
-                instr = programMemory[pc];
-                debugger(instr);
-                pc++;
-            }
-        }
+
     }
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
@@ -206,35 +208,48 @@ int main(int argc, char *argv[]) {
  * ToDo implement a debugger with a proper instructionset
  */
 void debugger(int instr) {
-    char *commands[6] = {"list", "quit"};
+    char *commands[5] = {"inspect", "list", "step", "run", "quit"};
     char *input = (char*) malloc(12);
-    printf("DEBUG: step, list, quit?\n");
+    printf("DEBUG: list, step, quit?\n");
     scanf("%s", input);
 
-    /*
+    /* RUN
      * run till end without stop
      * run next instruction
      */
-    /* show Stack */
-    /* printf(calculationStack); */
+
+    /* Inspect Stack
+     * show Stack
+     * printf(calculationStack);
+     */
 
     /* show static Variables */
     /* printf(staticPtr); */
 
+    /* LIST */
     /* list instructions */
-    if (strcmp(input, commands[0]) == 0) {
+    if (strcmp(input, commands[2]) == 0) {
+        int i = 0;
+        while (i < instructionCount) {
+            debugInstructions(instr);
+            i++;
+        }
+    }
+    /* STEP */
+    if (strcmp(input, commands[3]) == 0) {
         debugInstructions(instr);
     }
-    if (strcmp(input, commands[1]) == 1) {
-        while (pc < instructionCount) {
-            debugInstructions(instr);
-        } haltProgram();
-    } else {
-        haltProgram();
+    /* RUN */
+    if (strcmp(input, commands[4]) == 0) {
+        debugMode = false;
     }
 
-    /* exit VM */
-    /* exit(EXIT_SUCCESS); */
+    /* QUIT exit VM */
+    if (strcmp(input, commands[5]) == 0) {
+        haltProgram();
+        /* exit(EXIT_SUCCESS); */
+    }
+
 
 }
 
@@ -248,27 +263,22 @@ void matchInstruction(unsigned int instr) {
     int shifter = (SIGN_EXTEND(IMMEDIATE(shift)));
     if (shift == PUSHC) {
         push(value);
-        pc++;
         return;
     }
     if (shift == HALT) {
         haltProgram();
-        pc++;
         return;
     }
     if (shift == ADD) {
         add();
-        pc++;
         return;
     }
     if (shift == SUB) {
         sub();
-        pc++;
         return;
     }
     if (shift == MUL) {
         mul();
-        pc++;
         return;
     }
     if (shift == DIV) {
@@ -278,127 +288,102 @@ void matchInstruction(unsigned int instr) {
     }
     if (shift == MOD) {
         mod();
-        pc++;
         return;
     }
     if (shift == RDINT) {
         rdint();
-        pc++;
         return;
     }
     if (shift == WRINT) {
         wrint();
-        pc++;
         return;
     }
     if (shift == RDCHR) {
         rdchr();
-        pc++;
         return;
     }
     if (shift == WRCHR) {
         wrchr();
-        pc++;
         return;
     }
     if (shift == PUSHG) {
         pushg(value);
-        pc++;
         return;
     }
     if (shift == POPG) {
         popg(value);
-        pc++;
         return;
     }
     if (shift == ASF) {
         asf(value);
-        pc++;
         return;
     }
     if (shift == RSF) {
         rsf();
-        pc++;
         return;
     }
     if (shift == PUSHL) {
         pushl(value);
-        pc++;
         return;
     }
     if (shift == POPL) {
         popl(value);
-        pc++;
         return;
     }
     if (shift == EQ) {
         eq();
-        pc++;
         return;
     }
     if (shift == NE) {
         ne();
-        pc++;
         return;
     }
     if (shift == LT) {
         lt();
-        pc++;
         return;
     }
     if (shift == LE) {
         le();
-        pc++;
         return;
     }
     if (shift == GT) {
         gt();
-        pc++;
         return;
     }
     if (shift == GE) {
         ge();
-        pc++;
         return;
     }
     if (shift == JMP) {
-        jmp(shifter);
-        pc++;
+        jmp(value);
         return;
     }
     if (shift == BRF) {
-        brf(shifter);
-        pc++;
+        brf(value);
         return;
     }
     if (shift == BRT) {
-        brt(shifter);
-        pc++;
+        brt(value);
         return;
     }
     if (shift == CALL) {
         call(value);
-        pc++;
         return;
     }
     if (shift == RET) {
         ret();
-        pc++;
         return;
     }
     if (shift == PUSHR) {
         pushr();
-        pc++;
         return;
     }
     if (shift == POPR) {
         popr();
-        pc++;
         return;
     }
     if (shift == DROP) {
         drop(value);
-        pc++;
         return;
     }
 }

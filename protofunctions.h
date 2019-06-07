@@ -16,6 +16,7 @@ extern bool haltThis;
 extern bool debugMode;
 extern unsigned int *programMemory; /* List of all Program Instructions */
 extern int pc; /* Program Counter Variable for Instructions */
+extern int dc; /* Program Counter Variable for Debugging */
 
 void haltProgram (void);
 void push (int);

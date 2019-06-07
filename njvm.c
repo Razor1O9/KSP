@@ -196,8 +196,9 @@ int main(int argc, char *argv[]) {
                         /* small Hack :) */
                         i = instructionCount;
                     } else {
-                        instr = programMemory[i];
+                        instr = programMemory[dc];
                         debugger(instr);
+                        dc++;
                     }
                 }
             } else {
@@ -236,8 +237,9 @@ void debugger(int instr) {
     else if (strcmp(input, commands[1]) == 0) {
         int i = 0;
         while (i < instructionCount) {
-            instr = programMemory[i];
+            instr = programMemory[dc];
             debugInstructions(instr);
+            dc++;
             i++;
         }
     }
@@ -399,13 +401,13 @@ void matchInstruction(unsigned int instr) {
  */
 
 void debugInstructions(unsigned int inst) {
-    int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
+    int value = SIGN_EXTEND(IMMEDIATE(programMemory[dc]));
     switch (inst >> 24) {
         case HALT:
             printf("%d: HALT\n", pc);
             break;
         case PUSHC:
-            printf("%d: PUSHC\t %u \n", pc, (value & 0x00FFFFFF));
+            printf("%d: PUSHC\t %u \n", pc, (value));
             break;
         case ADD:
             printf("%d: ADD\n", pc);

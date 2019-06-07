@@ -12,6 +12,7 @@ bool debugMode = false;
 unsigned int *programMemory;
 int instructionCount=0;
 int pc=0;
+int dc=0;
 int staticAreaSize=0;
 int *staticPtr;
 int sp;

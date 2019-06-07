@@ -189,13 +189,21 @@ int main(int argc, char *argv[]) {
                 printf("(code size = %d, ", instructionCount);
                 printf("data size = %d)\n", staticAreaSize);
                 for (int i = 0; i < instructionCount; i++) {
-                    instr = programMemory[i];
-                    debugger(instr);
+                    if (debugMode == false) {
+                        instr = programMemory[pc];
+                        pc++;
+                        matchInstruction(instr);
+                    } else {
+                        instr = programMemory[i];
+                        debugger(instr);
+                    }
                 }
             }
+            /*
             instr = programMemory[pc];
             pc++;
             matchInstruction(instr);
+             */
         }
 
     }
@@ -203,9 +211,7 @@ int main(int argc, char *argv[]) {
     return (EXIT_SUCCESS);
 }
 
-/*
- * ToDo implement a debugger with a proper instructionset
- */
+
 void debugger(int instr) {
     char *commands[5] = {"inspect", "list", "step", "run", "quit"};
     char *options[2] = {"stack", "data"};
@@ -240,6 +246,7 @@ void debugger(int instr) {
     /* RUN */
     else if (strcmp(input, commands[3]) == 0) {
         debugMode = false;
+        return;
     }
 
     /* QUIT*/

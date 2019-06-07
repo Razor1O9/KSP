@@ -236,13 +236,15 @@ void debugger(int instr) {
     /* LIST */
     else if (strcmp(input, commands[1]) == 0) {
         int i = 0;
+        int old_dc = dc;
+        dc = 0;
         while (i < instructionCount) {
             instr = programMemory[dc];
             debugInstructions(instr);
             dc++;
             i++;
         }
-        dc = 0;
+        dc = --old_dc;
     }
     /* STEP */
     else if (strcmp(input, commands[2]) == 0) {

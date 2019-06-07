@@ -190,20 +190,18 @@ int main(int argc, char *argv[]) {
                 printf("data size = %d)\n", staticAreaSize);
                 for (int i = 0; i < instructionCount; i++) {
                     if (debugMode == false) {
-                        instr = programMemory[pc];
-                        pc++;
-                        matchInstruction(instr);
+                        /* small Hack :) */
+                        i = instructionCount;
                     } else {
                         instr = programMemory[i];
                         debugger(instr);
                     }
                 }
+            } else {
+                instr = programMemory[pc];
+                pc++;
+                matchInstruction(instr);
             }
-            /*
-            instr = programMemory[pc];
-            pc++;
-            matchInstruction(instr);
-             */
         }
 
     }
@@ -246,7 +244,6 @@ void debugger(int instr) {
     /* RUN */
     else if (strcmp(input, commands[3]) == 0) {
         debugMode = false;
-        return;
     }
 
     /* QUIT*/

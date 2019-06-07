@@ -191,23 +191,20 @@ int main(int argc, char *argv[]) {
                 printf("DEBUG: file %s loaded ", filename);
                 printf("(code size = %d, ", instructionCount);
                 printf("data size = %d)\n", staticAreaSize);
-                for (int i = 0; i < instructionCount; i++) {
-                    if (debugMode == false) {
-                        /* small Hack :) */
-                        i = instructionCount;
-                    } else {
-                        instr = programMemory[dc];
-                        debugger(instr);
-                        dc++;
-                    }
+                if (debugMode == false) {
+                    haltProgram();
+                } else {
+                    instr = programMemory[dc];
+                    debugger(instr);
+                    dc++;
                 }
             } else {
                 instr = programMemory[pc];
                 matchInstruction(instr);
                 pc++;
             }
-        }
 
+        }
     }
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);
@@ -242,6 +239,7 @@ void debugger(int instr) {
             dc++;
             i++;
         }
+        dc = 0;
     }
     /* STEP */
     else if (strcmp(input, commands[2]) == 0) {
@@ -404,100 +402,100 @@ void debugInstructions(unsigned int inst) {
     int value = SIGN_EXTEND(IMMEDIATE(programMemory[dc]));
     switch (inst >> 24) {
         case HALT:
-            printf("%d: HALT\n", pc);
+            printf("%d: HALT\n", dc);
             break;
         case PUSHC:
-            printf("%d: PUSHC\t %u \n", pc, (value));
+            printf("%d: PUSHC\t %u \n", dc, (value));
             break;
         case ADD:
-            printf("%d: ADD\n", pc);
+            printf("%d: ADD\n", dc);
             break;
         case SUB:
-            printf("%d: SUB\n", pc);
+            printf("%d: SUB\n", dc);
             break;
         case MUL:
-            printf("%d: MUL\n", pc);
+            printf("%d: MUL\n", dc);
             break;
         case DIV:
-            printf("%d: DIV1\n", pc);
+            printf("%d: DIV1\n", dc);
             break;
         case MOD:
-            printf("%d: MOD\n", pc);
+            printf("%d: MOD\n", dc);
             break;
         case RDINT:
-            printf("%d: RDINT\n", pc);
+            printf("%d: RDINT\n", dc);
             break;
         case WRINT:
-            printf("%d: WRINT\n", pc);
+            printf("%d: WRINT\n", dc);
             break;
         case RDCHR:
-            printf("%d: RDCHR\n", pc);
+            printf("%d: RDCHR\n", dc);
             break;
         case WRCHR:
-            printf("%d: WRCHR\n", pc);
+            printf("%d: WRCHR\n", dc);
             break;
         case PUSHG:
-            printf("%d: PUSHG\t %u \n", pc, (value));
+            printf("%d: PUSHG\t %u \n", dc, (value));
             break;
         case POPG:
-            printf("%d: POPG\t %u \n", pc, (value));
+            printf("%d: POPG\t %u \n", dc, (value));
             break;
         case ASF:
-            printf("%d: ASF\t %u \n", pc, (value));
+            printf("%d: ASF\t %u \n", dc, (value));
             break;
         case RSF:
-            printf("%d: RSF\n", pc);
+            printf("%d: RSF\n", dc);
             break;
         case PUSHL:
-            printf("%d: PUSHL\t %u \n", pc, (value));
+            printf("%d: PUSHL\t %u \n", dc, (value));
             break;
         case POPL:
-            printf("%d: POPL\t %u \n", pc, (value));
+            printf("%d: POPL\t %u \n", dc, (value));
             break;
         case EQ:
-            printf("%d: EQ\n", pc);
+            printf("%d: EQ\n", dc);
             break;
         case NE:
-            printf("%d: NE\n", pc);
+            printf("%d: NE\n", dc);
             break;
         case LT:
-            printf("%d: LT\n", pc);
+            printf("%d: LT\n", dc);
             break;
         case LE:
-            printf("%d: LE\n", pc);
+            printf("%d: LE\n", dc);
             break;
         case GT:
-            printf("%d: GT\n", pc);
+            printf("%d: GT\n", dc);
             break;
         case GE:
-            printf("%d: GE\n", pc);
+            printf("%d: GE\n", dc);
             break;
         case JMP:
-            printf("%d: JMP\t %u \n", pc, (value));
+            printf("%d: JMP\t %u \n", dc, (value));
             break;
         case BRF:
-            printf("%d: BRF\t %u \n", pc, (value));
+            printf("%d: BRF\t %u \n", dc, (value));
             break;
         case BRT:
-            printf("%d: BRT\t %u \n", pc, (value));
+            printf("%d: BRT\t %u \n", dc, (value));
             break;
         case CALL:
-            printf("%d: CALL\t %u \n", pc, (value));
+            printf("%d: CALL\t %u \n", dc, (value));
             break;
         case RET:
-            printf("%d: RET\n", pc);
+            printf("%d: RET\n", dc);
             break;
         case DROP:
-            printf("%d: DROP\t %u \n", pc, (value));
+            printf("%d: DROP\t %u \n", dc, (value));
             break;
         case PUSHR:
-            printf("%d: PUSHR\n", pc);
+            printf("%d: PUSHR\n", dc);
             break;
         case POPR:
-            printf("%d: POPR\n", pc);
+            printf("%d: POPR\n", dc);
             break;
         case DUP:
-            printf("%d: DUP\n", pc);
+            printf("%d: DUP\n", dc);
             break;
         default:
             printf("Wert ungültig \n");

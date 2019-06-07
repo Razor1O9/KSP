@@ -52,6 +52,7 @@
  * @return
  */
 int main(int argc, char *argv[]) {
+    char *filename = "";
     unsigned int instr;
     int reader = 0;
     char bin[] = ".bin";
@@ -128,14 +129,16 @@ int main(int argc, char *argv[]) {
 
         while (!haltThis) {
             instr = programMemory[pc];
-            pc++;
             matchInstruction(instr);
+            pc++;
         }
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
             debugMode = true;
+            filename = argv[2];
         } else if (strstr(argv[2], debug) != NULL) {
             debugMode = true;
+            filename = argv[1];
         }
         if (strstr(argv[1], bin) != NULL) {
             loadedFile = fopen(argv[1], "rb");
@@ -185,7 +188,7 @@ int main(int argc, char *argv[]) {
 
         while (!haltThis) {
             if (debugMode == true) {
-                printf("DEBUG: file %s loaded ", "Filename ToDo");
+                printf("DEBUG: file %s loaded ", filename);
                 printf("(code size = %d, ", instructionCount);
                 printf("data size = %d)\n", staticAreaSize);
                 for (int i = 0; i < instructionCount; i++) {
@@ -199,8 +202,8 @@ int main(int argc, char *argv[]) {
                 }
             } else {
                 instr = programMemory[pc];
-                pc++;
                 matchInstruction(instr);
+                pc++;
             }
         }
 
@@ -261,7 +264,6 @@ void debugger(int instr) {
 void matchInstruction(unsigned int instr) {
     int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
     int shift = instr>>24;
-    int shifter = (SIGN_EXTEND(IMMEDIATE(shift)));
     if (shift == PUSHC) {
         push(value);
         return;

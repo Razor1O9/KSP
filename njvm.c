@@ -191,20 +191,23 @@ int main(int argc, char *argv[]) {
                 printf("DEBUG: file %s loaded ", filename);
                 printf("(code size = %d, ", instructionCount);
                 printf("data size = %d)\n", staticAreaSize);
-                if (debugMode == false) {
-                    haltProgram();
-                } else {
-                    instr = programMemory[dc];
-                    debugger(instr);
-                    dc++;
+                for (int i = 0; i < instructionCount; i++) {
+                    if (debugMode == false) {
+                        /* small Hack :) */
+                        i = instructionCount;
+                    } else {
+                        instr = programMemory[dc];
+                        debugger(instr);
+                        dc++;
+                    }
                 }
             } else {
                 instr = programMemory[pc];
                 matchInstruction(instr);
                 pc++;
             }
-
         }
+
     }
     printf("Ninja Virtual Machine stopped\n");
     return (EXIT_SUCCESS);

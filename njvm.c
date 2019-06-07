@@ -217,7 +217,8 @@ void debugger(int instr) {
     printf("DEBUG: inspect, list, step, run, quit?\n");
     scanf("%s", input);
 
-    /* INSPECT */
+
+    /* INSPECT ToDo, not working... */
     if (strcmp(input, commands[0]) == 0) {
         printf("DEBUG [inspect]: stack, data?\n");
         scanf("%s", input);

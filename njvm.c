@@ -191,7 +191,6 @@ int main(int argc, char *argv[]) {
                 for (int i = 0; i < instructionCount; i++) {
                     instr = programMemory[i];
                     debugger(instr);
-
                 }
             }
             instr = programMemory[pc];
@@ -229,6 +228,7 @@ void debugger(int instr) {
     else if (strcmp(input, commands[1]) == 0) {
         int i = 0;
         while (i < instructionCount) {
+            instr = programMemory[i];
             debugInstructions(instr);
             i++;
         }

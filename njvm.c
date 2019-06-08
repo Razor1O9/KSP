@@ -410,7 +410,7 @@ void debugInstructions(unsigned int inst) {
             printf("%d: HALT\n", dc);
             break;
         case PUSHC:
-            printf("%d: PUSHC\t %u \n", dc, (value));
+            printf("%d: PUSHC\t %d \n", dc, (value));
             break;
         case ADD:
             printf("%d: ADD\n", dc);
@@ -440,22 +440,22 @@ void debugInstructions(unsigned int inst) {
             printf("%d: WRCHR\n", dc);
             break;
         case PUSHG:
-            printf("%d: PUSHG\t %u \n", dc, (value));
+            printf("%d: PUSHG\t %d \n", dc, (value));
             break;
         case POPG:
-            printf("%d: POPG\t %u \n", dc, (value));
+            printf("%d: POPG\t %d \n", dc, (value));
             break;
         case ASF:
-            printf("%d: ASF\t %u \n", dc, (value));
+            printf("%d: ASF\t %d \n", dc, (value));
             break;
         case RSF:
             printf("%d: RSF\n", dc);
             break;
         case PUSHL:
-            printf("%d: PUSHL\t %u \n", dc, (value));
+            printf("%d: PUSHL\t %d \n", dc, (value));
             break;
         case POPL:
-            printf("%d: POPL\t %u \n", dc, (value));
+            printf("%d: POPL\t %d \n", dc, (value));
             break;
         case EQ:
             printf("%d: EQ\n", dc);
@@ -476,22 +476,22 @@ void debugInstructions(unsigned int inst) {
             printf("%d: GE\n", dc);
             break;
         case JMP:
-            printf("%d: JMP\t %u \n", dc, (value));
+            printf("%d: JMP\t %d \n", dc, (value));
             break;
         case BRF:
-            printf("%d: BRF\t %u \n", dc, (value));
+            printf("%d: BRF\t %d \n", dc, (value));
             break;
         case BRT:
-            printf("%d: BRT\t %u \n", dc, (value));
+            printf("%d: BRT\t %d \n", dc, (value));
             break;
         case CALL:
-            printf("%d: CALL\t %u \n", dc, (value));
+            printf("%d: CALL\t %d \n", dc, (value));
             break;
         case RET:
             printf("%d: RET\n", dc);
             break;
         case DROP:
-            printf("%d: DROP\t %u \n", dc, (value));
+            printf("%d: DROP\t %d \n", dc, (value));
             break;
         case PUSHR:
             printf("%d: PUSHR\n", dc);

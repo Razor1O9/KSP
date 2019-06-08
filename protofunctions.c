@@ -23,8 +23,8 @@ int sp;
  */
 void push(int var) {
     if (sp < 1000) {
-        sp++;
         calculationStack[sp] = var;
+        sp++;
     } else {
         haltProgram();
     }
@@ -38,8 +38,8 @@ void push(int var) {
 int pop() {
     int value = 0;
     if (sp > 0) {
-        value = calculationStack[sp];
         sp--;
+        value = calculationStack[sp];
     } else {
         haltProgram();
     }

@@ -145,7 +145,7 @@ void ret() {
 
 void call(int value) {
     push(pc);
-    pc = value;
+    pc = value-1;
 }
 
 void brt(int value) {

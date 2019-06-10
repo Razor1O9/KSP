@@ -3,7 +3,7 @@
 #include <string.h>
 #include "protofunctions.h"
 
-int version = 4;
+int version = 5;
 int calculationStack[1000];
 int  fp = 0;
 int regADD = 0;
@@ -12,7 +12,7 @@ bool debugMode = false;
 unsigned int *programMemory;
 int instructionCount=0;
 int pc=0;
-int dc=0;
+int dc=0000;
 int staticAreaSize=0;
 int *staticPtr;
 int sp;

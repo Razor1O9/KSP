@@ -226,12 +226,19 @@ int main(int argc, char *argv[]) {
 
 
 void debugger(int instr) {
-    char *commands[5] = {"inspect", "list", "step", "run", "quit"};
+    char *commands[6] = {"inspect", "list", "breakpoint", "step", "run", "quit"};
     char *options[2] = {"stack", "data"};
     char *input = (char*) malloc(12);
-    printf("DEBUG: inspect, list, step, run, quit?\n");
-    scanf("%s", input);
 
+    /* Step */
+    if (strcmp(input, commands[3]) == 0) {
+        printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
+        scanf("%s", input);
+    } else {
+        debugInstructions(instr);
+        printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
+        scanf("%s", input);
+    }
 
     /* INSPECT ToDo, not working... */
     if (strcmp(input, commands[0]) == 0) {
@@ -256,18 +263,19 @@ void debugger(int instr) {
             i++;
         }
         dc = --old_dc;
+        printf("--- end of code ---\n");
     }
-    /* STEP */
+    /* Breakpoint ToDo */
     else if (strcmp(input, commands[2]) == 0) {
-        debugInstructions(instr);
+        printf("not implemented");
     }
     /* RUN */
-    else if (strcmp(input, commands[3]) == 0) {
+    else if (strcmp(input, commands[4]) == 0) {
         debugMode = false;
     }
 
     /* QUIT*/
-    else if (strcmp(input, commands[4]) == 0) {
+    else if (strcmp(input, commands[5]) == 0) {
         printf("Ninja Virtual Machine stopped\n");
         exit(EXIT_SUCCESS);
     }

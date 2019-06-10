@@ -53,7 +53,6 @@
  */
 int main(int argc, char *argv[]) {
     char *filename = "";
-    char *command = "";
     unsigned int instr;
     int reader = 0;
     char bin[] = ".bin";
@@ -140,16 +139,6 @@ int main(int argc, char *argv[]) {
         } else if (strstr(argv[2], debug) != NULL) {
             debugMode = true;
             filename = argv[1];
-        } else {
-            if (strstr(argv[1], bin) != NULL) {
-                command = argv[2];
-                printf("Error: unknown option '%s', try './njvm --help'\n", command);
-                return EXIT_FAILURE;
-            } if (strstr(argv[2], bin) != NULL) {
-                command = argv[1];
-                printf("Error: unknown option '%s', try './njvm --help'\n", command);
-                return EXIT_FAILURE;
-            }
         }
         if (strstr(argv[1], bin) != NULL) {
             loadedFile = fopen(argv[1], "rb");

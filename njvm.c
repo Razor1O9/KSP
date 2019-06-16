@@ -53,6 +53,7 @@
  */
 int main(int argc, char *argv[]) {
     char *filename = "";
+    char *command = "";
     unsigned int instr;
     int reader = 0;
     char bin[] = ".bin";
@@ -139,6 +140,17 @@ int main(int argc, char *argv[]) {
         } else if (strstr(argv[2], debug) != NULL) {
             debugMode = true;
             filename = argv[1];
+        } else {
+            if (strstr(argv[1], bin) != NULL) {
+                command = argv[2];
+                printf("Error: unknown option '%s', try './njvm --help'\n", command);
+                return EXIT_FAILURE;
+            }
+            if (strstr(argv[2], bin) != NULL) {
+                command = argv[1];
+                printf("Error: unknown option '%s', try './njvm --help'\n", command);
+                return EXIT_FAILURE;
+            }
         }
         if (strstr(argv[1], bin) != NULL) {
             loadedFile = fopen(argv[1], "rb");
@@ -215,12 +227,12 @@ int main(int argc, char *argv[]) {
 
 
 void debugger(int instr) {
-    char *commands[5] = {"inspect", "list", "step", "run", "quit"};
+    char *commands[6] = {"inspect", "list", "breakpoint", "step", "run", "quit"};
     char *options[2] = {"stack", "data"};
-    char *input = (char*) malloc(12);
-    printf("DEBUG: inspect, list, step, run, quit?\n");
-    scanf("%s", input);
+    char *input = (char *) malloc(12);
 
+    printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
+    scanf("%s", input);
 
     /* INSPECT ToDo, not working... */
     if (strcmp(input, commands[0]) == 0) {
@@ -228,12 +240,11 @@ void debugger(int instr) {
         scanf("%s", input);
         if (strcmp(input, options[0]) == 0) {
             printf("%s", (const char *) calculationStack);
-        }
-        else if (strcmp(input, options[1]) == 0) {
+        } else if (strcmp(input, options[1]) == 0) {
             printf("%s", (const char *) staticPtr);
         }
     }
-    /* LIST */
+        /* LIST */
     else if (strcmp(input, commands[1]) == 0) {
         int i = 0;
         int old_dc = dc;
@@ -245,30 +256,33 @@ void debugger(int instr) {
             i++;
         }
         dc = --old_dc;
+        printf("--- end of code ---\n");
     }
-    /* STEP */
+        /* Breakpoint ToDo */
     else if (strcmp(input, commands[2]) == 0) {
+        printf("not implemented");
+    }
+        /* Step */
+    else if (strcmp(input, commands[3]) == 0) {
         debugInstructions(instr);
     }
-    /* RUN */
-    else if (strcmp(input, commands[3]) == 0) {
+        /* RUN */
+    else if (strcmp(input, commands[4]) == 0) {
         debugMode = false;
     }
-
-    /* QUIT*/
-    else if (strcmp(input, commands[4]) == 0) {
+        /* QUIT*/
+    else if (strcmp(input, commands[5]) == 0) {
         printf("Ninja Virtual Machine stopped\n");
         exit(EXIT_SUCCESS);
     }
 }
-
 /**
  *
  * @return
  */
 void matchInstruction(unsigned int instr) {
     int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
-    int shift = instr>>24;
+    int shift = instr >> 24;
     if (shift == PUSHC) {
         push(value);
         return;

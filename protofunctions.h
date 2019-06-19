@@ -14,6 +14,8 @@ extern int staticAreaSize;
 extern int instructionCount;
 extern bool haltThis;
 extern bool debugMode;
+extern bool breakpoint;
+extern int breakpoint_pos;
 extern unsigned int *programMemory; /* List of all Program Instructions */
 extern int pc; /* Program Counter Variable for Instructions */
 extern int dc; /* Program Counter Variable for Debugging */

@@ -214,201 +214,249 @@ int main(int argc, char *argv[]) {
                     }
                 }
             } else {
-                instr = programMemory[pc];
-                matchInstruction(instr);
-                pc++;
+                if (dc == breakpoint) {
+                    if (debugMode == true) {
+                        printf("DEBUG: file %s loaded ", filename);
+                        printf("(code size = %d, ", instructionCount);
+                        printf("data size = %d)\n", staticAreaSize);
+                        for (int i = 0; i < instructionCount; i++) {
+                            if (debugMode == false) {
+                                /* small Hack :) */
+                                i = instructionCount;
+                            } else {
+                                instr = programMemory[dc];
+                                debugger(instr);
+                                dc++;
+                            }
+                        }
+                    } else {
+                        instr = programMemory[pc];
+                        matchInstruction(instr);
+                        pc++;
+                    }
+
+                } else {
+                    instr = programMemory[pc];
+                    matchInstruction(instr);
+                    pc++;
+                }
+            }
+
+        }
+        printf("Ninja Virtual Machine stopped\n");
+        return (EXIT_SUCCESS);
+    }
+}
+
+    void debugger(int instr) {
+        char *commands[6] = {"inspect", "list", "breakpoint", "step", "run", "quit"};
+        char *options[2] = {"stack", "data"};
+        char *breakpoint_options[3] = {"-1", "ret"};
+        char *input = (char *) malloc(12);
+
+        printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
+        scanf("%s", input);
+
+        /* INSPECT ToDo, not working... */
+        if (strcmp(input, commands[0]) == 0) {
+            printf("DEBUG [inspect]: stack, data?\n");
+            scanf("%s", input);
+            if (strcmp(input, options[0]) == 0) {
+                printf("%s", (const char *) calculationStack);
+            } else if (strcmp(input, options[1]) == 0) {
+                printf("%s", (const char *) staticPtr);
             }
         }
-
-    }
-    printf("Ninja Virtual Machine stopped\n");
-    return (EXIT_SUCCESS);
-}
-
-
-void debugger(int instr) {
-    char *commands[6] = {"inspect", "list", "breakpoint", "step", "run", "quit"};
-    char *options[2] = {"stack", "data"};
-    char *input = (char *) malloc(12);
-
-    printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
-    scanf("%s", input);
-
-    /* INSPECT ToDo, not working... */
-    if (strcmp(input, commands[0]) == 0) {
-        printf("DEBUG [inspect]: stack, data?\n");
-        scanf("%s", input);
-        if (strcmp(input, options[0]) == 0) {
-            printf("%s", (const char *) calculationStack);
-        } else if (strcmp(input, options[1]) == 0) {
-            printf("%s", (const char *) staticPtr);
+            /* LIST */
+        else if (strcmp(input, commands[1]) == 0) {
+            int i = 0;
+            int old_dc = dc;
+            dc = 0;
+            while (i < instructionCount) {
+                instr = programMemory[dc];
+                debugInstructions(instr);
+                dc++;
+                i++;
+            }
+            dc = --old_dc;
+            printf("--- end of code ---\n");
         }
-    }
-        /* LIST */
-    else if (strcmp(input, commands[1]) == 0) {
-        int i = 0;
-        int old_dc = dc;
-        dc = 0;
-        while (i < instructionCount) {
-            instr = programMemory[dc];
+            /* Breakpoint ToDo */
+        else if (strcmp(input, commands[2]) == 0) {
+            if (breakpoint == false) {
+                printf("DEBUG [breakpoint]: cleared"
+                       "DEBUG [breakpoint]: address to set, -1 to clear, <ret> for no change?\n");
+                scanf("%s", input);
+
+                // Breakpoint gets cleared
+                if (strcmp(input, breakpoint_options[0]) == 0) {
+                    breakpoint = false;
+                } else if (strcmp(input, breakpoint_options[1]) == 0) {
+                    return;
+                } else {
+                    breakpoint_pos = (int) input;
+                    if (breakpoint > instructionCount) {
+                        breakpoint = false;
+                        return;
+                    } else {
+                        /* Set Breakpoint to user input */
+                        breakpoint = true;
+                        printf("DEBUG [breakpoint]: now set at %d\n", breakpoint_pos);
+                    }
+                }
+
+            } else {
+                printf("DEBUG [breakpoint]: set at %d\n", breakpoint);
+                printf("DEBUG [breakpoint]: address to set, -1 to clear, <ret> for no change?\n");
+            }
+        }
+            /* Step */
+        else if (strcmp(input, commands[3]) == 0) {
             debugInstructions(instr);
-            dc++;
-            i++;
         }
-        dc = --old_dc;
-        printf("--- end of code ---\n");
+            /* RUN */
+        else if (strcmp(input, commands[4]) == 0) {
+            debugMode = false;
+        }
+            /* QUIT*/
+        else if (strcmp(input, commands[5]) == 0) {
+            printf("Ninja Virtual Machine stopped\n");
+            exit(EXIT_SUCCESS);
+        }
     }
-        /* Breakpoint ToDo */
-    else if (strcmp(input, commands[2]) == 0) {
-        printf("not implemented");
-    }
-        /* Step */
-    else if (strcmp(input, commands[3]) == 0) {
-        debugInstructions(instr);
-    }
-        /* RUN */
-    else if (strcmp(input, commands[4]) == 0) {
-        debugMode = false;
-    }
-        /* QUIT*/
-    else if (strcmp(input, commands[5]) == 0) {
-        printf("Ninja Virtual Machine stopped\n");
-        exit(EXIT_SUCCESS);
-    }
-}
 /**
  *
  * @return
  */
-void matchInstruction(unsigned int instr) {
-    int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
-    int shift = instr >> 24;
-    if (shift == PUSHC) {
-        push(value);
-        return;
+    void matchInstruction(unsigned int instr) {
+        int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
+        int shift = instr >> 24;
+        if (shift == PUSHC) {
+            push(value);
+            return;
+        }
+        if (shift == HALT) {
+            haltProgram();
+            return;
+        }
+        if (shift == ADD) {
+            add();
+            return;
+        }
+        if (shift == SUB) {
+            sub();
+            return;
+        }
+        if (shift == MUL) {
+            mul();
+            return;
+        }
+        if (shift == DIV) {
+            divide();
+            pc++;
+            return;
+        }
+        if (shift == MOD) {
+            mod();
+            return;
+        }
+        if (shift == RDINT) {
+            rdint();
+            return;
+        }
+        if (shift == WRINT) {
+            wrint();
+            return;
+        }
+        if (shift == RDCHR) {
+            rdchr();
+            return;
+        }
+        if (shift == WRCHR) {
+            wrchr();
+            return;
+        }
+        if (shift == PUSHG) {
+            pushg(value);
+            return;
+        }
+        if (shift == POPG) {
+            popg(value);
+            return;
+        }
+        if (shift == ASF) {
+            asf(value);
+            return;
+        }
+        if (shift == RSF) {
+            rsf();
+            return;
+        }
+        if (shift == PUSHL) {
+            pushl(value);
+            return;
+        }
+        if (shift == POPL) {
+            popl(value);
+            return;
+        }
+        if (shift == EQ) {
+            eq();
+            return;
+        }
+        if (shift == NE) {
+            ne();
+            return;
+        }
+        if (shift == LT) {
+            lt();
+            return;
+        }
+        if (shift == LE) {
+            le();
+            return;
+        }
+        if (shift == GT) {
+            gt();
+            return;
+        }
+        if (shift == GE) {
+            ge();
+            return;
+        }
+        if (shift == JMP) {
+            jmp(value);
+            return;
+        }
+        if (shift == BRF) {
+            brf(value);
+            return;
+        }
+        if (shift == BRT) {
+            brt(value);
+            return;
+        }
+        if (shift == CALL) {
+            call(value);
+            return;
+        }
+        if (shift == RET) {
+            ret();
+            return;
+        }
+        if (shift == PUSHR) {
+            pushr();
+            return;
+        }
+        if (shift == POPR) {
+            popr();
+            return;
+        }
+        if (shift == DROP) {
+            drop(value);
+            return;
+        }
     }
-    if (shift == HALT) {
-        haltProgram();
-        return;
-    }
-    if (shift == ADD) {
-        add();
-        return;
-    }
-    if (shift == SUB) {
-        sub();
-        return;
-    }
-    if (shift == MUL) {
-        mul();
-        return;
-    }
-    if (shift == DIV) {
-        divide();
-        pc++;
-        return;
-    }
-    if (shift == MOD) {
-        mod();
-        return;
-    }
-    if (shift == RDINT) {
-        rdint();
-        return;
-    }
-    if (shift == WRINT) {
-        wrint();
-        return;
-    }
-    if (shift == RDCHR) {
-        rdchr();
-        return;
-    }
-    if (shift == WRCHR) {
-        wrchr();
-        return;
-    }
-    if (shift == PUSHG) {
-        pushg(value);
-        return;
-    }
-    if (shift == POPG) {
-        popg(value);
-        return;
-    }
-    if (shift == ASF) {
-        asf(value);
-        return;
-    }
-    if (shift == RSF) {
-        rsf();
-        return;
-    }
-    if (shift == PUSHL) {
-        pushl(value);
-        return;
-    }
-    if (shift == POPL) {
-        popl(value);
-        return;
-    }
-    if (shift == EQ) {
-        eq();
-        return;
-    }
-    if (shift == NE) {
-        ne();
-        return;
-    }
-    if (shift == LT) {
-        lt();
-        return;
-    }
-    if (shift == LE) {
-        le();
-        return;
-    }
-    if (shift == GT) {
-        gt();
-        return;
-    }
-    if (shift == GE) {
-        ge();
-        return;
-    }
-    if (shift == JMP) {
-        jmp(value);
-        return;
-    }
-    if (shift == BRF) {
-        brf(value);
-        return;
-    }
-    if (shift == BRT) {
-        brt(value);
-        return;
-    }
-    if (shift == CALL) {
-        call(value);
-        return;
-    }
-    if (shift == RET) {
-        ret();
-        return;
-    }
-    if (shift == PUSHR) {
-        pushr();
-        return;
-    }
-    if (shift == POPR) {
-        popr();
-        return;
-    }
-    if (shift == DROP) {
-        drop(value);
-        return;
-    }
-}
 
 
 /**
@@ -417,108 +465,108 @@ void matchInstruction(unsigned int instr) {
  * The listing order is from top to bottom.
  */
 
-void debugInstructions(unsigned int inst) {
-    int value = SIGN_EXTEND(IMMEDIATE(programMemory[dc]));
-    switch (inst >> 24) {
-        case HALT:
-            printf("%d: HALT\n", dc);
-            break;
-        case PUSHC:
-            printf("%d: PUSHC\t %d \n", dc, (value));
-            break;
-        case ADD:
-            printf("%d: ADD\n", dc);
-            break;
-        case SUB:
-            printf("%d: SUB\n", dc);
-            break;
-        case MUL:
-            printf("%d: MUL\n", dc);
-            break;
-        case DIV:
-            printf("%d: DIV1\n", dc);
-            break;
-        case MOD:
-            printf("%d: MOD\n", dc);
-            break;
-        case RDINT:
-            printf("%d: RDINT\n", dc);
-            break;
-        case WRINT:
-            printf("%d: WRINT\n", dc);
-            break;
-        case RDCHR:
-            printf("%d: RDCHR\n", dc);
-            break;
-        case WRCHR:
-            printf("%d: WRCHR\n", dc);
-            break;
-        case PUSHG:
-            printf("%d: PUSHG\t %d \n", dc, (value));
-            break;
-        case POPG:
-            printf("%d: POPG\t %d \n", dc, (value));
-            break;
-        case ASF:
-            printf("%d: ASF\t %d \n", dc, (value));
-            break;
-        case RSF:
-            printf("%d: RSF\n", dc);
-            break;
-        case PUSHL:
-            printf("%d: PUSHL\t %d \n", dc, (value));
-            break;
-        case POPL:
-            printf("%d: POPL\t %d \n", dc, (value));
-            break;
-        case EQ:
-            printf("%d: EQ\n", dc);
-            break;
-        case NE:
-            printf("%d: NE\n", dc);
-            break;
-        case LT:
-            printf("%d: LT\n", dc);
-            break;
-        case LE:
-            printf("%d: LE\n", dc);
-            break;
-        case GT:
-            printf("%d: GT\n", dc);
-            break;
-        case GE:
-            printf("%d: GE\n", dc);
-            break;
-        case JMP:
-            printf("%d: JMP\t %d \n", dc, (value));
-            break;
-        case BRF:
-            printf("%d: BRF\t %d \n", dc, (value));
-            break;
-        case BRT:
-            printf("%d: BRT\t %d \n", dc, (value));
-            break;
-        case CALL:
-            printf("%d: CALL\t %d \n", dc, (value));
-            break;
-        case RET:
-            printf("%d: RET\n", dc);
-            break;
-        case DROP:
-            printf("%d: DROP\t %d \n", dc, (value));
-            break;
-        case PUSHR:
-            printf("%d: PUSHR\n", dc);
-            break;
-        case POPR:
-            printf("%d: POPR\n", dc);
-            break;
-        case DUP:
-            printf("%d: DUP\n", dc);
-            break;
-        default:
-            printf("Wert ungültig \n");
+    void debugInstructions(unsigned int inst) {
+        int value = SIGN_EXTEND(IMMEDIATE(programMemory[dc]));
+        switch (inst >> 24) {
+            case HALT:
+                printf("%d: HALT\n", dc);
+                break;
+            case PUSHC:
+                printf("%d: PUSHC\t %d \n", dc, (value));
+                break;
+            case ADD:
+                printf("%d: ADD\n", dc);
+                break;
+            case SUB:
+                printf("%d: SUB\n", dc);
+                break;
+            case MUL:
+                printf("%d: MUL\n", dc);
+                break;
+            case DIV:
+                printf("%d: DIV1\n", dc);
+                break;
+            case MOD:
+                printf("%d: MOD\n", dc);
+                break;
+            case RDINT:
+                printf("%d: RDINT\n", dc);
+                break;
+            case WRINT:
+                printf("%d: WRINT\n", dc);
+                break;
+            case RDCHR:
+                printf("%d: RDCHR\n", dc);
+                break;
+            case WRCHR:
+                printf("%d: WRCHR\n", dc);
+                break;
+            case PUSHG:
+                printf("%d: PUSHG\t %d \n", dc, (value));
+                break;
+            case POPG:
+                printf("%d: POPG\t %d \n", dc, (value));
+                break;
+            case ASF:
+                printf("%d: ASF\t %d \n", dc, (value));
+                break;
+            case RSF:
+                printf("%d: RSF\n", dc);
+                break;
+            case PUSHL:
+                printf("%d: PUSHL\t %d \n", dc, (value));
+                break;
+            case POPL:
+                printf("%d: POPL\t %d \n", dc, (value));
+                break;
+            case EQ:
+                printf("%d: EQ\n", dc);
+                break;
+            case NE:
+                printf("%d: NE\n", dc);
+                break;
+            case LT:
+                printf("%d: LT\n", dc);
+                break;
+            case LE:
+                printf("%d: LE\n", dc);
+                break;
+            case GT:
+                printf("%d: GT\n", dc);
+                break;
+            case GE:
+                printf("%d: GE\n", dc);
+                break;
+            case JMP:
+                printf("%d: JMP\t %d \n", dc, (value));
+                break;
+            case BRF:
+                printf("%d: BRF\t %d \n", dc, (value));
+                break;
+            case BRT:
+                printf("%d: BRT\t %d \n", dc, (value));
+                break;
+            case CALL:
+                printf("%d: CALL\t %d \n", dc, (value));
+                break;
+            case RET:
+                printf("%d: RET\n", dc);
+                break;
+            case DROP:
+                printf("%d: DROP\t %d \n", dc, (value));
+                break;
+            case PUSHR:
+                printf("%d: PUSHR\n", dc);
+                break;
+            case POPR:
+                printf("%d: POPR\n", dc);
+                break;
+            case DUP:
+                printf("%d: DUP\n", dc);
+                break;
+            default:
+                printf("Wert ungültig \n");
 
-            if ((programMemory[pc] & 0xFF000000) == HALT) { break; }
+                if ((programMemory[pc] & 0xFF000000) == HALT) { break; }
+        }
     }
-}

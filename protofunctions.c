@@ -9,6 +9,8 @@ int  fp = 0;
 int regADD = 0;
 bool haltThis = false;
 bool debugMode = false;
+int breakpoint_pos = 0;
+bool breakpoint = false;
 unsigned int *programMemory;
 int instructionCount=0;
 int pc=0;

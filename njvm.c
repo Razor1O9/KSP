@@ -253,6 +253,7 @@ int main(int argc, char *argv[]) {
         char *options[2] = {"stack", "data"};
         char *breakpoint_options[3] = {"-1", "ret"};
         char *input = (char *) malloc(12);
+        int *inputNum = (int *) malloc(12);;
 
         printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
         scanf("%s", input);
@@ -286,7 +287,7 @@ int main(int argc, char *argv[]) {
             if (breakpoint == false) {
                 printf("DEBUG [breakpoint]: cleared"
                        "DEBUG [breakpoint]: address to set, -1 to clear, <ret> for no change?\n");
-                scanf("%s", input);
+                scanf("%d", inputNum);
 
                 // Breakpoint gets cleared
                 if (strcmp(input, breakpoint_options[0]) == 0) {
@@ -294,7 +295,7 @@ int main(int argc, char *argv[]) {
                 } else if (strcmp(input, breakpoint_options[1]) == 0) {
                     return;
                 } else {
-                    breakpoint_pos = (int) input;
+                    breakpoint_pos = *inputNum;
                     if (breakpoint > instructionCount) {
                         breakpoint = false;
                         return;
@@ -306,7 +307,7 @@ int main(int argc, char *argv[]) {
                 }
 
             } else {
-                printf("DEBUG [breakpoint]: set at %d\n", breakpoint);
+                printf("DEBUG [breakpoint]: set at %d\n", breakpoint_pos);
                 printf("DEBUG [breakpoint]: address to set, -1 to clear, <ret> for no change?\n");
             }
         }

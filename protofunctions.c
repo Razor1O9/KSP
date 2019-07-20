@@ -45,14 +45,14 @@ void pushObjRef(ObjRef var) {
  * @return
  */
 
-StackSlot pop() {
+void *pop() {
     StackSlot member = {0};
     member.u.number = malloc(sizeof (int));
-    member.u.objRef = malloc(sizeof (unsigned int) + sizeof(int);
+    member.u.objRef = malloc(sizeof (unsigned int) + sizeof(int));
     if(member.u.objRef != NULL){
         if (sp > 0) {
             sp--;
-            member.u.objRef = calculationStack[sp];
+            member.u.objRef = calculationStack[sp].u.objRef;
         } else {
             haltProgram();
         }
@@ -60,7 +60,7 @@ StackSlot pop() {
     } else {
         if (sp > 0) {
             sp--;
-            member.u.number = calculationStack[sp];
+            member.u.number = calculationStack[sp].u.number;
         } else {
             haltProgram();
         }

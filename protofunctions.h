@@ -1,6 +1,13 @@
 #ifndef PROTOFUNCTIONS_H_
 #define PROTOFUNCTIONS_H_
 
+// is this object a primitve object?
+# define MSB                (1 << (8 * sizeof ( unsigned int) - 1))
+# define IS_PRIM(objRef)  (((objRef)->size & MSB) == 0)
+
+
+#define GET_SIZE(objRef) ((objRef)->size & ~MSB)
+
 /* Prototyp Funktionen */
 typedef enum { false, true } bool;
 
@@ -35,7 +42,7 @@ extern int dc; /* Program Counter Variable for Debugging */
 
 void haltProgram (void);
 void push (int);
-StackSlot pop (void);
+void *pop (void);
 void add (void);
 void sub (void);
 void mul (void);

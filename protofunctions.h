@@ -2,6 +2,8 @@
 #define PROTOFUNCTIONS_H_
 
 // is this object a primitve object?
+#include <bigint/build/include/support.h>
+
 # define MSB                (1 << (8 * sizeof ( unsigned int) - 1))
 # define IS_PRIM(objRef)  (((objRef)->size & MSB) == 0)
 
@@ -12,11 +14,6 @@
 
 /* Prototyp Funktionen */
 typedef enum { false, true } bool;
-
-typedef struct {
-    unsigned int size; /* byte count of payload data */
-    unsigned char data [1]; /* payload data , size as needed */
-} *ObjRef;
 
 typedef struct {
     bool isObjRef; /* slot used for object reference? */

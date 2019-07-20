@@ -59,6 +59,7 @@ void *pop() {
     if (member.u.objRef != NULL) {
         member.isObjRef = true;
         if (sp > 0) {
+            calculationStack[sp].u.objRef = NULL;
             sp--;
             member.u.objRef = calculationStack[sp].u.objRef;
         } else {
@@ -68,6 +69,7 @@ void *pop() {
     } else {
         member.isObjRef = false;
         if (sp > 0) {
+            calculationStack[sp].u.number = NULL;
             sp--;
             member.u.number = calculationStack[sp].u.number;
         } else {

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <bigint/build/include/support.h>
 #include "protofunctions.h"
 #include "bigint/src/bigint.h"
 #include "bigint/src/support.h"
@@ -167,7 +168,7 @@ void popr() {
 }
 
 void pushr() {
-    push((void *) (int) reg[0]);
+    push(reg[0]->data);
 }
 
 void drop(int var) {

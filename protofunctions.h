@@ -8,6 +8,8 @@
 
 #define GET_SIZE(objRef) ((objRef)->size & ~MSB)
 
+#define GET_REFS(objRef) ((ObjRef *)(objRef)->data)
+
 /* Prototyp Funktionen */
 typedef enum { false, true } bool;
 

@@ -4,13 +4,26 @@
 /* Prototyp Funktionen */
 typedef enum { false, true } bool;
 
+typedef struct {
+    unsigned int size;	/* byte count of payload data */
+    unsigned char data [1]; /* payload data , size as needed */
+} *ObjRef;
+
+typedef struct {
+    unsigned int isObjRef;
+    union {
+        ObjRef objRef;
+        int number;
+    } u;
+} Stackslot;
+
 extern int version ; /* The current version */
 extern int *staticPtr; /* Lists all global Variables */
-extern int calculationStack[]; /* Stack for Calculation */
+extern Stackslot calculationStack[]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
 extern int fp;
-extern int regADD;
-extern int staticAreaSize;
+extern Stackslot regADD;
+extern Stackslot staticAreaSize;
 extern int instructionCount;
 extern bool haltThis;
 extern bool debugMode;

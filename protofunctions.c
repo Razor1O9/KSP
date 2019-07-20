@@ -31,14 +31,7 @@ void push(int var) {
         haltProgram();
     }
 }
-void pushObjRef(ObjRef var) {
-    if (sp < 1000) {
-        calculationStack[sp] = var;
-        sp++;
-    } else {
-        haltProgram();
-    }
-}
+
 /**
  * This method removes the top variable from the stack.
  * It returns the new stack, without the removed variable.
@@ -68,16 +61,6 @@ void *pop() {
     }
 
 
-}
-void* popObjRef() {
-    ObjRef value = 0;
-    if (sp > 0) {
-        sp--;
-        value = calculationStack[sp];
-    } else {
-        haltProgram();
-    }
-    return value;
 }
 
 void add(void) {
@@ -162,11 +145,11 @@ void popl (int value) {
 }
 
 void popr() {
-    reg[0] = popObjRef();
+    reg[0] = pop();
 }
 
 void pushr() {
-    pushObjRef(reg[0]);
+    push((int) reg[0]);
 }
 
 void drop(int var) {

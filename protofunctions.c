@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <bigint/build/include/support.h>
+#include "bigint/build/include/support.h"
 #include "protofunctions.h"
-#include "bigint/src/bigint.h"
-#include "bigint/src/support.h"
 
 int version = 4;
 StackSlot calculationStack[1000];
@@ -62,6 +60,7 @@ void *pop() {
         if (sp > 0) {
             sp--;
             member.u.objRef = calculationStack[sp].u.objRef;
+            calculationStack[sp].u.objRef = NULL;
         } else {
             haltProgram();
         }
@@ -71,6 +70,8 @@ void *pop() {
         if (sp > 0) {
             sp--;
             member.u.number = calculationStack[sp].u.number;
+            calculationStack[sp].u.number = 0;
+            calculationStack[sp].u.objRef = NULL;
         } else {
             haltProgram();
         }

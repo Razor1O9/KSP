@@ -56,28 +56,28 @@ void push(void *var) {
 
 void *pop() {
     StackSlot member = {0};
+    ObjRef cache;
+    int numCache;
     if (member.u.objRef != NULL) {
         member.isObjRef = true;
         if (sp > 0) {
-            ObjRef cache = calculationStack[sp].u.objRef;
+            cache = calculationStack[sp].u.objRef;
             calculationStack[sp].u.objRef = NULL;
             sp--;
-            member.u.objRef = calculationStack[sp].u.objRef;
         } else {
             haltProgram();
         }
-        return member.u.objRef;
+        return cache;
     } else {
         member.isObjRef = false;
         if (sp > 0) {
-            int cache = calculationStack[sp].u.number;
+            numCache = calculationStack[sp].u.number;
             calculationStack[sp].u.number = NULL;
             sp--;
-            member.u.number = calculationStack[sp].u.number;
         } else {
             haltProgram();
         }
-        return member.u.number;
+        return numCache;
     }
 
 

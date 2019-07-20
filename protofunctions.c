@@ -81,32 +81,32 @@ void* popObjRef() {
 }
 
 void add(void) {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     push(var2 + var1);
 }
 
 void sub(void) {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     push(var2 - var1);
 }
 
 void mul() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     push(var2 * var1);
 }
 
 void divide() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     push(var2 / var1);
 }
 
 void mod() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     push(var2 % var1);
 }
 
@@ -131,7 +131,7 @@ void wrchr() {
 }
 
 void popg(int var) {
-    staticPtr[var] = pop();
+    staticPtr[var] = (int) pop();
 }
 
 void pushg(int var) {
@@ -146,7 +146,7 @@ void asf (int value) {
 }
 void rsf () {
     sp = fp;
-    fp = pop();
+    fp = (int) pop();
 }
 
 
@@ -174,7 +174,7 @@ void drop(int var) {
 }
 
 void ret() {
-    pc = pop();
+    pc = (int) pop();
 }
 
 void call(int value) {
@@ -183,7 +183,7 @@ void call(int value) {
 }
 
 void brt(int value) {
-    if (pop() == 1) {
+    if ((int) pop() == 1) {
         pc = value;
     }
 }
@@ -199,8 +199,8 @@ void jmp(int value) {
 }
 
 void ge() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     pc = pc -2;
     if (var2 >= var1){
         push(true);
@@ -210,8 +210,8 @@ void ge() {
 }
 
 void gt() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     pc = pc -2;
     if (var2 > var1){
         push(true);
@@ -221,8 +221,8 @@ void gt() {
 }
 
 void le() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     pc = pc - 2;
     if (var2 <= var1) {
         push(true);
@@ -233,8 +233,8 @@ void le() {
 }
 
 void lt() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     pc = pc - 2;
     if (var2 < var1) {
         push(true);
@@ -244,8 +244,8 @@ void lt() {
 }
 
 void ne() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     pc = pc - 2;
     if (var1 == var2) {
         push(false);
@@ -255,8 +255,8 @@ void ne() {
 }
 
 void eq() {
-    int var1 = pop();
-    int var2 = pop();
+    int var1 = (int) pop();
+    int var2 = (int) pop();
     pc = pc - 2;
     if (var1 != var2) {
         push(false);

@@ -30,6 +30,7 @@ void push(void *var) {
     member.u.number = malloc(sizeof(int));
     member.u.objRef = malloc(sizeof(unsigned int) + sizeof(int));
     if (member.u.objRef != NULL) {
+        member.isObjRef = true;
         if (sp < 1000) {
             calculationStack[sp].u.number = var;
             sp++;
@@ -37,6 +38,7 @@ void push(void *var) {
             haltProgram();
         }
     } else {
+        member.isObjRef = false;
         if (sp < 1000) {
             calculationStack[sp].u.objRef = var;
             sp++;
@@ -57,6 +59,7 @@ void *pop() {
     member.u.number = malloc(sizeof(int));
     member.u.objRef = malloc(sizeof(unsigned int) + sizeof(int));
     if (member.u.objRef != NULL) {
+        member.isObjRef = true;
         if (sp > 0) {
             sp--;
             member.u.objRef = calculationStack[sp].u.objRef;
@@ -65,6 +68,7 @@ void *pop() {
         }
         return member.u.objRef;
     } else {
+        member.isObjRef = false;
         if (sp > 0) {
             sp--;
             member.u.number = calculationStack[sp].u.number;

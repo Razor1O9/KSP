@@ -48,7 +48,7 @@ void pushObjRef(ObjRef var) {
 StackSlot pop() {
     StackSlot member = {0};
     member.u.number = malloc(sizeof (int));
-    member.u.objRef = malloc(sizeof (unsigned int) + staticAreaSize * sizeof(unsigned char));
+    member.u.objRef = malloc(sizeof (unsigned int) + sizeof(int));
     if(member.u.objRef != NULL){
         if (sp > 0) {
             sp--;

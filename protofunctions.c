@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "protofunctions.h"
+#include "bigint/src/bigint.h"
+#include "bigint/src/support.h"
 
 int version = 4;
 StackSlot calculationStack[1000];

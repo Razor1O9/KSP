@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <jmorecfg.h>
 #include "protofunctions.h"
 
 /* Makro-Deklarationen */
@@ -47,7 +45,7 @@
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
 typedef struct {
-    boolean isObjRef; /* slot used for object reference? */
+    bool isObjRef; /* slot used for object reference? */
     union {
         ObjRef objRef; /* used if isObjRef=TRUE */
         int number; /* used if isObjRef=FALSE */

@@ -134,6 +134,7 @@ int main(int argc, char *argv[]) {
             matchInstruction(instr);
             pc++;
         }
+        printf("haltThis = %d\n", haltThis);
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
             debugMode = true;

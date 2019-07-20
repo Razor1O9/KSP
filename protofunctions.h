@@ -19,7 +19,7 @@ typedef struct {
 
 extern int version ; /* The current version */
 extern int *staticPtr; /* Lists all global Variables */
-extern int calculationStack[]; /* Stack for Calculation */
+extern StackSlot calculationStack[]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
 extern int fp;
 extern int regADD;

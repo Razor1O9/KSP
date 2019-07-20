@@ -4,7 +4,7 @@
 #include "protofunctions.h"
 
 int version = 4;
-int calculationStack[1000];
+StackSlot calculationStack[1000];
 ObjRef *reg;
 int fp = 0;
 bool haltThis = false;
@@ -48,11 +48,11 @@ void pushObjRef(ObjRef var) {
 StackSlot pop() {
     StackSlot member = {0};
     member.u.number = malloc(sizeof (int));
-    member.u.objRef = malloc(sizeof (unsigned int) + sizeof(int));
+    member.u.objRef = malloc(sizeof (unsigned int) + sizeof(int);
     if(member.u.objRef != NULL){
         if (sp > 0) {
             sp--;
-            member.u.objRef = &calculationStack[sp];
+            member.u.objRef = calculationStack[sp];
         } else {
             haltProgram();
         }
@@ -60,7 +60,7 @@ StackSlot pop() {
     } else {
         if (sp > 0) {
             sp--;
-            member.u.number = &calculationStack[sp];
+            member.u.number = calculationStack[sp];
         } else {
             haltProgram();
         }

@@ -134,6 +134,8 @@ int main(int argc, char *argv[]) {
             matchInstruction(instr);
             pc++;
         }
+        printf("Ninja Virtual Machine stopped\n");
+        return (EXIT_SUCCESS);
     } else if (argc == 3) {
         if (strstr(argv[1], debug) != NULL) {
             debugMode = true;

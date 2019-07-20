@@ -41,7 +41,7 @@ extern int pc; /* Program Counter Variable for Instructions */
 extern int dc; /* Program Counter Variable for Debugging */
 
 void haltProgram (void);
-void push (int);
+void push (void*);
 void *pop (void);
 void add (void);
 void sub (void);

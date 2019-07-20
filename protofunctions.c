@@ -12,10 +12,10 @@ bool debugMode = false;
 int breakpoint_pos = 0;
 bool breakpoint = false;
 unsigned int *programMemory;
-int instructionCount=0;
-int pc=0;
-int dc=0;
-int staticAreaSize=0;
+int instructionCount = 0;
+int pc = 0;
+int dc = 0;
+int staticAreaSize = 0;
 int *staticPtr;
 int sp;
 
@@ -23,12 +23,24 @@ int sp;
  * This methods pushes a given variable on top of the stack.
  * @param var
  */
-void push(int var) {
-    if (sp < 1000) {
-        calculationStack[sp] = var;
-        sp++;
+void push(void *var) {
+    StackSlot member = {0};
+    member.u.number = malloc(sizeof(int));
+    member.u.objRef = malloc(sizeof(unsigned int) + sizeof(int));
+    if (member.u.objRef != NULL) {
+        if (sp < 1000) {
+            calculationStack[sp].u.number = var;
+            sp++;
+        } else {
+            haltProgram();
+        }
     } else {
-        haltProgram();
+        if (sp < 1000) {
+            calculationStack[sp].u.objRef = var;
+            sp++;
+        } else {
+            haltProgram();
+        }
     }
 }
 
@@ -40,9 +52,9 @@ void push(int var) {
 
 void *pop() {
     StackSlot member = {0};
-    member.u.number = malloc(sizeof (int));
-    member.u.objRef = malloc(sizeof (unsigned int) + sizeof(int));
-    if(member.u.objRef != NULL){
+    member.u.number = malloc(sizeof(int));
+    member.u.objRef = malloc(sizeof(unsigned int) + sizeof(int));
+    if (member.u.objRef != NULL) {
         if (sp > 0) {
             sp--;
             member.u.objRef = calculationStack[sp].u.objRef;
@@ -66,51 +78,51 @@ void *pop() {
 void add(void) {
     int var1 = (int) pop();
     int var2 = (int) pop();
-    push(var2 + var1);
+    push((void *) (var2 + var1));
 }
 
 void sub(void) {
     int var1 = (int) pop();
     int var2 = (int) pop();
-    push(var2 - var1);
+    push((void *) (var2 - var1));
 }
 
 void mul() {
     int var1 = (int) pop();
     int var2 = (int) pop();
-    push(var2 * var1);
+    push((void *) (var2 * var1));
 }
 
 void divide() {
     int var1 = (int) pop();
     int var2 = (int) pop();
-    push(var2 / var1);
+    push((void *) (var2 / var1));
 }
 
 void mod() {
     int var1 = (int) pop();
     int var2 = (int) pop();
-    push(var2 % var1);
+    push((void *) (var2 % var1));
 }
 
 void rdint() {
     int var;
     scanf("%d", &var);
-    push(var);
+    push((void *) var);
 }
 
 void wrint() {
-    printf("%d", pop());
+    printf("%d", (int) pop());
 }
 
 void rdchr() {
     char var;
     scanf("%c", &var);
-    push(var);
+    push((void *) var);
 }
 
 void wrchr() {
-    printf("%c", pop());
+    printf("%c", (int) pop());
 }
 
 void popg(int var) {
@@ -119,29 +131,31 @@ void popg(int var) {
 
 void pushg(int var) {
     if (sp != 1000) {
-        push(staticPtr[var]);
+        push((void *) staticPtr[var]);
     }
 }
-void asf (int value) {
-    push(fp);
+
+void asf(int value) {
+    push((void *) fp);
     fp = sp;
     sp = sp + value;
 }
-void rsf () {
+
+void rsf() {
     sp = fp;
     fp = (int) pop();
 }
 
 
-
-void pushl (int value) {
+void pushl(int value) {
     if (sp != 1000) {
-        calculationStack[sp] = calculationStack[fp + value];
+        calculationStack[sp].u.number = calculationStack[fp + value].u.number;
         sp = sp + 1;
     }
 }
-void popl (int value) {
-    calculationStack[fp + value] = pop();
+
+void popl(int value) {
+    calculationStack[fp + value].u.number = pop();
 }
 
 void popr() {
@@ -149,7 +163,7 @@ void popr() {
 }
 
 void pushr() {
-    push((int) reg[0]);
+    push((void *) (int) reg[0]);
 }
 
 void drop(int var) {
@@ -161,8 +175,8 @@ void ret() {
 }
 
 void call(int value) {
-    push(pc);
-    pc = value-1;
+    push((void *) pc);
+    pc = value - 1;
 }
 
 void brt(int value) {
@@ -184,22 +198,22 @@ void jmp(int value) {
 void ge() {
     int var1 = (int) pop();
     int var2 = (int) pop();
-    pc = pc -2;
-    if (var2 >= var1){
-        push(true);
+    pc = pc - 2;
+    if (var2 >= var1) {
+        push((void *) true);
     } else {
-        push(false);
+        push((void *) false);
     }
 }
 
 void gt() {
     int var1 = (int) pop();
     int var2 = (int) pop();
-    pc = pc -2;
-    if (var2 > var1){
-        push(true);
+    pc = pc - 2;
+    if (var2 > var1) {
+        push((void *) true);
     } else {
-        push(false);
+        push((void *) false);
     }
 }
 
@@ -208,9 +222,9 @@ void le() {
     int var2 = (int) pop();
     pc = pc - 2;
     if (var2 <= var1) {
-        push(true);
+        push((void *) true);
     } else {
-        push(false);
+        push((void *) false);
     }
 
 }
@@ -220,9 +234,9 @@ void lt() {
     int var2 = (int) pop();
     pc = pc - 2;
     if (var2 < var1) {
-        push(true);
+        push((void *) true);
     } else {
-        push(false);
+        push((void *) false);
     }
 }
 
@@ -231,9 +245,9 @@ void ne() {
     int var2 = (int) pop();
     pc = pc - 2;
     if (var1 == var2) {
-        push(false);
+        push((void *) false);
     } else {
-        push(true);
+        push((void *) true);
     }
 }
 
@@ -242,9 +256,9 @@ void eq() {
     int var2 = (int) pop();
     pc = pc - 2;
     if (var1 != var2) {
-        push(false);
+        push((void *) false);
     } else {
-        push(true);
+        push((void *) true);
     }
 }
 

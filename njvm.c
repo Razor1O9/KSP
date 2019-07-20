@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <rpcndr.h>
+
+#include <jmorecfg.h>
 #include "protofunctions.h"
 
 /* Makro-Deklarationen */

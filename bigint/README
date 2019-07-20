@@ -1,0 +1,79 @@
+The "bigint" Package
+====================
+
+1. What is it?
+--------------
+
+This package implements a multiple-precision integer arithmetic package,
+i.e., a collection of functions which can calculate with integers having
+arbitrarily many digits. The algorithms are taken from [D. Knuth: The
+Art of Computer Programming, Vol. 2, Seminumerical Algorithms], the
+implementation language is C.
+
+
+2. "Multiple Precision" - how does it work?
+-------------------------------------------
+
+Each integer number is represented as an array of digits. The array
+is large enough to hold the number of digits necessary to represent
+the number. Each digit occupies a single byte, so the number base of
+this representation is 256. Addition, subtraction, and multiplication
+work as we all have learned it: perform the desired operation digit
+by digit, starting from the least significant digit, and observing
+any "carries" from one place to the next higher one. Division is a
+little bit more complicated because there is a certain amount of
+guesswork involved. Knuth gives a formal treatment of this guesswork.
+
+
+3. How do I use it?
+-------------------
+
+Because every big integer may have a differently sized array to hold
+its digits, these structures are dynamically allocated on the heap of
+the C runtime system, and accessed by pointers. If you want to perform
+an arithmetic operation on one or two big integers, you have to load
+the corresponding pointers into a structure called BIP ("Big Integer
+Processor"), and call the arithmetic function. When the function has
+returned, the pointer to the result of the operation can be found in
+another component of the BIP. The following functions are available:
+
+    int bigSgn(void);                        /* sign */
+    int bigCmp(void);                        /* comparison */
+    void bigNeg(void);                       /* negation */
+    void bigAdd(void);                       /* addition */
+    void bigSub(void);                       /* subtraction */
+    void bigMul(void);                       /* multiplication */
+    void bigDiv(void);                       /* division */
+    void bigFromInt(int n);                  /* conversion int --> big */
+    int bigToInt(void);                      /* conversion big --> int */
+    void bigRead(FILE *in);                  /* read a big integer */
+    void bigPrint(FILE *out);                /* print a big integer */
+    void bigDump(FILE *out, ObjRef objRef);  /* dump a big integer */
+
+Some of these functions accept or return ordinary integers. For the
+exact definition of each function's interface, please see the comments
+in the function's source.
+
+
+4. What else is needed?
+-----------------------
+
+The library tries to detect fatal errors in using its functions (e.g.,
+null pointers to operands) as well as internal errors (which "cannot
+happen"). In either case a user-supplied error routine is called, which
+is supposed to print an error message and then to terminate the program.
+
+The library does not attempt to manage memory. For this purpose, it
+relies on a user-supplied function "ObjRef newPrimObject(int dataSize)",
+which should allocate sufficiently many bytes and return a pointer to
+the created object. For details see file "support.c" in the directory
+"tst".
+
+
+5. What is in the directory "tst"?
+----------------------------------
+
+Well, you may have guessed it already: these are test cases for the
+library. You can learn how to link against the library by inspecting
+the "Makefile" for the tests, and you can find a simple implementation
+of the support library.

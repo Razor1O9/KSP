@@ -19,17 +19,16 @@ int dc = 0;
 int staticAreaSize = 0;
 int *staticPtr;
 int sp;
+StackSlot member = {0};
 
 /**
  * This methods pushes a given variable on top of the stack.
  * @param var
  */
 void push(void *var) {
-    StackSlot member = {0};
     member.u.number = malloc(sizeof(int));
     member.u.objRef = malloc(sizeof(unsigned int) + sizeof(int));
-    if (member.u.objRef != NULL) {
-        member.isObjRef = true;
+    if (calculationStack[sp].isObjRef == true) {
         if (sp < 1000) {
             calculationStack[sp].u.number = var;
             sp++;
@@ -37,7 +36,6 @@ void push(void *var) {
             haltProgram();
         }
     } else {
-        member.isObjRef = false;
         if (sp < 1000) {
             calculationStack[sp].u.objRef = var;
             sp++;
@@ -54,9 +52,8 @@ void push(void *var) {
  */
 
 void *pop() {
-    StackSlot member = {0};
-    if (member.u.objRef != NULL) {
-        member.isObjRef = true;
+   // StackSlot member = {0};
+    if ( calculationStack[sp].isObjRef == true) {
         if (sp > 0) {
             sp--;
             member.u.objRef = calculationStack[sp].u.objRef;
@@ -66,7 +63,6 @@ void *pop() {
         }
         return member.u.objRef;
     } else {
-        member.isObjRef = false;
         if (sp > 0) {
             sp--;
             member.u.number = calculationStack[sp].u.number;
@@ -142,6 +138,7 @@ void pushg(int var) {
 }
 
 void asf(int value) {
+    calculationStack[sp].isObjRef = false;
     push((void *) fp);
     fp = sp;
     sp = sp + value;
@@ -169,7 +166,12 @@ void popr() {
 }
 
 void pushr() {
-    push(reg[0]->data);
+    //member.isObjRef = true;
+    //push(reg[0]->data);
+
+    calculationStack[sp].u.objRef = reg[0];
+    calculationStack[sp].isObjRef = true;
+    sp++;
 }
 
 void drop(int var) {
@@ -181,6 +183,7 @@ void ret() {
 }
 
 void call(int value) {
+    calculationStack[sp].isObjRef = false;
     push((void *) pc);
     pc = value - 1;
 }

@@ -45,17 +45,17 @@
 #define SIGN_EXTEND(i) ((i) & 0x00800000 ? (i) | 0xFF000000 : (i))
 
 typedef struct {
+    unsigned int size; /* byte count of payload data */
+    unsigned char data [1]; /* payload data , size as needed */
+} *ObjRef;
+
+typedef struct {
     bool isObjRef; /* slot used for object reference? */
     union {
         ObjRef objRef; /* used if isObjRef=TRUE */
         int number; /* used if isObjRef=FALSE */
     } u;
 } StackSlot;
-
-typedef struct {
-    unsigned int size; /* byte count of payload data */
-    unsigned char data [1]; /* payload data , size as needed */
-} *ObjRef;
 
 /**
  * Main Function, which reads all Terminal Arguments

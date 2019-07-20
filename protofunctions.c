@@ -56,8 +56,6 @@ void push(void *var) {
 
 void *pop() {
     StackSlot member = {0};
-    member.u.number = malloc(sizeof(int));
-    member.u.objRef = malloc(sizeof(unsigned int) + sizeof(int));
     if (member.u.objRef != NULL) {
         member.isObjRef = true;
         if (sp > 0) {

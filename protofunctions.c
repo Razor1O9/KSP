@@ -5,8 +5,8 @@
 
 int version = 4;
 int calculationStack[1000];
-int  fp = 0;
-int regADD = 0;
+ObjRef *reg;
+int fp = 0;
 bool haltThis = false;
 bool debugMode = false;
 int breakpoint_pos = 0;
@@ -31,14 +31,46 @@ void push(int var) {
         haltProgram();
     }
 }
-
+void pushObjRef(ObjRef var) {
+    if (sp < 1000) {
+        calculationStack[sp] = var;
+        sp++;
+    } else {
+        haltProgram();
+    }
+}
 /**
  * This method removes the top variable from the stack.
  * It returns the new stack, without the removed variable.
  * @return
  */
-int pop() {
-    int value = 0;
+
+StackSlot pop() {
+    StackSlot member = {0};
+    member.u.number = malloc(sizeof (int));
+    member.u.objRef = malloc(sizeof (unsigned int) + staticAreaSize * sizeof(unsigned char));
+    if(member.u.objRef != NULL){
+        if (sp > 0) {
+            sp--;
+            member.u.objRef = &calculationStack[sp];
+        } else {
+            haltProgram();
+        }
+        return member.u.objRef;
+    } else {
+        if (sp > 0) {
+            sp--;
+            member.u.number = &calculationStack[sp];
+        } else {
+            haltProgram();
+        }
+        return member.u.number;
+    }
+
+
+}
+void* popObjRef() {
+    ObjRef value = 0;
     if (sp > 0) {
         sp--;
         value = calculationStack[sp];
@@ -130,11 +162,11 @@ void popl (int value) {
 }
 
 void popr() {
-    regADD = calculationStack[sp-1];
+    reg[0] = popObjRef();
 }
 
 void pushr() {
-    push(regADD);
+    pushObjRef(reg[0]);
 }
 
 void drop(int var) {

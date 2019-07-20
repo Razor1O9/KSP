@@ -13,7 +13,7 @@ typedef struct {
     bool isObjRef; /* slot used for object reference? */
     union {
         ObjRef objRef; /* used if isObjRef=TRUE */
-        int number; /* used if isObjRef=FALSE */
+        int *number; /* used if isObjRef=FALSE */
     } u;
 } StackSlot;
 
@@ -35,7 +35,7 @@ extern int dc; /* Program Counter Variable for Debugging */
 
 void haltProgram (void);
 void push (int);
-int pop (void);
+StackSlot pop (void);
 void add (void);
 void sub (void);
 void mul (void);

@@ -18,11 +18,11 @@ typedef struct {
 } Stackslot;
 
 extern int version ; /* The current version */
-extern int *staticPtr; /* Lists all global Variables */
+extern ObjRef *staticPtr; /* Lists all global Variables */
 extern Stackslot calculationStack[]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
 extern int fp;
-extern Stackslot regADD;
+extern ObjRef regADD;
 extern Stackslot staticAreaSize;
 extern int instructionCount;
 extern bool haltThis;

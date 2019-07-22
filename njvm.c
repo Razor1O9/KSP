@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
         fread(&programHeader[2], sizeof(unsigned int), 1, loadedFile);
         staticAreaSize = programHeader[2];
 
-        staticPtr = malloc(staticAreaSize * sizeof(unsigned int));
+        staticPtr = malloc(staticAreaSize * sizeof(ObjRef));
         programMemory = malloc(instructionCount * sizeof(unsigned int));
 
         fread(programMemory, sizeof(unsigned int), instructionCount, loadedFile);
@@ -333,7 +333,7 @@ int main(int argc, char *argv[]) {
         int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
         int shift = instr >> 24;
         if (shift == PUSHC) {
-            push(value);
+            pushObject(value);
             return;
         }
         if (shift == HALT) {

@@ -23,7 +23,7 @@ extern Stackslot calculationStack[]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
 extern int fp;
 extern ObjRef regADD;
-extern Stackslot staticAreaSize;
+extern unsigned int staticAreaSize;
 extern int instructionCount;
 extern bool haltThis;
 extern bool debugMode;

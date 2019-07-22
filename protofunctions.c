@@ -4,9 +4,9 @@
 #include "protofunctions.h"
 
 int version = 4;
-int calculationStack[1000];
+Stackslot calculationStack[1000];
 int  fp = 0;
-int regADD = 0;
+ObjRef regADD = 0;
 bool haltThis = false;
 bool debugMode = false;
 int breakpoint_pos = 0;
@@ -15,8 +15,8 @@ unsigned int *programMemory;
 int instructionCount=0;
 int pc=0;
 int dc=0;
-int staticAreaSize=0;
-int *staticPtr;
+unsigned int staticAreaSize=0;
+ObjRef *staticPtr;
 int sp;
 
 // This method greate a Object get memory from heap
@@ -75,7 +75,7 @@ Stackslot pop() {
 void add(void) {
     int var1 = *(int *) (pop().u.objRef->data);
     int var2 = *(int *) (pop().u.objRef->data);
-    push(var2 + var1);
+    pushObject(var2 + var1);
 }
 
 void sub(void) {
@@ -128,7 +128,7 @@ void popg(int var) {
 
 void pushg(int var) {
     if (sp != 1000) {
-        push(*(int *) (staticPtr[var]->data));
+        pushObject(*(int *) (staticPtr[var]->data));
     }
 }
 void asf (int value) {
@@ -158,7 +158,7 @@ void popr() {
 }
 
 void pushr() {
-    push(*(int *) (regADD->data));
+    pushObject(*(int *) (regADD->data));
 }
 
 void drop(int var) {
@@ -206,9 +206,9 @@ void gt() {
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc -2;
     if (var2 > var1){
-        push(true);
+        pushObject(true);
     } else {
-        push(false);
+        pushObject(false);
     }
 }
 
@@ -217,9 +217,9 @@ void le() {
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc - 2;
     if (var2 <= var1) {
-        push(true);
+        pushObject(true);
     } else {
-        push(false);
+        pushObject(false);
     }
 
 }
@@ -229,9 +229,9 @@ void lt() {
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc - 2;
     if (var2 < var1) {
-        push(true);
+        pushObject(true);
     } else {
-        push(false);
+        pushObject(false);
     }
 }
 
@@ -240,9 +240,9 @@ void ne() {
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc - 2;
     if (var1 == var2) {
-        push(false);
+        pushObject(false);
     } else {
-        push(true);
+        pushObject(true);
     }
 }
 
@@ -251,9 +251,9 @@ void eq() {
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc - 2;
     if (var1 != var2) {
-        push(false);
+        pushObject(false);
     } else {
-        push(true);
+        pushObject(true);
     }
 }
 

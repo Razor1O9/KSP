@@ -19,7 +19,7 @@ unsigned int staticAreaSize=0;
 ObjRef *staticPtr;
 int sp;
 
-// This method greate a Object get memory from heap
+// This method greate a Object and get memory from heap
 ObjRef createObject(int value) {
     ObjRef o = malloc(sizeof(unsigned int) + sizeof(int));
     if(o == NULL) {

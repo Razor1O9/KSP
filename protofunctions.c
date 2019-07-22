@@ -19,13 +19,35 @@ int staticAreaSize=0;
 int *staticPtr;
 int sp;
 
+ObjRef createObject(int value) {
+    ObjRef o = malloc(sizeof(unsigned int) + sizeof(int));
+    if(o == NULL) {
+        printf("memory is full");
+        exit(1);
+    }
+    o->size = sizeof(int);
+    *(int*) (o->data) = value;
+    return o;
+}
+
 /**
  * This methods pushes a given variable on top of the stack.
  * @param var
  */
-void push(int var) {
+void pushNumber(int var) {
     if (sp < 1000) {
-        calculationStack[sp] = var;
+        calculationStack[sp].u.number = var;
+        calculationStack[sp].isObjRef = false;
+        sp++;
+    } else {
+        haltProgram();
+    }
+}
+
+void pushObject(int var) {
+    if (sp < 1000) {
+        calculationStack[sp].u.objRef = createObject(var);
+        calculationStack[sp].isObjRef = true;
         sp++;
     } else {
         haltProgram();

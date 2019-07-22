@@ -35,7 +35,7 @@ extern int dc; /* Program Counter Variable for Debugging */
 
 void haltProgram (void);
 void push (int);
-int pop (void);
+Stackslot pop (void);
 void add (void);
 void sub (void);
 void mul (void);

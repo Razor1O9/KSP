@@ -19,6 +19,7 @@ int staticAreaSize=0;
 int *staticPtr;
 int sp;
 
+// This method greate a Object get memory from heap
 ObjRef createObject(int value) {
     ObjRef o = malloc(sizeof(unsigned int) + sizeof(int));
     if(o == NULL) {
@@ -31,7 +32,7 @@ ObjRef createObject(int value) {
 }
 
 /**
- * This methods pushes a given variable on top of the stack.
+ * This method pushes only numbers on top of the stack.
  * @param var
  */
 void pushNumber(int var) {
@@ -44,6 +45,7 @@ void pushNumber(int var) {
     }
 }
 
+// This method pushes only Object on the top of stack
 void pushObject(int var) {
     if (sp < 1000) {
         calculationStack[sp].u.objRef = createObject(var);
@@ -59,8 +61,8 @@ void pushObject(int var) {
  * It returns the new stack, without the removed variable.
  * @return
  */
-int pop() {
-    int value = 0;
+Stackslot pop() {
+    Stackslot value;
     if (sp > 0) {
         sp--;
         value = calculationStack[sp];

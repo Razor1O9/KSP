@@ -334,7 +334,7 @@ int main(int argc, char *argv[]) {
         int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
         int shift = instr >> 24;
         if (shift == PUSHC) {
-            bigFromInt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            bigFromInt(value);
             pushObject(bip.res);
             return;
         }

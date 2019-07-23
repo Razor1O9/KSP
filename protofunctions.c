@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "bigint/build/include/support.h"
+#include "bigint/build/include/support.h"
+#include "bigint/build/include/support.h"
+#include "bigint/build/include/support.h"
 #include "protofunctions.h"
 #include "bigint/build/include/bigint.h"
 
@@ -189,11 +193,11 @@ void brt(int value) {
 void brf(int value) {
     bip.op1 = pop().u.objRef;
     if(bigToInt() == 0)
-        pc = value;
+        pc = value-1;
 }
 
 void jmp(int value) {
-    pc = value;
+    pc = value-1;
 }
 
 void ge() {

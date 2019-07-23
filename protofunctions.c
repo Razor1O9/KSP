@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "protofunctions.h"
+#include "bigint/build/include/bigint.h"
 
 int version = 4;
 Stackslot calculationStack[1000];
@@ -19,16 +20,10 @@ unsigned int staticAreaSize=0;
 ObjRef *staticPtr;
 int sp;
 
-// This method greate a Object and get memory from heap
-ObjRef createObject(int value) {
-    ObjRef o = malloc(sizeof(unsigned int) + sizeof(int));
-    if(o == NULL) {
-        printf("memory is full");
-        exit(1);
-    }
-    o->size = sizeof(int);
-    *(int*) (o->data) = value;
-    return o;
+bool is_object(int i) {
+    if(calculationStack[i].isObjRef == true)
+        return true;
+    return false;
 }
 
 /**
@@ -46,9 +41,9 @@ void pushNumber(int var) {
 }
 
 // This method pushes only Object on the top of stack
-void pushObject(int var) {
+void pushObject(ObjRef var) {
     if (sp < 1000) {
-        calculationStack[sp].u.objRef = createObject(var);
+        calculationStack[sp].u.objRef = var;
         calculationStack[sp].isObjRef = true;
         sp++;
     } else {
@@ -73,53 +68,62 @@ Stackslot pop() {
 }
 
 void add(void) {
-    int var1 = *(int *) (pop().u.objRef->data);
-    int var2 = *(int *) (pop().u.objRef->data);
-    pushObject(var2 + var1);
+    bip.op1 = pop().u.objRef;
+    bip.op2 = pop().u.objRef;
+    bigAdd();
+    pushObject(bip.res);
 }
 
 void sub(void) {
-    int var1 = *(int *) (pop().u.objRef->data);
-    int var2 = *(int *) (pop().u.objRef->data);
-    pushObject(var2 - var1);
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    bigSub();
+    pushObject(bip.res);
 }
 
 void mul() {
-    int var1 = *(int *) (pop().u.objRef->data);
-    int var2 = *(int *) (pop().u.objRef->data);
-    pushObject(var2 * var1);
+    bip.op1 = pop().u.objRef;
+    bip.op2 = pop().u.objRef;
+    bigMul();
+    pushObject(bip.res);
 }
 
 void divide() {
-    int var1 = *(int *) (pop().u.objRef->data);
-    int var2 = *(int *) (pop().u.objRef->data);
-    pushObject(var2 / var1);
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    bigDiv();
+    pushObject(bip.res);
 }
 
 void mod() {
-    int var1 = *(int *) (pop().u.objRef->data);
-    int var2 = *(int *) (pop().u.objRef->data);
-    pushObject(var2 % var1);
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    bigDiv();
+    pushObject(bip.rem);
 }
 
 void rdint() {
     int var;
     scanf("%d", &var);
-    pushObject(var);
+    bigFromInt(var);
+    pushObject(bip.res);
 }
 
 void wrint() {
-    printf("%d", *(int *) (pop().u.objRef->data));
+    bip.op1 = pop().u.objRef;
+    bigPrint(stdout);
 }
 
 void rdchr() {
     char var;
     scanf("%c", &var);
-    pushObject(var);
+    bigFromInt(var);
+    pushObject(bip.res);
 }
 
 void wrchr() {
-    printf("%c", *(int *) (pop().u.objRef->data));
+    bip.op1 = pop().u.objRef;
+    printf("%c", bigToInt());
 }
 
 void popg(int var) {
@@ -128,7 +132,7 @@ void popg(int var) {
 
 void pushg(int var) {
     if (sp != 1000) {
-        pushObject(*(int *) (staticPtr[var]->data));
+        pushObject(staticPtr[var]);
     }
 }
 void asf (int value) {
@@ -158,7 +162,7 @@ void popr() {
 }
 
 void pushr() {
-    pushObject(*(int *) (regADD->data));
+    pushObject(regADD);
 }
 
 void drop(int var) {
@@ -166,24 +170,26 @@ void drop(int var) {
 }
 
 void ret() {
-    pc = pop().u.number;
+    bip.op1 = pop().u.objRef;
+    pc = bigToInt();
 }
 
 void call(int value) {
-    pushNumber(pc);
+    bigFromInt(pc);
+    pushObject(bip.res);
     pc = value-1;
 }
 
 void brt(int value) {
-    if (*(int *) (pop().u.objRef->data) == 1) {
+    bip.op1 = pop().u.objRef;
+    if(bigToInt() == 1)
         pc = value;
-    }
 }
 
 void brf(int value) {
-    if (*(int *) (pop().u.objRef->data) == 0) {
+    bip.op1 = pop().u.objRef;
+    if(bigToInt() == 0)
         pc = value;
-    }
 }
 
 void jmp(int value) {
@@ -191,70 +197,113 @@ void jmp(int value) {
 }
 
 void ge() {
-    int var1 = *(int *) (pop().u.objRef->data);
-    int var2 = *(int *) (pop().u.objRef->data);
-    pc = pc -2;
-    if (var2 >= var1){
-        pushObject(true);
-    } else {
-        pushObject(false);
-    }
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    if(bigCmp() >= 0)
+        bigFromInt(1);
+    else
+        bigFromInt(0);
+    pushObject(bip.res);
+
+    /*int var1 = *(int *) (pop().u.objRef->data);*/
+    /*int var2 = *(int *) (pop().u.objRef->data);*/
+    /*pc = pc -2;*/
+    /*if (var2 >= var1){*/
+    /*    pushObject(true);*/
+    /*} else {*/
+    /*    pushObject(false);*/
+    /*}*/
 }
 
 void gt() {
-    int var1 = *(int *) (pop().u.objRef->data);
-    int var2 = *(int *) (pop().u.objRef->data);
-    pc = pc -2;
-    if (var2 > var1){
-        pushObject(true);
-    } else {
-        pushObject(false);
-    }
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    if(bigCmp() > 0)
+        bigFromInt(1);
+    else
+        bigFromInt(0);
+    pushObject(bip.res);
+//    int var1 = *(int *) (pop().u.objRef->data);
+//    int var2 = *(int *) (pop().u.objRef->data);
+//    pc = pc -2;
+//    if (var2 > var1){
+//        pushObject(true);
+//    } else {
+//        pushObject(false);
+//    }
 }
 
 void le() {
-    int var1 = *(int *) (pop().u.objRef->data);
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    if(bigCmp() <= 0)
+        bigFromInt(1);
+    else
+        bigFromInt(0);
+    pushObject(bip.res);
+    /*int var1 = *(int *) (pop().u.objRef->data);
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc - 2;
     if (var2 <= var1) {
         pushObject(true);
     } else {
         pushObject(false);
-    }
+    }*/
 
 }
 
 void lt() {
-    int var1 = *(int *) (pop().u.objRef->data);
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    if(bigCmp() < 0)
+        bigFromInt(1);
+    else
+        bigFromInt(0);
+    pushObject(bip.res);
+    /*int var1 = *(int *) (pop().u.objRef->data);
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc - 2;
     if (var2 < var1) {
         pushObject(true);
     } else {
         pushObject(false);
-    }
+    }*/
 }
 
 void ne() {
-    int var1 = *(int *) (pop().u.objRef->data);
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    if(bigCmp() == 0)
+        bigFromInt(0);
+    else
+        bigFromInt(1);
+    pushObject(bip.res);
+    /*int var1 = *(int *) (pop().u.objRef->data);
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc - 2;
     if (var1 == var2) {
         pushObject(false);
     } else {
         pushObject(true);
-    }
+    }*/
 }
 
 void eq() {
-    int var1 = *(int *) (pop().u.objRef->data);
+    bip.op2 = pop().u.objRef;
+    bip.op1 = pop().u.objRef;
+    if(bigCmp() == 0)
+        bigFromInt(1);
+    else
+        bigFromInt(0);
+    pushObject(bip.res);
+    /*int var1 = *(int *) (pop().u.objRef->data);
     int var2 = *(int *) (pop().u.objRef->data);
     pc = pc - 2;
     if (var1 != var2) {
         pushObject(false);
     } else {
         pushObject(true);
-    }
+    }*/
 }
 
 void haltProgram(void) {

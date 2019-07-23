@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "protofunctions.h"
+#include "bigint/build/include/bigint.h"
 
 /* Makro-Deklarationen */
 #define HALT 0
@@ -332,7 +333,8 @@ int main(int argc, char *argv[]) {
         int value = SIGN_EXTEND(IMMEDIATE(programMemory[pc]));
         int shift = instr >> 24;
         if (shift == PUSHC) {
-            pushObject(value);
+            bigFromInt(SIGN_EXTEND(IMMEDIATE(programMemory[pc])));
+            pushObject(bip.res);
             return;
         }
         if (shift == HALT) {

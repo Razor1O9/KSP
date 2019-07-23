@@ -42,7 +42,7 @@ extern int dc; /* Program Counter Variable for Debugging */
 void haltProgram (void);
 ObjRef createObject(int);
 void pushNumber (int);
-void pushObject (int);
+void pushObject (ObjRef);
 Stackslot pop (void);
 void add (void);
 void sub (void);

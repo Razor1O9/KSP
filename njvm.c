@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
         /* Reads the File VM-version */
         fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
         if (version < programHeader[0]) {
-            printf("Version: %d is not supported!", programHeader[0]);
+            printf("Version: %d is not supported!\n", programHeader[0]);
             return (EXIT_FAILURE);
         }
         /* Reads the amount of instructions inside the File */
@@ -181,7 +181,7 @@ int main(int argc, char *argv[]) {
         /* Reads the File VM-version */
         fread(&programHeader[0], sizeof(unsigned int), 1, loadedFile);
         if (version < programHeader[0]) {
-            printf("Version: %d is not supported!", programHeader[0]);
+            printf("Version: %d is not supported!\n", programHeader[0]);
             return (EXIT_FAILURE);
         }
         /* Reads the amount of instructions inside the File */

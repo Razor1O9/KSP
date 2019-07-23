@@ -4,7 +4,7 @@
 #include "protofunctions.h"
 #include "bigint/build/include/bigint.h"
 
-int version = 4;
+int version = 6;
 Stackslot calculationStack[1000];
 int  fp = 0;
 ObjRef regADD = 0;

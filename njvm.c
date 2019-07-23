@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "protofunctions.h"
 #include "bigint/build/include/bigint.h"
+#include "protofunctions.h"
+
 
 /* Makro-Deklarationen */
 #define HALT 0

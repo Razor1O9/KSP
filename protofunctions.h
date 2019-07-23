@@ -2,6 +2,8 @@
 #define PROTOFUNCTIONS_H_
 
 // is this object a primitve object?
+
+
 #include "bigint/build/include/support.h"
 
 # define MSB                (1 << (8 * sizeof ( unsigned int) - 1))

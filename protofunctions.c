@@ -138,7 +138,7 @@ void asf (int value) {
 }
 void rsf () {
     sp = fp;
-    fp = *(int *) (pop().u.objRef->data);
+    fp = pop().u.number;
 }
 
 
@@ -166,7 +166,7 @@ void drop(int var) {
 }
 
 void ret() {
-    pc = *(int *) (pop().u.objRef->data);
+    pc = pop().u.number;
 }
 
 void call(int value) {

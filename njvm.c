@@ -243,9 +243,9 @@ int main(int argc, char *argv[]) {
             }
 
         }
-        printf("Ninja Virtual Machine stopped\n");
-        return (EXIT_SUCCESS);
     }
+    printf("Ninja Virtual Machine stopped\n");
+    return (EXIT_SUCCESS);
 }
 
     void debugger(int instr) {

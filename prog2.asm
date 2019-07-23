@@ -5,7 +5,6 @@ pushc	2000000
 pushc	2000000
 mul
 ge
-brf
 pushc	10
 wrchr
 halt

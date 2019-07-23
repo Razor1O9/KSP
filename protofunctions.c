@@ -57,7 +57,7 @@ void pushObject(int var) {
 }
 
 /**
- * This method removes the top variable from the stack.
+ * This method removes the top variable from the stack. duc
  * It returns the new stack, without the removed variable.
  * @return
  */

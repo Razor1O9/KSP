@@ -16,11 +16,6 @@
 typedef enum { false, true } bool;
 
 typedef struct {
-    unsigned int size;	/* byte count of payload data */
-    unsigned char data [1]; /* payload data , size as needed */
-} *ObjRef;
-
-typedef struct {
     unsigned int isObjRef;
     union {
         ObjRef objRef;

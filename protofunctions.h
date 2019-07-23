@@ -16,20 +16,25 @@
 typedef enum { false, true } bool;
 
 typedef struct {
-    bool isObjRef; /* slot used for object reference? */
+    unsigned int size;	/* byte count of payload data */
+    unsigned char data [1]; /* payload data , size as needed */
+} *ObjRef;
+
+typedef struct {
+    unsigned int isObjRef;
     union {
-        ObjRef objRef; /* used if isObjRef=TRUE */
-        int *number; /* used if isObjRef=FALSE */
+        ObjRef objRef;
+        int number;
     } u;
-} StackSlot;
+} Stackslot;
 
 extern int version ; /* The current version */
-extern int *staticPtr; /* Lists all global Variables */
-extern StackSlot calculationStack[]; /* Stack for Calculation */
+extern ObjRef *staticPtr; /* Lists all global Variables */
+extern Stackslot calculationStack[]; /* Stack for Calculation */
 extern int sp; /* Stack Pointer Variable for Calculations */
 extern int fp;
-extern int regADD;
-extern int staticAreaSize;
+extern ObjRef regADD;
+extern unsigned int staticAreaSize;
 extern int instructionCount;
 extern bool haltThis;
 extern bool debugMode;
@@ -40,8 +45,10 @@ extern int pc; /* Program Counter Variable for Instructions */
 extern int dc; /* Program Counter Variable for Debugging */
 
 void haltProgram (void);
-void push (void*);
-void *pop (void);
+ObjRef createObject(int);
+void pushNumber (int);
+void pushObject (int);
+Stackslot pop (void);
 void add (void);
 void sub (void);
 void mul (void);

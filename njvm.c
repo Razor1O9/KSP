@@ -272,9 +272,9 @@ void debugger(int instr) {
                 printf("SP   -->   [%d]: (xxxxxx) xxxxxx\n", copySP);
                 copySP--;
             }
-            for (int i = copySP; i > 0; i--) {
+            for (int i = copySP; i >= 0; i--) {
                 if (fp == copySP) {
-                    printf("FP    -->  [%d]: ", fp);
+                    printf("FP   -->   [%d]: ", fp);
                     if (calculationStack[copySP].isObjRef == true) {
                         printf("(objref) %p\n", (void *) &calculationStack[fp].u.objRef);
                     } else if (calculationStack[copySP].isObjRef == false) {

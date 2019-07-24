@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "support.h"
+#include "bigint/build/include/support.h"
 
 
 /*

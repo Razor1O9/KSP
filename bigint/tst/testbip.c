@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "bigint.h"
+#include "bigint/build/include/bigint.h"
 
 
 /**************************************************************/

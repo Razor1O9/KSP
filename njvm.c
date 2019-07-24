@@ -259,14 +259,38 @@ void debugger(int instr) {
     printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
     scanf("%s", input);
 
-    /* INSPECT ToDo, not working... */
+    /* INSPECT ToDo */
     if (strcmp(input, commands[0]) == 0) {
-        printf("DEBUG [inspect]: stack, data?\n");
+        printf("DEBUG [inspect]: stack, data, object?\n");
         scanf("%s", input);
         if (strcmp(input, options[0]) == 0) {
-            printf("--- bottom of stack ---\n");
-            // ToDo
-            //printf("%c", calculationStack);
+            int copySP = sp;
+            if (fp == sp) {
+                printf("FP, SP --> [%d]: (xxxxxx) xxxxxx\n", copySP);
+                copySP--;
+            } else {
+                printf("SP   -->   [%d]: (xxxxxx) xxxxxx\n", copySP);
+                copySP--;
+            }
+            for (int i = copySP; i > 0; i--) {
+                if (fp == copySP) {
+                    printf("FP    -->  [%d]: ", fp);
+                    if (calculationStack[copySP].isObjRef == true) {
+                        printf("(objref) %p\n", (void *) &calculationStack[fp].u.objRef);
+                    } else if (calculationStack[copySP].isObjRef == false) {
+                        printf("(number) %d\n", calculationStack[fp].u.number);
+                    }
+                } else if (copySP >= 0) {
+                    printf("           [%d]: ", copySP);
+                    if (calculationStack[copySP].isObjRef == true) {
+                        printf("(objref) %p\n", (void *) &calculationStack[copySP].u.objRef);
+                    } else if (calculationStack[copySP].isObjRef == false) {
+                        printf("(number) %d\n", calculationStack[copySP].u.number);
+                    }
+                }
+                copySP--;
+                printf("--- bottom of stack ---\n");
+            }
         } else if (strcmp(input, options[1]) == 0) {
             printf("--- end of data ---\n");
             // ToDo
@@ -352,6 +376,7 @@ void debugger(int instr) {
     else if (
             strcmp(input, commands[3]
             ) == 0) {
+        matchInstruction(instr);
         debugInstructions(instr);
     }
 /* RUN */

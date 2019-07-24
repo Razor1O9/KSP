@@ -264,9 +264,13 @@ void debugger(int instr) {
         printf("DEBUG [inspect]: stack, data?\n");
         scanf("%s", input);
         if (strcmp(input, options[0]) == 0) {
-            printf("%s", (const char *) calculationStack);
+            printf("--- bottom of stack ---\n");
+            //printf("%c", calculationStack);
         } else if (strcmp(input, options[1]) == 0) {
-            printf("%s", (const char *) staticPtr);
+            printf("--- end of data ---\n");
+            //printf("%s", (const char *) staticPtr);
+        } else {
+            printf("Command invalid");
         }
     }
         /* LIST */

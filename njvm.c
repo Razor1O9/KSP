@@ -56,7 +56,7 @@ void validation(FILE *loadedFile, char validBinFile[]);
  */
 int main(int argc, char *argv[]) {
     char *filename = "";
-    char *command = "";
+    char *command;
     unsigned int instr;
     char bin[] = ".bin";
     char debug[] = "--debug";

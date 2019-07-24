@@ -301,6 +301,7 @@ void debugger(int instr) {
             // ToDo
         } else {
             printf("Command invalid");
+            return;
         }
     }
         /* LIST */

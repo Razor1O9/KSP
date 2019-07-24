@@ -186,17 +186,16 @@ void validation(FILE *loadedFile, char validBinFile[]) {
 /* Checks if the binary file is a valid Ninja-Binary file */
     fread(&validBinFile[reader], sizeof(char), 4, loadedFile);
     if (strncmp(&validBinFile[0], "N", 1) != 0) {
-        haltProgram();
+        exit(EXIT_FAILURE);
     }
     if (strncmp(&validBinFile[1], "J", 1) != 0) {
-        haltProgram();
+        exit(EXIT_FAILURE);
     }
     if (strncmp(&validBinFile[2], "B", 1) != 0) {
-        haltProgram();
+        exit(EXIT_FAILURE);
     }
     if (strncmp(&validBinFile[3], "F", 1) != 0) {
-        haltProgram();
-
+        exit(EXIT_FAILURE);
     }
 
     /* Reads the File VM-version */

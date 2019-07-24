@@ -289,12 +289,15 @@ void debugger(int instr) {
                     }
                 }
                 copySP--;
-                printf("--- bottom of stack ---\n");
             }
+            printf("--- bottom of stack ---\n");
         } else if (strcmp(input, options[1]) == 0) {
+            for (int counter = 0; counter < staticAreaSize; counter++) {
+                printf("data[%d]: ", counter);
+                printf("(objref) %p\n", (void *) &staticPtr[counter]);
+            }
             printf("--- end of data ---\n");
-            // ToDo
-            //printf("%s", (const char *) staticPtr);
+            return;
         } else if (strcmp(input, options[2]) == 0) {
             printf("Object reference?");
             scanf("%s", input);
@@ -322,54 +325,31 @@ void debugger(int instr) {
             printf("DEBUG [breakpoint]: cleared\n");
             printf("DEBUG [breakpoint]: address to set, -1 to clear, <ret> for no change?\n");
             scanf("%s", inputNum);
-            // Breakpoint gets cleared
-            if (strcmp(inputNum, breakpoint_options[0]) == 0) {
-                breakpoint_pos = 0;
-                breakpoint = false;
-                printf("DEBUG [breakpoint]: now cleared\n");
-                return;
-            } else if (strcmp(inputNum, breakpoint_options[1]) == 0) {
-                return;
-            } else {
-                breakpoint_pos = (int) *inputNum - 48;
-                if (breakpoint_pos > instructionCount) {
-                    printf("DEBUG [breakpoint]: Breakpoint position not valid!\n");
-                    breakpoint_pos = 0;
-                    breakpoint = false;
-                    return;
-                } else {
-                    /* Set Breakpoint to user input */
-                    breakpoint = true;
-                    printf("DEBUG [breakpoint]: now set at %d\n", breakpoint_pos);
-                    return;
-                }
-            }
-
         } else {
             printf("DEBUG [breakpoint]: set at %d\n", breakpoint_pos);
             printf("DEBUG [breakpoint]: address to set, -1 to clear, <ret> for no change?\n");
             scanf("%s", inputNum);
-            // Breakpoint gets cleared
-            if (strcmp((const char *) inputNum, breakpoint_options[0]) == 0) {
+        }
+        // Breakpoint gets cleared
+        if (strcmp(inputNum, breakpoint_options[0]) == 0) {
+            breakpoint_pos = 0;
+            breakpoint = false;
+            printf("DEBUG [breakpoint]: now cleared\n");
+            return;
+        } else if (strcmp(inputNum, breakpoint_options[1]) == 0) {
+            return;
+        } else {
+            breakpoint_pos = (int) *inputNum - 48;
+            if (breakpoint_pos > instructionCount) {
+                printf("DEBUG [breakpoint]: Breakpoint position not valid!\n");
                 breakpoint_pos = 0;
                 breakpoint = false;
-                printf("DEBUG [breakpoint]: now cleared\n");
-                return;
-            } else if (strcmp((const char *) inputNum, breakpoint_options[1]) == 0) {
                 return;
             } else {
-                breakpoint_pos = (int) *inputNum - 48;
-                if (breakpoint_pos > instructionCount) {
-                    printf("DEBUG [breakpoint]: Breakpoint position not valid!\n");
-                    breakpoint_pos = 0;
-                    breakpoint = false;
-                    return;
-                } else {
-                    /* Set Breakpoint to user input */
-                    breakpoint = true;
-                    printf("DEBUG [breakpoint]: now set at %d\n", breakpoint_pos);
-                    return;
-                }
+                /* Set Breakpoint to user input */
+                breakpoint = true;
+                printf("DEBUG [breakpoint]: now set at %d\n", breakpoint_pos);
+                return;
             }
         }
     }

@@ -251,7 +251,7 @@ int main(int argc, char *argv[]) {
 
 void debugger(int instr) {
     char *commands[6] = {"inspect", "list", "breakpoint", "step", "run", "quit"};
-    char *options[2] = {"stack", "data"};
+    char *options[3] = {"stack", "data", "object"};
     char *breakpoint_options[2] = {"-1", "ret"};
     char *input = (char *) malloc(12);
     char *inputNum = (char *) malloc(12);
@@ -265,10 +265,16 @@ void debugger(int instr) {
         scanf("%s", input);
         if (strcmp(input, options[0]) == 0) {
             printf("--- bottom of stack ---\n");
+            // ToDo
             //printf("%c", calculationStack);
         } else if (strcmp(input, options[1]) == 0) {
             printf("--- end of data ---\n");
+            // ToDo
             //printf("%s", (const char *) staticPtr);
+        } else if (strcmp(input, options[2]) == 0) {
+            printf("Object reference?");
+            scanf("%s", input);
+            // ToDo
         } else {
             printf("Command invalid");
         }

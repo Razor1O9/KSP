@@ -224,7 +224,7 @@ void debugger(int instr) {
     char *options[3] = {"stack", "data", "object"};
     char *breakpoint_options[2] = {"-1", "ret"};
     char *input = (char *) malloc(12);
-    char *inputNum = (char *) malloc(12);
+    unsigned int *hexValue = (unsigned int *) malloc(12);
 
     printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
     scanf("%s", input);
@@ -270,10 +270,10 @@ void debugger(int instr) {
             return;
         } else if (strcmp(input, options[2]) == 0) {
             printf("Object reference?");
-            scanf("%s", input);
-            // ToDo
+            scanf("%X", hexValue);
+            printf("Value of input: Hex: %X, Decimal: %d\n",hexValue,hexValue);
         } else {
-            printf("Command invalid");
+            printf("Command is invalid\n");
             return;
         }
     }
@@ -294,22 +294,22 @@ void debugger(int instr) {
         if (breakpoint == false) {
             printf("DEBUG [breakpoint]: cleared\n");
             printf("DEBUG [breakpoint]: address to set, -1 to clear, <ret> for no change?\n");
-            scanf("%s", inputNum);
+            scanf("%s", input);
         } else {
             printf("DEBUG [breakpoint]: set at %d\n", breakpoint_pos);
             printf("DEBUG [breakpoint]: address to set, -1 to clear, <ret> for no change?\n");
-            scanf("%s", inputNum);
+            scanf("%s", input);
         }
         // Breakpoint gets cleared
-        if (strcmp(inputNum, breakpoint_options[0]) == 0) {
+        if (strcmp(input, breakpoint_options[0]) == 0) {
             breakpoint_pos = 0;
             breakpoint = false;
             printf("DEBUG [breakpoint]: now cleared\n");
             return;
-        } else if (strcmp(inputNum, breakpoint_options[1]) == 0) {
+        } else if (strcmp(input, breakpoint_options[1]) == 0) {
             return;
         } else {
-            breakpoint_pos = (int) *inputNum - 48;
+            breakpoint_pos = (int) *input - 48;
             if (breakpoint_pos > instructionCount) {
                 printf("DEBUG [breakpoint]: Breakpoint position not valid!\n");
                 breakpoint_pos = 0;

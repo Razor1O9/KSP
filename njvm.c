@@ -268,12 +268,11 @@ void debugger(int instr) {
             printf("--- end of data ---\n");
             return;
         } else if (strcmp(input, options[2]) == 0) {
-            char hexValue[11];
+            unsigned int *address;
             printf("Object reference?");
-            scanf("%s", hexValue);
-            char *ptr = (char *)strtol(hexValue, 0, 16);
-            //printf("Value of input: Hex: %x, Decimal: %d\n",hexValue,hexValue);
-            printf("value at adress = %c\n", *ptr);
+            scanf("%p", &address);
+            unsigned int value = SIGN_EXTEND(IMMEDIATE(*address));
+            printf("The content of Memory Address: %p is: %d\n", address, value);
         } else {
             printf("Command is invalid\n");
             return;

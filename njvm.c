@@ -224,7 +224,6 @@ void debugger(int instr) {
     char *options[3] = {"stack", "data", "object"};
     char *breakpoint_options[2] = {"-1", "ret"};
     char *input = (char *) malloc(12);
-    unsigned int *hexValue = (unsigned int *) malloc(12);
 
     printf("DEBUG: inspect, list, breakpoint, step, run, quit?\n");
     scanf("%s", input);
@@ -269,9 +268,12 @@ void debugger(int instr) {
             printf("--- end of data ---\n");
             return;
         } else if (strcmp(input, options[2]) == 0) {
+            char hexValue[11];
             printf("Object reference?");
-            scanf("%X", hexValue);
-            printf("Value of input: Hex: %X, Decimal: %d\n",hexValue,hexValue);
+            scanf("%s", hexValue);
+            char *ptr = (char *)strtol(hexValue, 0, 16);
+            //printf("Value of input: Hex: %x, Decimal: %d\n",hexValue,hexValue);
+            printf("value at adress = %c\n", *ptr);
         } else {
             printf("Command is invalid\n");
             return;
